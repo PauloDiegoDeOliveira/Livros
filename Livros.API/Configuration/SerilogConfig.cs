@@ -1,4 +1,6 @@
-﻿namespace Livros.API.Configuration
+﻿using Serilog;
+
+namespace Livros.API.Configuration
 {
     public static class SerilogConfig
     {

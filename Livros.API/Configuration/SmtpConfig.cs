@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder.Extensions;
+﻿using Livros.Application.Dtos.Smtp;
 
 namespace Livros.API.Configuration
 {
