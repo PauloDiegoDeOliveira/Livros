@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Interfaces\Repositories\Base\" />
     <Folder Include="Interfaces\Services\Base\" />
-    <Folder Include="Notification\" />
   </ItemGroup>
 
   <ItemGroup>

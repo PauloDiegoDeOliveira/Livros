@@ -1,0 +1,28 @@
+﻿namespace Livros.API.Configuration
+{
+    public static class SerilogConfig
+    {
+        public static void AddSerilogApi()
+        {
+            LogConfiguration(GetConfiguration());
+        }
+
+        private static void LogConfiguration(IConfigurationRoot configurationBuilder)
+        {
+            Log.Logger = new LoggerConfiguration()
+               .WriteTo.Console()
+               .ReadFrom.Configuration(configurationBuilder)
+               .CreateLogger();
+        }
+
+        private static IConfigurationRoot GetConfiguration()
+        {
+            string ambiente = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{ambiente}.json", optional: true)
+                .Build();
+        }
+    }
+}

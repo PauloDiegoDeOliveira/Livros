@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Applications\" />
+    <Folder Include="Applications\Base\" />
     <Folder Include="Attributes\" />
     <Folder Include="Dtos\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Base\" />
     <Folder Include="Mappings\" />
     <Folder Include="Utilities\Hash\" />
+    <Folder Include="Utilities\ConversorHora\" />
+    <Folder Include="Utilities\Image\" />
+    <Folder Include="Utilities\Text\" />
+    <Folder Include="Utilities\Paths\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
