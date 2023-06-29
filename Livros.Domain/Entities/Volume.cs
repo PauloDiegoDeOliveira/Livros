@@ -1,0 +1,17 @@
+﻿using Livros.Domain.Entities.Base;
+
+namespace Livros.Domain.Entities
+{
+    public class Volume : EntityBase
+    {
+        public string Titulo { get; set; }
+        public int Numero { get; set; }
+        public int Paginas { get; set; }
+        public string Anotacao { get; set; }
+        public decimal Preco { get; set; }
+        public int Avaliacao { get; set; }
+        public bool Lido { get; set; }
+        public DateTime DataLeitura { get; set; }
+        public DateTime DataCompra { get; set; }
+    }
+}

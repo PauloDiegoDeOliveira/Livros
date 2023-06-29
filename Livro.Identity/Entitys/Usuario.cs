@@ -6,8 +6,8 @@ namespace Livro.Identity.Entitys
     {
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
-        public string Genero { get; set; }
         public DateTime Nascimento { get; set; }
+        public string Genero { get; set; }
         public bool Notificar { get; set; }
         public long VersaoToken { get; set; }
         public string Status { get; set; }

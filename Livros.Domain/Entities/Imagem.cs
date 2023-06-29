@@ -2,7 +2,7 @@
 
 namespace Livros.Domain.Entities
 {
-    public class Upload : UploadIFormFileBase
+    public class Imagem : UploadIFormFileBase
     {
         public string TipoUpload { get; set; }
 
