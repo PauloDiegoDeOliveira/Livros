@@ -4,6 +4,7 @@ namespace Livros.Domain.Entities
 {
     public class Volume : EntityBase
     {
+        public Guid ObraId { get; set; }
         public string Titulo { get; set; }
         public int Numero { get; set; }
         public int Paginas { get; set; }
@@ -13,5 +14,7 @@ namespace Livros.Domain.Entities
         public bool Lido { get; set; }
         public DateTime DataLeitura { get; set; }
         public DateTime DataCompra { get; set; }
+
+        public Obra Obra { get; set; }
     }
 }

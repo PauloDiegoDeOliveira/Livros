@@ -7,5 +7,7 @@ namespace Livros.Domain.Entities
         public Guid UsuarioId { get; set; }
         public string Nome { get; set; }
         public string Publico { get; set; }
+
+        public List<Obra> Obras { get; set; }
     }
 }

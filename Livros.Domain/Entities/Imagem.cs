@@ -6,6 +6,6 @@ namespace Livros.Domain.Entities
     {
         public string TipoUpload { get; set; }
 
-        //public List<Livro> Livros { get; set; }
+        public List<Obra> Obras { get; set; }
     }
 }

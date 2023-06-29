@@ -18,6 +18,13 @@
   <ItemGroup>
     <Folder Include="Applications\Base\" />
     <Folder Include="Attributes\" />
+    <Folder Include="Dtos\Editora\" />
+    <Folder Include="Dtos\Idioma\" />
+    <Folder Include="Dtos\Lista\" />
+    <Folder Include="Dtos\Autor\" />
+    <Folder Include="Dtos\Genero\" />
+    <Folder Include="Dtos\Volume\" />
+    <Folder Include="Dtos\Obra\" />
     <Folder Include="Interfaces\Base\" />
     <Folder Include="Mappings\" />
     <Folder Include="Utilities\Hash\" />

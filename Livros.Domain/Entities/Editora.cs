@@ -5,6 +5,9 @@ namespace Livros.Domain.Entities
     public class Editora : EntityBase
     {
         public Guid UsuarioId { get; set; }
+        public Guid ObraId { get; set; }
         public string Nome { get; set; }
+
+        public Obra Obra { get; set; }
     }
 }
