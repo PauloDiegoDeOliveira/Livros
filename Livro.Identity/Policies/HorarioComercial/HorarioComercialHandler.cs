@@ -8,7 +8,9 @@ namespace Livro.Identity.Policies.HorarioComercial
         {
             DateTime horarioAtual = DateTime.Now;
             if (horarioAtual.Hour >= 7 && horarioAtual.Hour <= 23)
+            {
                 context.Succeed(requirement);
+            }
 
             return Task.CompletedTask;
         }

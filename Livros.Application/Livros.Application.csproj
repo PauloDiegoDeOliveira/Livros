@@ -32,16 +32,22 @@
     <Folder Include="Interfaces\Base\" />
     <Folder Include="Mappings\" />
     <Folder Include="Utilities\Hash\" />
-    <Folder Include="Utilities\ConversorHora\" />
-    <Folder Include="Utilities\Image\" />
-    <Folder Include="Utilities\Text\" />
-    <Folder Include="Utilities\Paths\" />
-    <Folder Include="Validators\" />
+    <Folder Include="Validators\Autor\" />
+    <Folder Include="Validators\Editora\" />
+    <Folder Include="Validators\Genero\" />
+    <Folder Include="Validators\Idioma\" />
+    <Folder Include="Validators\Imagem\" />
+    <Folder Include="Validators\Lista\" />
+    <Folder Include="Validators\Volume\" />
+    <Folder Include="Validators\Usuario\" />
+    <Folder Include="Validators\Obra\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.19" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

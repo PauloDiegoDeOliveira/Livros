@@ -99,7 +99,7 @@ namespace Livros.API.Configuration
                 Description = "Esta API faz parte do projeto Livros.",
                 Contact = new OpenApiContact
                 {
-                    Name = "Paulo e Fickert",
+                    Name = "Paulo Diego e Henrique Fickert",
                     Email = "pdiegodo@gmail.com",
                 },
             };

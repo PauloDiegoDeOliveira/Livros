@@ -20,15 +20,17 @@ namespace Livro.Identity.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             ClaimsPrincipal user = context.HttpContext.User;
-
             if (user == null || !user.Identity.IsAuthenticated)
             {
                 context.Result = new UnauthorizedResult();
+
                 return;
             }
 
             if (!user.HasClaim(_claim.Type, _claim.Value))
+            {
                 context.Result = new ForbidResult();
+            }
         }
     }
 }

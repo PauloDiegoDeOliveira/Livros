@@ -25,8 +25,6 @@ try
 
     builder.Services.AddDatabaseConfiguration(configurationManager);
 
-    builder.Services.AddIdentityConfiguration(configurationManager);
-
     builder.Services.AddDependencyInjectionConfiguration();
 
     builder.Services.AddSMTPConfiguration(configurationManager);

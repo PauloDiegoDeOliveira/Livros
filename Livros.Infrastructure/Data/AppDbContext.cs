@@ -1,11 +1,13 @@
-﻿using Livros.Domain.Entities.Base;
+﻿using Livros.Domain.Entities;
+using Livros.Domain.Entities.Base;
 using Livros.Domain.Enums;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Livros.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<Usuario>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -22,7 +24,7 @@ namespace Livros.Infrastructure.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries())
+            foreach (EntityEntry entry in ChangeTracker.Entries())
             {
                 if (entry.State == EntityState.Modified)
                 {

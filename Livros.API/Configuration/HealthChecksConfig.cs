@@ -24,8 +24,8 @@ namespace Livros.API.Configuration
                           string result = JsonConvert.SerializeObject(
                               new
                               {
-                                  currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                  statusApplication = report.Status.ToString(),
+                                  horaAtual = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                  statusAplicação = report.Status.ToString(),
                                   healthChecks = report.Entries.Select(e => new
                                   {
                                       check = e.Key,
@@ -33,6 +33,7 @@ namespace Livros.API.Configuration
                                       status = Enum.GetName(typeof(HealthStatus), e.Value.Status)
                                   })
                               });
+
                           context.Response.ContentType = MediaTypeNames.Application.Json;
                           await context.Response.WriteAsync(result);
                       }

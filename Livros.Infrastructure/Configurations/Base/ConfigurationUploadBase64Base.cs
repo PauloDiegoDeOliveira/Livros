@@ -27,14 +27,14 @@ namespace Livros.Infrastructure.Configurations.Base
                    .HasDefaultValueSql("NEWID()");
 
             builder.Property(p => p.CaminhoRelativo)
-                  .HasMaxLength(300)
-                  .HasColumnName("CaminhoRelativo")
-                  .HasColumnType("varchar(300)");
+                   .HasMaxLength(300)
+                   .HasColumnName("CaminhoRelativo")
+                   .HasColumnType("varchar(300)");
 
             builder.Property(p => p.CaminhoAbsoluto)
-                  .HasMaxLength(300)
-                  .HasColumnName("CaminhoAbsoluto")
-                  .HasColumnType("varchar(300)");
+                   .HasMaxLength(300)
+                   .HasColumnName("CaminhoAbsoluto")
+                   .HasColumnType("varchar(300)");
 
             builder.Property(p => p.CaminhoFisico)
                    .HasMaxLength(300)

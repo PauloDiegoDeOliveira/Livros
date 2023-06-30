@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Livro.Identity.Entitys
+namespace Livros.Domain.Entities
 {
     public class Usuario : IdentityUser
     {

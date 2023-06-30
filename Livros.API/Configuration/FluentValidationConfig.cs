@@ -11,23 +11,36 @@ namespace Livros.API.Configuration
     {
         public static void AddFluentValidationConfiguration(this IServiceCollection services)
         {
-            services.AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
-                })
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+            ConfigureControllers(services);
+            RegisterValidators(services);
+            ConfigureGlobalValidationOptions();
+        }
 
+        private static void ConfigureControllers(IServiceCollection services)
+        {
+            services.AddControllers()
+                .AddNewtonsoftJson(config =>
+                {
+                    config.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    config.SerializerSettings.Converters.Add(new StringEnumConverter());
+                })
+                .AddJsonOptions(conf =>
+                {
+                    conf.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+        }
+
+        private static void ConfigureGlobalValidationOptions()
+        {
+            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
+        }
+
+        private static void RegisterValidators(IServiceCollection services)
+        {
             //services.AddValidatorsFromAssemblyContaining<PostLivroValidator>();
-            //services.AddValidatorsFromAssemblyContaining<PostUsuarioValidator>();
+            //services.AddValidatorsFromAssemblyContaining<PutLivroValidator>();
 
             services.AddFluentValidationAutoValidation();
-
-            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("pt-BR");
         }
     }
 }

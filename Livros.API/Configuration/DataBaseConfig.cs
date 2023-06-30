@@ -1,4 +1,7 @@
-﻿using Livros.Infrastructure.Data;
+﻿using Livro.Identity.Extensions;
+using Livros.Domain.Entities;
+using Livros.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Livros.API.Configuration
@@ -7,7 +10,37 @@ namespace Livros.API.Configuration
     {
         public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            ConfigureDbContext(services, configuration);
+            ConfigureIdentity(services);
+            ConfigureIdentityOptions(services);
+        }
+
+        private static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
+        {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Connection")));
+        }
+
+        private static void ConfigureIdentity(IServiceCollection services)
+        {
+            services.AddDefaultIdentity<Usuario>()
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>()
+                    .AddErrorDescriber<IdentityLocalization>()
+                    .AddDefaultTokenProviders();
+        }
+
+        private static void ConfigureIdentityOptions(IServiceCollection services)
+        {
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.SignIn.RequireConfirmedEmail = true;
+            });
         }
 
         public static void UseDatabaseConfiguration(this IApplicationBuilder app)
