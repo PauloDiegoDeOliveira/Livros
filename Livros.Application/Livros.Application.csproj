@@ -16,13 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Applications\Base\" />
     <Folder Include="Attributes\" />
     <Folder Include="Dtos\Editora\" />
+    <Folder Include="Dtos\Identity\Autenticacao\" />
+    <Folder Include="Dtos\Identity\Usuario\" />
     <Folder Include="Dtos\Idioma\" />
     <Folder Include="Dtos\Lista\" />
     <Folder Include="Dtos\Autor\" />
     <Folder Include="Dtos\Genero\" />
+    <Folder Include="Dtos\Imagem\" />
+    <Folder Include="Dtos\Token\" />
+    <Folder Include="Dtos\Pagination\" />
     <Folder Include="Dtos\Volume\" />
     <Folder Include="Dtos\Obra\" />
     <Folder Include="Interfaces\Base\" />
