@@ -10,7 +10,7 @@ namespace Livros.Application.Dtos.Usuario.Autenticacao
         /// <summary>
         /// E-mail
         /// </summary>
-        /// <example>edd.dev@unip.br</example>
+        /// <example>backend@gmail.com</example>
         [Display(Name = "e-mail antiga")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EmailAddress(ErrorMessage = "O campo {0 está em um formato inválido.")]

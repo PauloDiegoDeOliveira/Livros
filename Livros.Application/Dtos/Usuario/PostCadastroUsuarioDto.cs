@@ -11,7 +11,7 @@ namespace Livros.Application.Dtos.Usuario
         /// <summary>
         /// Nome
         /// </summary>
-        /// <example>Front</example>
+        /// <example>Back</example>
         [Display(Name = "nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
@@ -29,7 +29,7 @@ namespace Livros.Application.Dtos.Usuario
         /// <summary>
         /// E-mail
         /// </summary>
-        /// <example>edd.dev@unip.br</example>
+        /// <example>pdiegodo@gmail.com</example>
         [Display(Name = "e-mail")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EmailAddress(ErrorMessage = "O campo {0} está no formato inválido.")]
