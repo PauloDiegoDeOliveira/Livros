@@ -13,7 +13,15 @@ namespace Livros.Infrastructure.Data
         {
         }
 
-        //public DbSet<Livro> Livros { get; set; }
+        public DbSet<Autor> Autores { get; set; }
+        public DbSet<Editora> Editoras { get; set; }
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<Idioma> Idiomas { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
+        public DbSet<Lista> Listas { get; set; }
+        public DbSet<Obra> Obras { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Volume> Volumes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
