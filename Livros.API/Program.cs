@@ -44,8 +44,6 @@ try
         options.SuppressModelStateInvalidFilter = true;
     });
 
-    builder.Services.AddSignalR();
-
     // Configure services
 
     var app = builder.Build();

@@ -6,7 +6,7 @@ namespace Livros.Domain.Entities
     {
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
-        public DateTime Nascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
         public string Genero { get; set; }
         public bool Notificar { get; set; }
         public long VersaoToken { get; set; }

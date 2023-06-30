@@ -1,10 +1,12 @@
-﻿namespace Livros.API.Configuration
+﻿using Livros.Application.Mappings;
+
+namespace Livros.API.Configuration
 {
     public static class AutoMapperConfig
     {
         public static void AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            //services.AddAutoMapper(typeof(LivroMappingProfile));
+            services.AddAutoMapper(typeof(UsuarioMappingProfile));
         }
     }
 }
