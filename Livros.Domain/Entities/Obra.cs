@@ -19,8 +19,10 @@ namespace Livros.Domain.Entities
         public Idioma Idioma { get; set; }
         public Imagem Imagem { get; set; }
         public List<Editora> Editoras { get; set; }
+
         public List<Lista> Listas { get; set; }
         public List<Volume> Volumes { get; set; }
+
         public List<Autor> Autores { get; set; }
         public List<Genero> Generos { get; set; }
     }
