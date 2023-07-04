@@ -4,6 +4,7 @@ using Livros.Domain.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace Livros.Infrastructure.Data
 {
@@ -25,9 +26,27 @@ namespace Livros.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-            modelBuilder.Entity<EntityBase>().HasQueryFilter(u => u.Status != EStatus.Excluido.ToString());
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(EntityBase).IsAssignableFrom(entityType.ClrType))
+                {
+                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(CreateFilterExpression(entityType.ClrType));
+                }
+            }
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private static LambdaExpression CreateFilterExpression(Type type)
+        {
+            ParameterExpression lambdaParam = Expression.Parameter(type);
+            BinaryExpression lambdaBody = Expression.NotEqual(
+                Expression.Property(lambdaParam, nameof(EntityBase.Status)),
+                Expression.Constant(EStatus.Excluido.ToString()));
+
+            return Expression.Lambda(lambdaBody, lambdaParam);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

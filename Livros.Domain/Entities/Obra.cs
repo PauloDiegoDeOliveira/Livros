@@ -16,6 +16,7 @@ namespace Livros.Domain.Entities
         public bool VolumeUnico { get; set; }
         public string Tipo { get; set; }
 
+        public Usuario Usuario { get; set; }
         public Idioma Idioma { get; set; }
         public Imagem Imagem { get; set; }
         public List<Editora> Editoras { get; set; }

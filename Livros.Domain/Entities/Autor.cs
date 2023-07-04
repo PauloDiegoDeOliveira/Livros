@@ -8,6 +8,7 @@ namespace Livros.Domain.Entities
         public Guid ObraId { get; set; }
         public string Nome { get; set; }
 
+        public Usuario Usuario { get; set; }
         public Obra Obra { get; set; }
     }
 }
