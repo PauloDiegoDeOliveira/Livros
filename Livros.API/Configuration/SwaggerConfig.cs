@@ -94,9 +94,9 @@ namespace Livros.API.Configuration
         {
             var info = new OpenApiInfo()
             {
-                Title = "Obras",
+                Title = "Libro Vault",
                 Version = description.ApiVersion.ToString(),
-                Description = "Esta API faz parte do projeto Obras.",
+                Description = "Esta API faz parte do projeto Libro Vault.",
                 Contact = new OpenApiContact
                 {
                     Name = "Paulo Diego e Henrique Fickert",
