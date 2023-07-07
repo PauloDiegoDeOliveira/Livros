@@ -278,7 +278,7 @@ namespace Livros.Application.Applications
             string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             if (!string.IsNullOrEmpty(token))
             {
-                await CriarEmail(user, token, configuration.GetSection("Application:ConfirmarEmail").Value, "Olá {{UserName}}, confirme o seu email do Objetivo Eventos.", "ConfirmarEmail");
+                await CriarEmail(user, token, configuration.GetSection("Application:ConfirmarEmail").Value, "Olá {{UserName}}, confirme o seu email do Libro Vault.", "ConfirmarEmail");
             }
         }
 
@@ -287,7 +287,7 @@ namespace Livros.Application.Applications
             string token = await userManager.GeneratePasswordResetTokenAsync(user);
             if (!string.IsNullOrEmpty(token))
             {
-                await CriarEmail(user, token, configuration.GetSection("Application:ResetarSenha").Value, "Olá {{UserName}}, resetar sua senha (Objetivo Eventos).", "ResetSenha");
+                await CriarEmail(user, token, configuration.GetSection("Application:ResetarSenha").Value, "Olá {{UserName}}, resetar sua senha (Libro Vault).", "ResetSenha");
             }
         }
 
