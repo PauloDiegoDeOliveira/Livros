@@ -17,7 +17,13 @@ namespace Livros.API.Configuration
 
         private static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Connection")));
+            string mySqlConnection = configuration.GetConnectionString("Connection");
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(mySqlConnection));
+
+            //services.AddDbContextPool<AppDbContext>(options =>
+            //    options.UseMySql(mySqlConnection,
+            //          ServerVersion.AutoDetect(mySqlConnection)));
         }
 
         private static void ConfigureIdentity(IServiceCollection services)
