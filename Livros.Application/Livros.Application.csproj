@@ -27,7 +27,6 @@
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Dtos\Volume\" />
-    <Folder Include="Dtos\Obra\" />
     <Folder Include="Interfaces\Base\" />
     <Folder Include="Utilities\Hash\" />
     <Folder Include="Validators\Autor\" />
