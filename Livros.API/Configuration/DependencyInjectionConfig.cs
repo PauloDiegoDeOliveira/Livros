@@ -19,9 +19,9 @@ namespace Livros.API.Configuration
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
 
-            //services.AddScoped<ILivroApplication, LivroApplication>();
-            //services.AddScoped<ILivroRepository, LivroRepository>();
-            //services.AddScoped<ILivroService, LivroService>();
+            services.AddScoped<IObraApplication, ObraApplication>();
+            services.AddScoped<IObraRepository, ObraRepository>();
+            services.AddScoped<IObraService, ObraService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

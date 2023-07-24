@@ -15,5 +15,6 @@ namespace Livros.Application.Dtos.Obra
         public bool Concluido { get; set; }
         public bool VolumeUnico { get; set; }
         public ETipo Tipo { get; set; }
+        public EStatus Status { get; set; }
     }
 }

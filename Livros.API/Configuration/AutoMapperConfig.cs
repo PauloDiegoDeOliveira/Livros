@@ -6,7 +6,8 @@ namespace Livros.API.Configuration
     {
         public static void AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(UsuarioMappingProfile));
+            services.AddAutoMapper(typeof(UsuarioMappingProfile),
+                                   typeof(ObraMappingProfile));
         }
     }
 }
