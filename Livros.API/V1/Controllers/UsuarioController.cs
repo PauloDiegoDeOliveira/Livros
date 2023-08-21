@@ -58,6 +58,39 @@ namespace Livros.API.V1.Controllers
         }
 
         /// <summary>
+        /// Cadastra um usuário.
+        /// </summary>
+        /// <param name="usuarioCadastro"></param>
+        /// <returns></returns>
+        [HttpPost("cadastro-usuario")]
+        [Authorize(Policy = Policies.HorarioComercial)]
+        //[ClaimsAuthorizeAttribute(ClaimTypes.Autorizacao, PermissionTypes.Inserir)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Cadastrar([FromBody] PostCadastroUsuarioDto usuarioCadastro)
+        {
+            if (!ModelState.IsValid)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            bool inserido = await usuarioApplication.CadastrarUsuario(usuarioCadastro);
+
+            if (!inserido)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (!IsValidOperation())
+            {
+                return CustomResponse(ModelState);
+            }
+
+            NotifyWarning("Usuário cadastrado com sucesso!");
+
+            return CustomResponse(inserido);
+        }
+
+        /// <summary>
         /// Atualiza um usuário.
         /// </summary>
         /// <param name="putCadastroUsuarioDto"></param>
@@ -86,6 +119,88 @@ namespace Livros.API.V1.Controllers
             }
 
             return CustomResponse(inserido);
+        }
+
+        /// <summary>
+        /// Exclui um usuário.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <remarks>Ao excluir o mesmo será removido permanentemente da base.</remarks>
+        [Authorize]
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            ViewUsuarioDto removido = await usuarioApplication.DeleteAsync(id);
+            if (removido is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            logger.LogWarning("Objeto removido {@removido} ", removido);
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Usuário excluído com sucesso!");
+            }
+
+            return CustomResponse(removido);
+        }
+
+        /// <summary>
+        /// Altera o status.
+        /// </summary>
+        /// <param name="putStatusDto"></param>
+        /// <returns></returns>
+        [HttpPut("status")]
+        [ProducesResponseType(typeof(ViewUsuarioDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PutStatusAsync([FromForm] PutStatusDto putStatusDto)
+        {
+            if (putStatusDto.Status == 0)
+            {
+                NotifyError("Nenhum status selecionado!");
+                return CustomResponse(ModelState);
+            }
+
+            logger.LogWarning("Objeto recebido {@putStatusDto}", putStatusDto);
+
+            ViewUsuarioDto atualizado;
+            using (Operation.Time("Tempo de atualização do status de um upload."))
+            {
+                logger.LogWarning("Foi requisitada a atualização do status de um usuário.");
+                atualizado = await usuarioApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
+            }
+
+            if (atualizado is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (IsValidOperation())
+            {
+                switch (atualizado.Status)
+                {
+                    case EStatus.Ativo:
+                        NotifyWarning("Usuário atualizado para ativo com sucesso.");
+                        break;
+
+                    case EStatus.Inativo:
+                        NotifyWarning("Usuário atualizado para inativo com sucesso.");
+                        break;
+
+                    case EStatus.Excluido:
+                        NotifyWarning("Usuário atualizado para excluído com sucesso.");
+                        break;
+
+                    default:
+                        NotifyWarning("Status atualizado com sucesso.");
+                        break;
+                }
+            }
+
+            return CustomResponse(atualizado);
         }
 
         /// <summary>
@@ -259,88 +374,6 @@ namespace Livros.API.V1.Controllers
             if (IsValidOperation())
             {
                 NotifyWarning("Verificação reenviada com sucesso!");
-            }
-
-            return CustomResponse(atualizado);
-        }
-
-        /// <summary>
-        /// Exclui um usuário.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <remarks>Ao excluir o mesmo será removido permanentemente da base.</remarks>
-        [Authorize]
-        [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> DeleteAsync(Guid id)
-        {
-            ViewUsuarioDto removido = await usuarioApplication.DeleteAsync(id);
-            if (removido is null)
-            {
-                return CustomResponse(ModelState);
-            }
-
-            logger.LogWarning("Objeto removido {@removido} ", removido);
-
-            if (IsValidOperation())
-            {
-                NotifyWarning("Usuário excluído com sucesso!");
-            }
-
-            return CustomResponse(removido);
-        }
-
-        /// <summary>
-        /// Altera o status.
-        /// </summary>
-        /// <param name="putStatusDto"></param>
-        /// <returns></returns>
-        [HttpPut("status")]
-        [ProducesResponseType(typeof(ViewUsuarioDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutStatusAsync([FromForm] PutStatusDto putStatusDto)
-        {
-            if (putStatusDto.Status == 0)
-            {
-                NotifyError("Nenhum status selecionado!");
-                return CustomResponse(ModelState);
-            }
-
-            logger.LogWarning("Objeto recebido {@putStatusDto}", putStatusDto);
-
-            ViewUsuarioDto atualizado;
-            using (Operation.Time("Tempo de atualização do status de um upload."))
-            {
-                logger.LogWarning("Foi requisitada a atualização do status de um usuário.");
-                atualizado = await usuarioApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
-            }
-
-            if (atualizado is null)
-            {
-                return CustomResponse(ModelState);
-            }
-
-            if (IsValidOperation())
-            {
-                switch (atualizado.Status)
-                {
-                    case EStatus.Ativo:
-                        NotifyWarning("Usuário atualizado para ativo com sucesso.");
-                        break;
-
-                    case EStatus.Inativo:
-                        NotifyWarning("Usuário atualizado para inativo com sucesso.");
-                        break;
-
-                    case EStatus.Excluido:
-                        NotifyWarning("Usuário atualizado para excluído com sucesso.");
-                        break;
-
-                    default:
-                        NotifyWarning("Status atualizado com sucesso.");
-                        break;
-                }
             }
 
             return CustomResponse(atualizado);

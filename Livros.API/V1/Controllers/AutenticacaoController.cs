@@ -1,10 +1,7 @@
-﻿using Livro.Identity.Constants;
-using Livros.API.Controllers;
-using Livros.Application.Dtos.Usuario;
+﻿using Livros.API.Controllers;
 using Livros.Application.Dtos.Usuario.Autenticacao;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Livros.API.V1.Controllers
@@ -53,39 +50,6 @@ namespace Livros.API.V1.Controllers
             }
 
             return CustomResponse(resultado);
-        }
-
-        /// <summary>
-        /// Cadastra um usuário.
-        /// </summary>
-        /// <param name="usuarioCadastro"></param>
-        /// <returns></returns>
-        [HttpPost("cadastro-usuario")]
-        [Authorize(Policy = Policies.HorarioComercial)]
-        //[ClaimsAuthorizeAttribute(ClaimTypes.Autorizacao, PermissionTypes.Inserir)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Cadastrar([FromBody] PostCadastroUsuarioDto usuarioCadastro)
-        {
-            if (!ModelState.IsValid)
-            {
-                return CustomResponse(ModelState);
-            }
-
-            bool inserido = await usuarioApplication.CadastrarUsuario(usuarioCadastro);
-
-            if (!inserido)
-            {
-                return CustomResponse(ModelState);
-            }
-
-            if (!IsValidOperation())
-            {
-                return CustomResponse(ModelState);
-            }
-
-            NotifyWarning("Usuário cadastrado com sucesso!");
-
-            return CustomResponse(inserido);
         }
     }
 }

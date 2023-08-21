@@ -17,19 +17,19 @@ namespace Livros.Application.Dtos.Usuario
         [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Nome { get; set; }
 
-        /// <summary>
-        /// Sobrenome
-        /// </summary>
-        /// <example>End</example>
-        [Display(Name = "sobrenome")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string Sobrenome { get; set; }
+        ///// <summary>
+        ///// Sobrenome
+        ///// </summary>
+        ///// <example>End</example>
+        //[Display(Name = "sobrenome")]
+        //[Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        //[StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
+        //public string Sobrenome { get; set; }
 
         /// <summary>
         /// E-mail
         /// </summary>
-        /// <example>pdiegodo@gmail.com</example>
+        /// <example>teste@teste.com</example>
         [Display(Name = "e-mail")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EmailAddress(ErrorMessage = "O campo {0} está no formato inválido.")]

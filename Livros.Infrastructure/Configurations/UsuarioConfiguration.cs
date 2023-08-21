@@ -16,10 +16,10 @@ namespace Livros.Infrastructure.Configurations
                    .HasMaxLength(150)
                    .HasColumnType("varchar(150)");
 
-            builder.Property(p => p.Sobrenome)
-                   .HasColumnName("Sobrenome")
-                   .HasMaxLength(150)
-                   .HasColumnType("varchar(150)");
+            //builder.Property(p => p.Sobrenome)
+            //       .HasColumnName("Sobrenome")
+            //       .HasMaxLength(150)
+            //       .HasColumnType("varchar(150)");
 
             builder.Property(p => p.Genero)
                    .HasMaxLength(50)

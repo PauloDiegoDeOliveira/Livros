@@ -86,13 +86,12 @@ namespace Livros.Application.Applications
             Usuario usuario = new()
             {
                 UserName = postCadastroUsuarioDto.Email,
-                Email = postCadastroUsuarioDto.Email
+                Email = postCadastroUsuarioDto.Email,
+                Nome = postCadastroUsuarioDto.Nome,
+                //usuario.Sobrenome = postCadastroUsuarioDto.Sobrenome;
+                Genero = postCadastroUsuarioDto.Genero.ToString(),
+                DataNascimento = postCadastroUsuarioDto.DataNascimento
             };
-
-            usuario.Nome = postCadastroUsuarioDto.Nome;
-            usuario.Sobrenome = postCadastroUsuarioDto.Sobrenome;
-            usuario.Genero = postCadastroUsuarioDto.Genero.ToString();
-            usuario.DataNascimento = postCadastroUsuarioDto.DataNascimento;
 
             IdentityResult result = await userManager.CreateAsync(usuario, postCadastroUsuarioDto.Senha);
             if (!result.Succeeded)
@@ -116,7 +115,7 @@ namespace Livros.Application.Applications
             }
 
             usuario.Nome = putCadastroUsuarioDto.Nome;
-            usuario.Sobrenome = putCadastroUsuarioDto.Sobrenome;
+            //usuario.Sobrenome = putCadastroUsuarioDto.Sobrenome;
             usuario.Genero = putCadastroUsuarioDto.Genero.ToString();
             usuario.DataNascimento = putCadastroUsuarioDto.DataNascimento;
             usuario.Status = putCadastroUsuarioDto.Status.ToString();
