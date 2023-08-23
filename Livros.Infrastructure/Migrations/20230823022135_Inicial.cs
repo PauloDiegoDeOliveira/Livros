@@ -29,7 +29,6 @@ namespace Livros.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    Sobrenome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Genero = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Notificar = table.Column<bool>(type: "bit", nullable: false),
