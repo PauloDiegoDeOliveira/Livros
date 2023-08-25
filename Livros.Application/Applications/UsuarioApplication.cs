@@ -293,7 +293,7 @@ namespace Livros.Application.Applications
         private async Task CriarEmail(Usuario user, string token, string pageName, string subject, string template)
         {
             string appdomain = configuration.GetSection($"Application:AppDomain{actualEnvironment}").Value;
-            string emailLink = $"{pageName}?UsuarioId={user.Id}&token={HttpUtility.UrlEncode(token)}";
+            string emailLink = $"{pageName}?Id={user.Id}&token={HttpUtility.UrlEncode(token)}";
 
             UserEmailOptions options = new()
             {
