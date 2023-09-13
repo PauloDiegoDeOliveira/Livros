@@ -4,6 +4,7 @@ using Livros.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230913194729_Estante-Publico")]
+    partial class EstantePublico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace Livros.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EstanteObra", b =>
+                {
+                    b.Property<Guid>("EstantesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ObrasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EstantesId", "ObrasId");
+
+                    b.HasIndex("ObrasId");
+
+                    b.ToTable("EstanteObra");
+                });
 
             modelBuilder.Entity("Livros.Domain.Entities.Autor", b =>
                 {
@@ -122,9 +139,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(150)")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid?>("ObraId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("Publico")
                         .HasColumnType("bit");
 
@@ -140,8 +154,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ObraId");
 
                     b.HasIndex("UsuarioId");
 
@@ -682,6 +694,21 @@ namespace Livros.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EstanteObra", b =>
+                {
+                    b.HasOne("Livros.Domain.Entities.Estante", null)
+                        .WithMany()
+                        .HasForeignKey("EstantesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Livros.Domain.Entities.Obra", null)
+                        .WithMany()
+                        .HasForeignKey("ObrasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Livros.Domain.Entities.Autor", b =>
                 {
                     b.HasOne("Livros.Domain.Entities.Obra", "Obra")
@@ -718,15 +745,9 @@ namespace Livros.Infrastructure.Migrations
 
             modelBuilder.Entity("Livros.Domain.Entities.Estante", b =>
                 {
-                    b.HasOne("Livros.Domain.Entities.Obra", "Obra")
-                        .WithMany("Estantes")
-                        .HasForeignKey("ObraId");
-
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Listas")
                         .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Obra");
 
                     b.Navigation("Usuario");
                 });
@@ -850,8 +871,6 @@ namespace Livros.Infrastructure.Migrations
                     b.Navigation("Autores");
 
                     b.Navigation("Editoras");
-
-                    b.Navigation("Estantes");
 
                     b.Navigation("Generos");
 

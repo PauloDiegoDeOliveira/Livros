@@ -1,6 +1,5 @@
 ﻿using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
-using System.Security.Cryptography;
 
 namespace Livros.Application.Dtos.Obra
 {

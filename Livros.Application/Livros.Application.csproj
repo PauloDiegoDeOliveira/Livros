@@ -20,7 +20,6 @@
     <Folder Include="Dtos\Identity\Autenticacao\" />
     <Folder Include="Dtos\Identity\Usuario\" />
     <Folder Include="Dtos\Idioma\" />
-    <Folder Include="Dtos\Lista\" />
     <Folder Include="Dtos\Autor\" />
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />

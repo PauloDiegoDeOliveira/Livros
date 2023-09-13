@@ -7,6 +7,6 @@ namespace Livros.Domain.Entities
         public string Nome { get; set; }
         public string Alias { get; set; }
 
-        public List<Obra> Obras { get; set; }
+        public IList<Obra> Obras { get; set; }
     }
 }

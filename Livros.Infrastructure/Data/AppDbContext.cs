@@ -19,7 +19,7 @@ namespace Livros.Infrastructure.Data
         public DbSet<Genero> Generos { get; set; }
         public DbSet<Idioma> Idiomas { get; set; }
         public DbSet<Imagem> Imagens { get; set; }
-        public DbSet<Lista> Listas { get; set; }
+        public DbSet<Estante> Estantes { get; set; }
         public DbSet<Obra> Obras { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Volume> Volumes { get; set; }

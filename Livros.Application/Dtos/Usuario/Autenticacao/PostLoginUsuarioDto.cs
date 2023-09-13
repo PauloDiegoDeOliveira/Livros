@@ -19,6 +19,7 @@ namespace Livros.Application.Dtos.Usuario.Autenticacao
         /// <summary>
         /// Senha
         /// </summary>
+        /// <example>Teste@123</example>
         [Display(Name = "senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Senha { get; set; }

@@ -17,11 +17,11 @@ namespace Livros.Domain.Entities
         public DateTime? AlteradoEm { get; set; }
         public DateTimeOffset? UltimoAcesso { get; set; }
 
-        public List<Autor> Autores { get; set; }
-        public List<Editora> Editoras { get; set; }
-        public List<Genero> Generos { get; set; }
-        public List<Lista> Listas { get; set; }
-        public List<Obra> Obras { get; set; }
+        public IList<Autor> Autores { get; set; }
+        public IList<Editora> Editoras { get; set; }
+        public IList<Genero> Generos { get; set; }
+        public IList<Estante> Listas { get; set; }
+        public IList<Obra> Obras { get; set; }
 
         public void AlteraAlteradoEm()
         {

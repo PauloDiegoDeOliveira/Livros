@@ -31,7 +31,7 @@ namespace Livros.Infrastructure.Data.Repositories
             return await TryCatch(async () =>
             {
                 IQueryable<Obra> obras = appDbContext.Obras
-                        .Include(o=> o.Volumes).AsNoTracking();
+                        .Include(o => o.Volumes).AsNoTracking();
 
                 if (parametersObra.Id != null)
                 {
