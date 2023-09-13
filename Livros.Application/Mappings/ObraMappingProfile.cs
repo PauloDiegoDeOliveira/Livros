@@ -15,7 +15,14 @@ namespace Livros.Application.Mappings
         {
             CreateMap<PostObraDto, Obra>().ReverseMap();
             CreateMap<PutObraDto, Obra>().ReverseMap();
-            CreateMap<Obra, ViewObraDto>().ReverseMap();
+
+            CreateMap<Obra, ViewObraDto>()
+                  .ForMember(viewObraDto => viewObraDto.PrecoTotal,
+                             opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Preco)))
+                  .ForMember(viewObraDto => viewObraDto.AvaliacaoTotal,
+                             opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Avaliacao)))
+                  .ForMember(viewObraDto => viewObraDto.PaginaTotal,
+                             opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Paginas)));
         }
     }
 }

@@ -4,6 +4,7 @@ using Livros.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230913211318_Null-Obra")]
+    partial class NullObra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,7 +321,7 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(5000)")
                         .HasColumnName("Anotacao");
 
-                    b.Property<int?>("AvaliacaoTotal")
+                    b.Property<int>("AvaliacaoTotal")
                         .HasColumnType("int")
                         .HasColumnName("AvaliacaoTotal");
 
@@ -335,11 +337,11 @@ namespace Livros.Infrastructure.Migrations
                     b.Property<Guid>("ImagemId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("PaginaTotal")
+                    b.Property<int>("PaginaTotal")
                         .HasColumnType("int")
                         .HasColumnName("PaginaTotal");
 
-                    b.Property<decimal?>("PrecoTotal")
+                    b.Property<decimal>("PrecoTotal")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("PrecoTotal");
 

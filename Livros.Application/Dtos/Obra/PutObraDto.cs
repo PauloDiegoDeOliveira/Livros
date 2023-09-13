@@ -1,6 +1,7 @@
 ﻿using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Livros.Application.Dtos.Obra
 {
@@ -49,6 +50,7 @@ namespace Livros.Application.Dtos.Obra
         /// Avaliação total
         /// </summary>
         /// <example>5</example>
+        [JsonIgnore]
         [Display(Name = "avaliação total")]
         public int AvaliacaoTotal { get; set; }
 
@@ -56,6 +58,7 @@ namespace Livros.Application.Dtos.Obra
         /// Preço total
         /// </summary>
         /// <example>20</example>
+        [JsonIgnore]
         [Display(Name = "preço total")]
         public decimal PrecoTotal { get; set; }
 
@@ -63,6 +66,7 @@ namespace Livros.Application.Dtos.Obra
         /// Página total
         /// </summary>
         /// <example>500</example>
+        [JsonIgnore]
         [Display(Name = "página total")]
         public int PaginaTotal { get; set; }
 

@@ -30,8 +30,9 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return await TryCatch(async () =>
             {
-                IQueryable<Obra> obras = appDbContext.Obras
-                        .Include(o => o.Volumes).AsNoTracking();
+                IQueryable<Obra> obras = appDbContext.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString())
+                        .Include(o => o.Volumes)
+                        .AsNoTracking();
 
                 if (parametersObra.Id != null)
                 {
