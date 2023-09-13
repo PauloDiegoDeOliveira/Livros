@@ -106,7 +106,8 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             if (obra.Id == Guid.Empty)
             {
-                return appDbContext.Obras.AsNoTracking().Any(o => o.Titulo.ToLower() == obra.Titulo.ToLower());
+                return appDbContext.Obras.AsNoTracking()
+                          .Any(o => o.Titulo.ToLower() == obra.Titulo.ToLower());
             }
             else
             {
