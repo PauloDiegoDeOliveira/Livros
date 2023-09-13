@@ -6,7 +6,5 @@ namespace Livros.Domain.Pagination
     {
         public string PalavraChave { get; set; }
         public EOrdenar Ordenar { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime? DataFim { get; set; }
     }
 }
