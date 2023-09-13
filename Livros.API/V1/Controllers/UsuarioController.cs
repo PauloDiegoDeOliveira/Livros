@@ -31,7 +31,7 @@ namespace Livros.API.V1.Controllers
         }
 
         /// <summary>
-        /// Retorna todos os usuários com filtro e paginação de dados.
+        /// Retorna todos os usuários, com opções de filtro e paginação de dados.
         /// </summary>
         /// <param name="parametersUsuario"></param>
         /// <returns></returns>

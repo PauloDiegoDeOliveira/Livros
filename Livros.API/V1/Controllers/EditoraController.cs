@@ -32,7 +32,7 @@ namespace Livros.API.V1.Controllers
         }
 
         /// <summary>
-        /// Retorna todas as editoras com filtro e paginação de dados.
+        /// Retorna todas as editoras, com opções de filtro e paginação de dados.
         /// </summary>
         /// <param name="parametersEditora"></param>
         /// <returns></returns>

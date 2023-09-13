@@ -2,6 +2,7 @@
 
 namespace Livros.API.V1.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("1.0")]
     [Route("/v{version:apiVersion}/versao")]
     [ApiController]

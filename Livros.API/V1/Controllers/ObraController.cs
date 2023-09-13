@@ -32,7 +32,7 @@ namespace Livros.API.V1.Controllers
         }
 
         /// <summary>
-        /// Retorna todas as obras com filtro e paginação de dados.
+        /// Retorna todas as obras, com opções de filtro e paginação de dados.
         /// </summary>
         /// <param name="parametersObra"></param>
         /// <returns></returns>
