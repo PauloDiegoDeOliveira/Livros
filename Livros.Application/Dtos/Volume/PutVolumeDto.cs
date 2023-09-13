@@ -1,22 +1,10 @@
-﻿using Livros.Application.Dtos.Volume;
-using Livros.Domain.Enums;
-using Microsoft.AspNetCore.Http;
+﻿using Livros.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Livros.Application.Dtos.Obra
+namespace Livros.Application.Dtos.Volume
 {
-    public class PutObraDto
+    public class PutVolumeDto
     {
-        //[Display(Name = "imagem")]
-        //[Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        //public IFormFile ImagemUpload { get; set; }
-
-        /// <summary>
-        /// ImagemId
-        /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid ImagemId { get; set; }
-
         /// <summary>
         /// Id
         /// </summary>
@@ -25,19 +13,33 @@ namespace Livros.Application.Dtos.Obra
         public Guid Id { get; set; }
 
         /// <summary>
-        /// IdiomaId
+        /// ObraId
         /// </summary>
         /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid IdiomaId { get; set; }
+        public Guid ObraId { get; set; }
 
         /// <summary>
         /// Título
         /// </summary>
-        /// <example>1984</example>
+        /// <example>Volume</example>
         [Display(Name = "título")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Titulo { get; set; }
+
+        /// <summary>
+        /// Número
+        /// </summary>
+        /// <example>1</example>
+        [Display(Name = "número")]
+        public int Numero { get; set; }
+
+        /// <summary>
+        /// Páginas
+        /// </summary>
+        /// <example>500</example>
+        [Display(Name = "páginas")]
+        public int Paginas { get; set; }
 
         /// <summary>
         /// Anotação
@@ -47,45 +49,41 @@ namespace Livros.Application.Dtos.Obra
         public string Anotacao { get; set; }
 
         /// <summary>
-        /// Avaliação total
+        /// Preço
+        /// </summary>
+        /// <example>100</example>
+        [Display(Name = "preço")]
+        public decimal Preco { get; set; }
+
+        /// <summary>
+        /// Avaliação
         /// </summary>
         /// <example>5</example>
-        [Display(Name = "avaliação total")]
-        public int AvaliacaoTotal { get; set; }
+        [Display(Name = "avaliação")]
+        public int Avaliacao { get; set; }
 
         /// <summary>
-        /// Preço total
+        /// Lido
         /// </summary>
-        /// <example>20</example>
-        [Display(Name = "preço total")]
-        public decimal PrecoTotal { get; set; }
+        public bool Lido { get; set; }
 
         /// <summary>
-        /// Página total
+        /// Data de leitura
         /// </summary>
-        /// <example>500</example>
-        [Display(Name = "página total")]
-        public int PaginaTotal { get; set; }
+        /// <example>1984-05-20</example>
+        [Display(Name = "data de leitura")]
+        [DataType(DataType.DateTime, ErrorMessage = "O campo {0} está em formato inválido.")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DataLeitura { get; set; }
 
         /// <summary>
-        /// Concluído
+        /// Data de compra
         /// </summary>
-        [Display(Name = "concluído")]
-        public bool Concluido { get; set; }
-
-        /// <summary>
-        /// Volume único
-        /// </summary>
-        [Display(Name = "volume único")]
-        public bool VolumeUnico { get; set; }
-
-        /// <summary>
-        /// Tipo
-        /// </summary>
-        [Display(Name = "tipo")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        [EnumDataType(typeof(ETipo), ErrorMessage = "O campo {0} está em formato inválido.")]
-        public ETipo Tipo { get; set; }
+        /// <example>1984-05-20</example>
+        [Display(Name = "data de compra")]
+        [DataType(DataType.DateTime, ErrorMessage = "O campo {0} está em formato inválido.")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DataCompra { get; set; }
 
         /// <summary>
         /// Status
@@ -94,14 +92,5 @@ namespace Livros.Application.Dtos.Obra
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EnumDataType(typeof(EStatus), ErrorMessage = "O campo {0} está em formato inválido.")]
         public EStatus Status { get; set; }
-
-        /// <summary>
-        /// Volumes
-        /// </summary>
-        public List<PutVolumeDto> Volumes { get; set; }
-
-        public PutObraDto()
-        {
-        }
     }
 }

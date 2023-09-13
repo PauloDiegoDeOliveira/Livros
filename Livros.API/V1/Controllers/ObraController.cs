@@ -72,6 +72,7 @@ namespace Livros.API.V1.Controllers
             {
                 return CustomResponse(ModelState);
             }
+
             logger.LogWarning("Objeto recebido {@postObraDto}", postObraDto);
 
             ViewObraDto inserido;

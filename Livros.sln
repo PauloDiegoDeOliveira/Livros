@@ -13,19 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructure", "4.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Tests", "5.Tests", "{BDB15C61-9BC4-4C71-BFF4-BF321D0584E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.API", "Livros.API\Livros.API.csproj", "{B55C3322-D634-4162-8A3E-5FD5468E5ECC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.API", "Livros.API\Livros.API.csproj", "{B55C3322-D634-4162-8A3E-5FD5468E5ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.Application", "Livros.Application\Livros.Application.csproj", "{07810055-1261-4357-BA00-66BB388841B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.Application", "Livros.Application\Livros.Application.csproj", "{07810055-1261-4357-BA00-66BB388841B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.Domain", "Livros.Domain\Livros.Domain.csproj", "{48076684-1414-4B5E-A960-5D7A06D2482F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.Domain", "Livros.Domain\Livros.Domain.csproj", "{48076684-1414-4B5E-A960-5D7A06D2482F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.Domain.Core", "Livros.Domain.Core\Livros.Domain.Core.csproj", "{BEF70E63-B125-4730-9258-E5EA8262B03C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.Domain.Core", "Livros.Domain.Core\Livros.Domain.Core.csproj", "{BEF70E63-B125-4730-9258-E5EA8262B03C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.Domain.Service", "Livros.Domain.Service\Livros.Domain.Service.csproj", "{D236F3F2-DDE7-4459-865D-08280FE3F0B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.Domain.Service", "Livros.Domain.Service\Livros.Domain.Service.csproj", "{D236F3F2-DDE7-4459-865D-08280FE3F0B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livros.Infrastructure", "Livros.Infrastructure\Livros.Infrastructure.csproj", "{59103750-B763-41BC-8013-B625200F00EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livros.Infrastructure", "Livros.Infrastructure\Livros.Infrastructure.csproj", "{59103750-B763-41BC-8013-B625200F00EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Livro.Identity", "Livro.Identity\Livro.Identity.csproj", "{DD626616-6251-4595-A0E0-B8851418C791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Livro.Identity", "Livro.Identity\Livro.Identity.csproj", "{DD626616-6251-4595-A0E0-B8851418C791}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

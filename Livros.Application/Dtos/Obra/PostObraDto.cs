@@ -1,21 +1,27 @@
-﻿using Livros.Domain.Enums;
+﻿using Livros.Application.Dtos.Volume;
+using Livros.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace Livros.Application.Dtos.Obra
 {
     public class PostObraDto
     {
-        /// <summary>
-        /// IdiomaId
-        /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid IdiomaId { get; set; }
+        //[Display(Name = "imagem")]
+        //[Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        //public IFormFile ImagemUpload { get; set; }
 
         /// <summary>
         /// ImagemId
         /// </summary>
         /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
         public Guid ImagemId { get; set; }
+
+        /// <summary>
+        /// IdiomaId
+        /// </summary>
+        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
+        public Guid IdiomaId { get; set; }
 
         /// <summary>
         /// Título
@@ -29,28 +35,28 @@ namespace Livros.Application.Dtos.Obra
         /// <summary>
         /// Anotação
         /// </summary>
-        /// <example>"1984, obra-prima de George Orwell, é uma distopia sombria e poderosa que explora um futuro totalitário. A história segue Winston Smith, um funcionário público do partido que controla Oceânia, uma das três superpotências do mundo, com o olho sempre vigiante do Grande Irmão. Winston se encontra desafiando o sistema, em meio à repressão e lavagem cerebral, se arriscando em um ato de rebelião - amar. Enquanto a polícia do pensamento se esforça para manter o status quo, Winston luta pela liberdade individual. Uma leitura aterrorizante e perturbadora sobre autoritarismo, vigilância e a erosão da verdade.</example>
+        /// <example>1984, obra-prima de George Orwell, é uma distopia sombria e poderosa que explora um futuro totalitário. A história segue Winston Smith, um funcionário público do partido que controla Oceânia, uma das três superpotências do mundo, com o olho sempre vigiante do Grande Irmão. Winston se encontra desafiando o sistema, em meio à repressão e lavagem cerebral, se arriscando em um ato de rebelião - amar. Enquanto a polícia do pensamento se esforça para manter o status quo, Winston luta pela liberdade individual. Uma leitura aterrorizante e perturbadora sobre autoritarismo, vigilância e a erosão da verdade.</example>
         [Display(Name = "anotação")]
         public string Anotacao { get; set; }
 
         /// <summary>
         /// Avaliação total
         /// </summary>
-        /// <example>10</example>
+        /// <example>5</example>
         [Display(Name = "avaliação total")]
         public int AvaliacaoTotal { get; set; }
 
         /// <summary>
         /// Preço total
         /// </summary>
-        /// <example>19,90</example>
+        /// <example>20</example>
         [Display(Name = "preço total")]
         public decimal PrecoTotal { get; set; }
 
         /// <summary>
         /// Página total
         /// </summary>
-        /// <example>416</example>
+        /// <example>500</example>
         [Display(Name = "página total")]
         public int PaginaTotal { get; set; }
 
@@ -73,5 +79,10 @@ namespace Livros.Application.Dtos.Obra
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EnumDataType(typeof(ETipo), ErrorMessage = "O campo {0} está em formato inválido.")]
         public ETipo Tipo { get; set; }
+
+        /// <summary>
+        /// Volumes
+        /// </summary>
+        public List<PostVolumeDto> Volumes { get; set; }
     }
 }
