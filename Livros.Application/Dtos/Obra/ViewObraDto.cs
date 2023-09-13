@@ -1,4 +1,6 @@
-﻿using Livros.Domain.Enums;
+﻿using Livros.Application.Dtos.Volume;
+using Livros.Domain.Enums;
+using System.Security.Cryptography;
 
 namespace Livros.Application.Dtos.Obra
 {
@@ -18,6 +20,7 @@ namespace Livros.Application.Dtos.Obra
         public ETipo Tipo { get; set; }
         public EStatus Status { get; set; }
 
+        public IList<ViewVolumeDto> Volumes { get; set; }
         //public ViewImagemDto Imagem { get; set; }
     }
 }
