@@ -101,7 +101,7 @@ namespace Livros.Application.Dtos.Obra
         /// <summary>
         /// Volumes
         /// </summary>
-        public IList<PostVolumeDto> Volumes { get; set; }
+        public IList<PutVolumeDto> Volumes { get; set; }
 
         public PutObraDto()
         {

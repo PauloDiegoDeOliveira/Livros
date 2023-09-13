@@ -28,7 +28,7 @@ namespace Livros.API.Configuration
             services.AddScoped<IEditoraService, EditoraService>();
 
             services.AddScoped<IGeneroApplication, GeneroApplication>();
-            services.AddScoped<IGeneroRepository, GeneroRepository>(); 
+            services.AddScoped<IGeneroRepository, GeneroRepository>();
             services.AddScoped<IGeneroService, GeneroService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
