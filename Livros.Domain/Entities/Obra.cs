@@ -4,7 +4,7 @@ namespace Livros.Domain.Entities
 {
     public class Obra : EntityBase
     {
-        public Guid UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
         public Guid IdiomaId { get; set; }
         public Guid ImagemId { get; set; }
         public string Titulo { get; set; }

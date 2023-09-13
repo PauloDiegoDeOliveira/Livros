@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230912225746_Inicial")]
+    [Migration("20230913124959_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,17 +68,14 @@ namespace Livros.Infrastructure.Migrations
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ObraId");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Autores", (string)null);
                 });
@@ -112,17 +109,14 @@ namespace Livros.Infrastructure.Migrations
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ObraId");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Editoras", (string)null);
                 });
@@ -156,17 +150,14 @@ namespace Livros.Infrastructure.Migrations
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ObraId");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Generos", (string)null);
                 });
@@ -320,15 +311,12 @@ namespace Livros.Infrastructure.Migrations
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Listas", (string)null);
                 });
@@ -391,10 +379,7 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(150)")
                         .HasColumnName("Titulo");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
+                    b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("VolumeUnico")
@@ -406,7 +391,7 @@ namespace Livros.Infrastructure.Migrations
 
                     b.HasIndex("ImagemId");
 
-                    b.HasIndex("UsuarioId1");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Obras", (string)null);
                 });
@@ -739,7 +724,7 @@ namespace Livros.Infrastructure.Migrations
 
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Autores")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Obra");
 
@@ -756,7 +741,7 @@ namespace Livros.Infrastructure.Migrations
 
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Editoras")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Obra");
 
@@ -773,7 +758,7 @@ namespace Livros.Infrastructure.Migrations
 
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Generos")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Obra");
 
@@ -784,7 +769,7 @@ namespace Livros.Infrastructure.Migrations
                 {
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Listas")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Usuario");
                 });
@@ -805,7 +790,7 @@ namespace Livros.Infrastructure.Migrations
 
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Obras")
-                        .HasForeignKey("UsuarioId1");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Idioma");
 

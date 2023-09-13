@@ -208,10 +208,9 @@ namespace Livros.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
                     Publico = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false, defaultValue: "Publico"),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -220,8 +219,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Listas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Listas_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Listas_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -231,7 +230,7 @@ namespace Livros.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IdiomaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ImagemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Titulo = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
@@ -242,7 +241,6 @@ namespace Livros.Infrastructure.Migrations
                     Concluido = table.Column<bool>(type: "bit", nullable: false),
                     VolumeUnico = table.Column<bool>(type: "bit", nullable: false),
                     Tipo = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false, defaultValue: "Obra"),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -251,8 +249,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Obras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Obras_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Obras_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -274,10 +272,9 @@ namespace Livros.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -286,8 +283,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Autores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Autores_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Autores_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -303,10 +300,9 @@ namespace Livros.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -315,8 +311,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Editoras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Editoras_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Editoras_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -332,10 +328,9 @@ namespace Livros.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
                     CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -344,8 +339,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Generos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Generos_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Generos_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -455,9 +450,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Autores_UsuarioId1",
+                name: "IX_Autores_UsuarioId",
                 table: "Autores",
-                column: "UsuarioId1");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Editoras_ObraId",
@@ -465,9 +460,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Editoras_UsuarioId1",
+                name: "IX_Editoras_UsuarioId",
                 table: "Editoras",
-                column: "UsuarioId1");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Generos_ObraId",
@@ -475,9 +470,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Generos_UsuarioId1",
+                name: "IX_Generos_UsuarioId",
                 table: "Generos",
-                column: "UsuarioId1");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListaObra_ObrasId",
@@ -485,9 +480,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "ObrasId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Listas_UsuarioId1",
+                name: "IX_Listas_UsuarioId",
                 table: "Listas",
-                column: "UsuarioId1");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obras_IdiomaId",
@@ -500,9 +495,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "ImagemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_UsuarioId1",
+                name: "IX_Obras_UsuarioId",
                 table: "Obras",
-                column: "UsuarioId1");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Volumes_ObraId",
