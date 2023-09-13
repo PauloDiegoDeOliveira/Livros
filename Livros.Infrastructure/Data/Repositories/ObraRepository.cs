@@ -14,13 +14,16 @@ namespace Livros.Infrastructure.Data.Repositories
     public class ObraRepository : RepositoryBase<Obra>, IObraRepository
     {
         private readonly AppDbContext appDbContext;
+        private readonly IUser user;
 
         public ObraRepository(AppDbContext appDbContext,
                               INotifier notifier,
                               ILogger<RepositoryBase<Obra>> logger,
-                              IConfiguration configuration) : base(appDbContext, notifier, logger, configuration)
+                              IConfiguration configuration,
+                              IUser user) : base(appDbContext, notifier, logger, configuration)
         {
             this.appDbContext = appDbContext;
+            this.user = user;
         }
 
         public async Task<PagedList<Obra>> GetPaginationAsync(ParametersObra parametersObra)
@@ -79,6 +82,18 @@ namespace Livros.Infrastructure.Data.Repositories
 
                 return await Task.FromResult(PagedList<Obra>.ToPagedList(obras, parametersObra.NumeroPagina, parametersObra.ResultadosExibidos));
             });
+        }
+
+        public override async Task<Obra> PostAsync(Obra obra)
+        {
+            obra.UsuarioId = user.GetUserId().ToString();
+            return await base.PostAsync(obra);
+        }
+
+        public override async Task<Obra> PutAsync(Obra obra)
+        {
+            obra.UsuarioId = user.GetUserId().ToString();
+            return await base.PutAsync(obra);
         }
 
         public bool ExisteId(Guid id)

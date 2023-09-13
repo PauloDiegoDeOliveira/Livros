@@ -13,7 +13,7 @@ using SerilogTimings;
 
 namespace Livros.API.V1.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("/v{version:apiVersion}/obras")]
     [ApiController]
