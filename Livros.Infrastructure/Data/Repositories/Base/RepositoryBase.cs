@@ -176,6 +176,7 @@ namespace Livros.Infrastructure.Data.Repositories.Base
             catch (Exception ex)
             {
                 AddNotification("Ocorreu um erro ao executar a operação.");
+                AddNotification(ex.Message);
                 logger.LogWarning(ex.InnerException.ToString());
                 logger.LogWarning(ex.Message);
                 //logger.LogWarning(ex.StackTrace);

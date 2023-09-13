@@ -61,7 +61,7 @@ namespace Livros.API.Configuration
                 {
                     foreach (string description in provider.ApiVersionDescriptions.Select(x => x.GroupName))
                     {
-                            options.SwaggerEndpoint($"/swagger/{description}/swagger.json", description.ToUpperInvariant());
+                        options.SwaggerEndpoint($"/swagger/{description}/swagger.json", description.ToUpperInvariant());
                     }
                 });
 

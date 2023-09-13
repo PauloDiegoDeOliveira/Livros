@@ -24,7 +24,6 @@ namespace Livros.Application.Applications
         public async Task<ViewPagedListDto<Obra, ViewObraDto>> GetPaginationAsync(ParametersObra parametersObra)
         {
             PagedList<Obra> obras = await obraService.GetPaginationAsync(parametersObra);
-
             if (obras is null)
             {
                 return null;
@@ -42,13 +41,15 @@ namespace Livros.Application.Applications
         {
             Obra obra = mapper.Map<Obra>(postObraDto);
             bool consulta = obraService.ExisteNome(obra);
+
             return mapper.Map<bool>(consulta);
         }
 
         public bool ExisteNomePutDto(PutObraDto putObraDto)
         {
-            Obra participante = mapper.Map<Obra>(putObraDto);
-            bool consulta = obraService.ExisteNome(participante);
+            Obra obra = mapper.Map<Obra>(putObraDto);
+            bool consulta = obraService.ExisteNome(obra);
+
             return mapper.Map<bool>(consulta);
         }
     }

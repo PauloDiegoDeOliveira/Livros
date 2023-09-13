@@ -1,6 +1,5 @@
 ﻿using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace Livros.Application.Dtos.Obra

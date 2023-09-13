@@ -23,6 +23,14 @@ namespace Livros.API.Configuration
             services.AddScoped<IObraRepository, ObraRepository>();
             services.AddScoped<IObraService, ObraService>();
 
+            services.AddScoped<IEditoraApplication, EditoraApplication>();
+            services.AddScoped<IEditoraRepository, EditoraRepository>();
+            services.AddScoped<IEditoraService, EditoraService>();
+
+            services.AddScoped<IObraApplication, ObraApplication>();
+            services.AddScoped<IObraRepository, ObraRepository>();
+            services.AddScoped<IObraService, ObraService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230913124959_Inicial")]
+    [Migration("20230913144932_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -332,8 +332,8 @@ namespace Livros.Infrastructure.Migrations
 
                     b.Property<string>("Anotacao")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar(5000)")
                         .HasColumnName("Anotacao");
 
                     b.Property<int>("AvaliacaoTotal")
@@ -510,8 +510,8 @@ namespace Livros.Infrastructure.Migrations
 
                     b.Property<string>("Anotacao")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
+                        .HasMaxLength(5000)
+                        .HasColumnType("varchar(5000)")
                         .HasColumnName("Anotacao");
 
                     b.Property<int>("Avaliacao")

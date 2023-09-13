@@ -22,8 +22,8 @@ namespace Livros.Infrastructure.Configurations
             builder.Property(v => v.Anotacao)
                    .IsRequired()
                    .HasColumnName("Anotacao")
-                   .HasMaxLength(150)
-                   .HasColumnType("varchar(150)");
+                   .HasMaxLength(5000)
+                   .HasColumnType("varchar(5000)");
         }
     }
 }

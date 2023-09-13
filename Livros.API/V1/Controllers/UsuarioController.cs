@@ -1,8 +1,8 @@
 ﻿using Livro.Identity.Constants;
 using Livros.API.Controllers;
 using Livros.Application.Dtos.Base;
-using Livros.Application.Dtos.Usuario.Autenticacao;
 using Livros.Application.Dtos.Usuario;
+using Livros.Application.Dtos.Usuario.Autenticacao;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;
 using Livros.Domain.Enums;

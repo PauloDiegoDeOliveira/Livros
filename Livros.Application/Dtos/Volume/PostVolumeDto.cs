@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Livros.Application.Dtos.Volume
 {
@@ -8,6 +9,7 @@ namespace Livros.Application.Dtos.Volume
         /// ObraId
         /// </summary>
         /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
+        [JsonIgnore]
         public Guid ObraId { get; set; }
 
         /// <summary>
