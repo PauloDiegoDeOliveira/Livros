@@ -30,7 +30,9 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return await TryCatch(async () =>
             {
-                IQueryable<Editora> editoras = appDbContext.Editoras.AsNoTracking();
+                IQueryable<Editora> editoras = appDbContext.Editoras
+                    .Where(e => e.UsuarioId == user.GetUserId().ToString())
+                    .AsNoTracking();
 
                 if (parametersEditora.Id != null)
                 {

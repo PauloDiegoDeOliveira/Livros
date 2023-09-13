@@ -30,7 +30,9 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return await TryCatch(async () =>
             {
-                IQueryable<Genero> generos = appDbContext.Generos.AsNoTracking();
+                IQueryable<Genero> generos = appDbContext.Generos
+                    .Where(g => g.UsuarioId == user.GetUserId().ToString())
+                    .AsNoTracking();
 
                 if (parametersGenero.Id != null)
                 {
