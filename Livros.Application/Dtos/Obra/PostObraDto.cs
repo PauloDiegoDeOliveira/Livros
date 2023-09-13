@@ -10,11 +10,11 @@ namespace Livros.Application.Dtos.Obra
         //[Required(ErrorMessage = "O campo {0} é obrigatório.")]
         //public IFormFile ImagemUpload { get; set; }
 
-        ///// <summary>
-        ///// ImagemId
-        ///// </summary>
-        ///// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        //public Guid ImagemId { get; set; }
+        /// <summary>
+        /// ImagemId
+        /// </summary>
+        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
+        public Guid ImagemId { get; set; }
 
         /// <summary>
         /// IdiomaId
