@@ -287,15 +287,15 @@ namespace Livros.API.V1.Controllers
             switch (atualizado.Status)
             {
                 case EStatus.Ativo:
-                    NotifyWarning("Participante atualizado para ativo com sucesso!");
+                    NotifyWarning("Obra atualizado para ativo com sucesso!");
                     break;
 
                 case EStatus.Inativo:
-                    NotifyWarning("Participante atualizado para inativo com sucesso!");
+                    NotifyWarning("Obra atualizado para inativo com sucesso!");
                     break;
 
                 case EStatus.Excluido:
-                    NotifyWarning("Participante atualizada para excluído com sucesso!");
+                    NotifyWarning("Obra atualizada para excluído com sucesso!");
                     break;
 
                 default:
