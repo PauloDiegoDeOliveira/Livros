@@ -2,6 +2,6 @@
 {
     public enum EDiretorio
     {
-        Livro = 1,
+        Obra = 1,
     }
 }

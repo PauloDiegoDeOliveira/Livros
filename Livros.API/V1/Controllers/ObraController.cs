@@ -95,8 +95,8 @@ namespace Livros.API.V1.Controllers
 
             Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
 
-            string extensao = ExtensionSystem.GetExtensaoB64(postObraDto.ImagemBase64);
-            string base64String = ExtensionSystem.GetB64String(postObraDto.ImagemBase64);
+            string extensao = ExtensionSystem.GetExtensaoBase64(postObraDto.ImagemBase64);
+            string base64String = ExtensionSystem.GetBase64String(postObraDto.ImagemBase64);
             if (extensao is null || base64String is null)
             {
                 NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");

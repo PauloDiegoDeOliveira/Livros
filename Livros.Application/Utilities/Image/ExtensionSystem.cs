@@ -6,7 +6,7 @@ namespace Livros.Application.Utilities.Image
     {
         private static readonly Regex DataUriPattern = new(@"^data\:(?<mimeType>image\/(?<imageType>png|tiff|jpg|gif|jpeg|svg+xml|svg));base64,(?<data>[A-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
-        public static string GetExtensaoB64(string base64String)
+        public static string GetExtensaoBase64(string base64String)
         {
             if (string.IsNullOrWhiteSpace(base64String))
             {
@@ -22,7 +22,7 @@ namespace Livros.Application.Utilities.Image
             return ModificaExtensao(match.Groups["imageType"].Value);
         }
 
-        public static string GetB64String(string base64String)
+        public static string GetBase64String(string base64String)
         {
             if (string.IsNullOrWhiteSpace(base64String))
             {

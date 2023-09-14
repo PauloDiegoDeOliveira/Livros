@@ -1,4 +1,5 @@
 using Livros.API.Configuration;
+using Livros.Application.Utilities.Paths;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
@@ -43,6 +44,8 @@ try
     {
         options.SuppressModelStateInvalidFilter = true;
     });
+
+    await PathSystem.GetBase64URLsUpload();
 
     // Configure services
 

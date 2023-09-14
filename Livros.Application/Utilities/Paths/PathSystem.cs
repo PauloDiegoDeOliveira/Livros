@@ -7,9 +7,9 @@ namespace Livros.Application.Utilities.Paths
     {
         public static Dictionary<string, Dictionary<string, string>> Paths { get; private set; }
 
-        public static async Task GetUrlJson()
+        public static async Task GetBase64URLsUpload()
         {
-            string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\Urls.json");
+            string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\Base64URLsUpload.json");
             Paths = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
             await Task.CompletedTask;
         }
