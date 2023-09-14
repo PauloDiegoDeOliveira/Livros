@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Livros.Application.Dtos.Volume;
+using Livros.Application.Utilities.Extensions;
 using Livros.Domain.Entities;
 
 namespace Livros.Application.Mappings
@@ -15,7 +16,10 @@ namespace Livros.Application.Mappings
         {
             CreateMap<PostVolumeDto, Volume>().ReverseMap();
             CreateMap<PutVolumeDto, Volume>().ReverseMap();
-            CreateMap<Volume, ViewVolumeDto>().ReverseMap();
+
+            CreateMap<Volume, ViewVolumeDto>()
+                .ForMember(viewObraDto => viewObraDto.Preco,
+                             opt => opt.MapFrom(volume => volume.Preco.MoedaBrasileira()));
         }
     }
 }

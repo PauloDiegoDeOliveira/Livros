@@ -54,6 +54,7 @@ namespace Livros.Application.Dtos.Volume
         /// </summary>
         /// <example>5</example>
         [Display(Name = "avaliação")]
+        [Range(1, 5, ErrorMessage = "A {0} deve ser entre 1 e 5.")]
         public int Avaliacao { get; set; }
 
         /// <summary>

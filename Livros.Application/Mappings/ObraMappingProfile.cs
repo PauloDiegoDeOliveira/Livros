@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Livros.Application.Dtos.Obra;
+using Livros.Application.Utilities.Extensions;
 using Livros.Domain.Entities;
 
 namespace Livros.Application.Mappings
@@ -18,7 +19,7 @@ namespace Livros.Application.Mappings
 
             CreateMap<Obra, ViewObraDto>()
                   .ForMember(viewObraDto => viewObraDto.PrecoTotal,
-                             opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Preco)))
+                             opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Preco).MoedaBrasileira()))
                   .ForMember(viewObraDto => viewObraDto.AvaliacaoTotal,
                              opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Avaliacao)))
                   .ForMember(viewObraDto => viewObraDto.PaginaTotal,

@@ -10,7 +10,7 @@ namespace Livros.Application.Dtos.Volume
         public int Numero { get; set; }
         public int Paginas { get; set; }
         public string Anotacao { get; set; }
-        public decimal Preco { get; set; }
+        public string Preco { get; set; }
         public int Avaliacao { get; set; }
         public bool Lido { get; set; }
         public DateTime DataLeitura { get; set; }
