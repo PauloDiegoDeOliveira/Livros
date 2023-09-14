@@ -67,6 +67,12 @@ namespace Livros.API.V1.Controllers
             return CustomResponse(obras);
         }
 
+        /// <summary>
+        /// Insere um obra.
+        /// </summary>
+        /// <param name="postObraDto"></param>
+        /// <param name="eDiretorio"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -131,6 +137,12 @@ namespace Livros.API.V1.Controllers
             return inserido;
         }
 
+        /// <summary>
+        /// Altera uma obra.
+        /// </summary>
+        /// <param name="putObraDto"></param>
+        /// <param name="eDiretorio"></param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

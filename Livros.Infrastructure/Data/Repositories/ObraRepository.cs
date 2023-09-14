@@ -94,8 +94,23 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public override async Task<Obra> PutAsync(Obra obra)
         {
-            obra.UsuarioId = user.GetUserId().ToString();
-            return await base.PutAsync(obra);
+            Obra obraConsultado = await appDbContext.Obras
+                        .Include(o => o.Volumes)
+                        .FirstOrDefaultAsync(o => o.Id == obra.Id);
+
+            appDbContext.Entry(obraConsultado).CurrentValues.SetValues(obra);
+            UpdateVolumeAsync(obra, obraConsultado);
+            obraConsultado.UsuarioId = user.GetUserId().ToString();
+
+            await SaveChangesAsync();
+
+            return obra;
+        }
+
+        private static void UpdateVolumeAsync(Obra obra, Obra obraConsultado)
+        {
+            obraConsultado.Volumes.Clear();
+            obraConsultado.Volumes = obra.Volumes;
         }
 
         public bool ExisteId(Guid id)
