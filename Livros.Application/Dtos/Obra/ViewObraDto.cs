@@ -8,7 +8,6 @@ namespace Livros.Application.Dtos.Obra
         public Guid Id { get; set; }
         public Guid UsuarioId { get; set; }
         public Guid IdiomaId { get; set; }
-        public Guid ImagemId { get; set; }
         public string Titulo { get; set; }
         public string Anotacao { get; set; }
         public int AvaliacaoTotal { get; set; }
@@ -16,10 +15,11 @@ namespace Livros.Application.Dtos.Obra
         public int PaginaTotal { get; set; }
         public bool Concluido { get; set; }
         public bool VolumeUnico { get; set; }
+        public string CaminhoAbsoluto { get; set; }
+        public string CaminhoRelativo { get; set; }
         public ETipo Tipo { get; set; }
         public EStatus Status { get; set; }
 
         public IList<ViewVolumeDto> Volumes { get; set; }
-        //public ViewImagemDto Imagem { get; set; }
     }
 }
