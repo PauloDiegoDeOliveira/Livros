@@ -85,44 +85,54 @@ namespace Livros.API.V1.Controllers
 
             logger.LogWarning("Objeto recebido {@postObraDto}", postObraDto);
 
-            #region Validação base64
-
-            if (!await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente))
+            if (!await IsValidURLs(eDiretorio))
             {
                 NotifyWarning("Diretório não encontrado.");
                 return CustomResponse(ModelState);
             }
 
-            Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
-
-            string extensao = ExtensionSystem.GetExtensaoBase64(postObraDto.ImagemBase64);
-            string base64String = ExtensionSystem.GetBase64String(postObraDto.ImagemBase64);
-            if (extensao is null || base64String is null)
+            var (base64String, extensao) = ExtractImageInfo(postObraDto.ImagemBase64);
+            if (base64String is null || extensao is null)
             {
                 NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");
                 return CustomResponse(ModelState);
             }
 
-            #endregion Validação base64
-
-            ViewObraDto inserido;
-            using (Operation.Time("Tempo de adição de uma obra."))
-            {
-                logger.LogWarning("Foi requisitado a inserção de uma obra.");
-                inserido = await obraApplication.PostAsync(postObraDto, Urls["IP"], Urls["DNS"], Urls["SPLIT"], base64String, extensao);
-            }
+            ViewObraDto inserido = await AddObra(postObraDto, eDiretorio, base64String, extensao);
 
             if (!IsValidOperation())
             {
                 return CustomResponse(ModelState);
             }
 
-            if (IsValidOperation())
-            {
-                NotifyWarning("Obra criada com sucesso!");
-            }
+            NotifyWarning("Obra criada com sucesso!");
 
             return CustomResponse(inserido);
+        }
+
+        private async Task<bool> IsValidURLs(EDiretorio eDiretorio)
+        {
+            return await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente);
+        }
+
+        private (string, string) ExtractImageInfo(string imagemBase64)
+        {
+            string extensao = ExtensionSystem.GetExtensaoBase64(imagemBase64);
+            string base64String = ExtensionSystem.GetBase64String(imagemBase64);
+            return (base64String, extensao);
+        }
+
+        private async Task<ViewObraDto> AddObra(PostObraDto postObraDto, EDiretorio eDiretorio, string base64String, string extensao)
+        {
+            ViewObraDto inserido;
+            Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
+
+            using (Operation.Time("Tempo de adição de uma obra."))
+            {
+                logger.LogWarning("Foi requisitado a inserção de uma obra.");
+                inserido = await obraApplication.PostAsync(postObraDto, Urls["IP"], Urls["DNS"], Urls["SPLIT"], base64String, extensao);
+            }
+            return inserido;
         }
 
         /// <summary>
