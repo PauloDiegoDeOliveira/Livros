@@ -3,6 +3,8 @@ using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
 using Livros.Application.Interfaces;
+using Livros.Application.Utilities.Image;
+using Livros.Application.Utilities.Paths;
 using Livros.Domain.Core.Interfaces.Services;
 using Livros.Domain.Entities;
 using Livros.Domain.Enums;
@@ -13,7 +15,7 @@ using SerilogTimings;
 
 namespace Livros.API.V1.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("/v{version:apiVersion}/obras")]
     [ApiController]
@@ -21,14 +23,21 @@ namespace Livros.API.V1.Controllers
     {
         private readonly IObraApplication obraApplication;
         private readonly ILogger<ObraController> logger;
+        private readonly EAmbiente eAmbiente;
 
         public ObraController(IObraApplication obraApplication,
                               INotifier notifier,
                               ILogger<ObraController> logger,
-                              IUser user) : base(notifier, user)
+                              IUser user,
+                              IWebHostEnvironment webHostEnvironment) : base(notifier, user)
         {
             this.obraApplication = obraApplication;
             this.logger = logger;
+            this.eAmbiente = webHostEnvironment.IsProduction()
+                                  ? EAmbiente.Producao
+                                  : webHostEnvironment.IsEnvironment("Homologation")
+                                      ? EAmbiente.Homologacao
+                                      : EAmbiente.Desenvolvimento;
         }
 
         /// <summary>
@@ -61,25 +70,46 @@ namespace Livros.API.V1.Controllers
         /// <summary>
         /// Insere uma obra.
         /// </summary>
-        /// <param name="postObraUploadDto"></param>
+        /// <param name="postObraDto"></param>
+        /// <param name="eDiretorio"></param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostAsync([FromForm] PostObraUploadDto postObraUploadDto)
+        public async Task<IActionResult> PostAsync([FromBody] PostObraDto postObraDto, EDiretorio eDiretorio)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@postObraUploadDto}", postObraUploadDto);
+            logger.LogWarning("Objeto recebido {@postObraDto}", postObraDto);
+
+            #region Validação base64
+
+            if (!await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente))
+            {
+                NotifyWarning("Diretório não encontrado.");
+                return CustomResponse(ModelState);
+            }
+
+            Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
+
+            string extensao = ExtensionSystem.GetExtensaoB64(postObraDto.ImagemBase64);
+            string base64String = ExtensionSystem.GetB64String(postObraDto.ImagemBase64);
+            if (extensao is null || base64String is null)
+            {
+                NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");
+                return CustomResponse(ModelState);
+            }
+
+            #endregion Validação base64
 
             ViewObraDto inserido;
             using (Operation.Time("Tempo de adição de uma obra."))
             {
                 logger.LogWarning("Foi requisitado a inserção de uma obra.");
-                inserido = await obraApplication.PostAsync(new PostObraDto(postObraUploadDto));
+                inserido = await obraApplication.PostAsync(postObraDto, Urls["IP"], Urls["DNS"], Urls["SPLIT"], base64String, extensao);
             }
 
             if (!IsValidOperation())
@@ -99,11 +129,12 @@ namespace Livros.API.V1.Controllers
         /// Altera uma obra.
         /// </summary>
         /// <param name="putObraDto"></param>
+        /// <param name="eDiretorio"></param>
         /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutAsync([FromForm] PutObraDto putObraDto)
+        public async Task<IActionResult> PutAsync([FromBody] PutObraDto putObraDto, EDiretorio eDiretorio)
         {
             if (!ModelState.IsValid)
             {

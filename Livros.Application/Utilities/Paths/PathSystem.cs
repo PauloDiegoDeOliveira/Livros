@@ -1,28 +1,45 @@
 ﻿using Livros.Domain.Enums;
+using Newtonsoft.Json;
 
 namespace Livros.Application.Utilities.Paths
 {
     public static class PathSystem
     {
-        public static Paths Paths { get; set; }
+        public static Dictionary<string, Dictionary<string, string>> Paths { get; private set; }
 
-        public static bool ValidateURLs(string pathName, EAmbiente ambiente)
+        public static async Task GetUrlJson()
         {
-            string key = $"{pathName}{ambiente}";
-            if (!Paths.Urls.TryGetValue(key, out var url) || string.IsNullOrEmpty(url?.IP) || string.IsNullOrEmpty(url?.DNS) || string.IsNullOrEmpty(url?.SPLIT))
+            string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\Urls.json");
+            Paths = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
+            await Task.CompletedTask;
+        }
+
+        public static async Task<bool> ValidateURLs(string pathName, EAmbiente eAmbiente)
+        {
+            string key = pathName + eAmbiente.ToString();
+
+            if (!Paths.ContainsKey(key) || !Paths[key].ContainsKey("IP") || !Paths[key].ContainsKey("DNS") || !Paths[key].ContainsKey("SPLIT"))
             {
                 return false;
             }
 
+            await Task.CompletedTask;
+
             return true;
         }
 
-        public static Url GetURLs(string pathName, EAmbiente ambiente)
+        public static async Task<Dictionary<string, string>> GetURLs(string pathName, EAmbiente eAmbiente)
         {
-            string key = $"{pathName}{ambiente}";
-            Paths.Urls.TryGetValue(key, out Url url);
+            string key = pathName + eAmbiente.ToString();
 
-            return url;
+            if (!Paths.ContainsKey(key))
+            {
+                return null;
+            }
+
+            await Task.CompletedTask;
+
+            return Paths[key];
         }
     }
 }

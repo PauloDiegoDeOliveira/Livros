@@ -2,11 +2,10 @@
 
 namespace Livros.Domain.Entities
 {
-    public class Obra : EntityBase
+    public class Obra : UploadBase64Base
     {
         public string UsuarioId { get; set; }
         public Guid IdiomaId { get; set; }
-        public Guid ImagemId { get; set; }
         public string Titulo { get; set; }
         public string Anotacao { get; set; }
         public int? AvaliacaoTotal { get; set; }
@@ -18,7 +17,6 @@ namespace Livros.Domain.Entities
 
         public Usuario Usuario { get; set; }
         public Idioma Idioma { get; set; }
-        public Imagem Imagem { get; set; }
         public IList<Editora> Editoras { get; set; }
         public IList<Estante> Estantes { get; set; }
         public IList<Volume> Volumes { get; set; }

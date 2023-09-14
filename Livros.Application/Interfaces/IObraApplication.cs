@@ -11,6 +11,10 @@ namespace Livros.Application.Interfaces
     {
         Task<ViewPagedListDto<Obra, ViewObraDto>> GetPaginationAsync(ParametersObra parametersObra);
 
+        Task<ViewObraDto> PostAsync(PostObraDto postObraDto, string caminhoFisico, string caminhoAbsoluto, string splitRelativo, string base64string, string extensao);
+
+        Task<ViewObraDto> PutAsync(PutObraDto putObraDto, string caminhoFisico, string caminhoAbsoluto, string splitRelativo, string base64string, string extensao);
+
         bool ExisteId(Guid id);
 
         bool ExisteNomePostDto(PostObraDto postObraDto);

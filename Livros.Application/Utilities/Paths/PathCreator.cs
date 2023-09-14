@@ -4,49 +4,45 @@ namespace Livros.Application.Utilities.Paths
 {
     public static class PathCreator
     {
-        public static PathResponse CreateIpFolderPath(string ipPath)
+        public static async Task<string> CreateIpPath(string ipPath)
         {
-            string folderPath = GetDateBasedFolderPath(ipPath, $@"\");
+            string path = await DataFolders(ipPath, $@"\");
 
-            if (Path.IsPathRooted(folderPath))
-            {
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
-                return new PathResponse(true, folderPath);
-            }
+            await Task.CompletedTask;
 
-            PathResponse failResponse = new();
-            failResponse.AdicionarErro("Erro ao criar as pastas de upload de imagem.");
-
-            return failResponse;
+            return path;
         }
 
-        public static string CreateAbsoluteFolderPath(string absolutePath)
+        public static async Task<string> CreateAbsolutePath(string absolutePath)
         {
-            return GetDateBasedFolderPath(absolutePath, $@"/");
+            return await DataFolders(absolutePath, $@"/");
         }
 
-        public static PathResponse CreateRelativeFolderPath(string absolutePath, string lastPart)
+        public static async Task<string> CreateRelativePath(string absolutePath, string lastPart)
         {
             string[] splits = absolutePath.Split(new[] { lastPart }, 2, StringSplitOptions.RemoveEmptyEntries);
+            await Task.CompletedTask;
 
-            if (splits.Length < 2)
-            {
-                PathResponse failResponse = new();
-                failResponse.AdicionarErro("Erro ao criar o caminho relativo.");
-
-                return failResponse;
-            }
-
-            return new PathResponse(true, splits[1]);
+            return splits[1];
         }
 
-        public static string GetDateBasedFolderPath(string externalPath, string pathSeparator)
+        public static async Task<string> DataFolders(string externalPath, string charType)
         {
-            return $"{externalPath}{pathSeparator}{DateInformations.GetSplitData(EData.Year)}{pathSeparator}{DateInformations.GetSplitData(EData.Month)}{pathSeparator}{DateInformations.GetSplitData(EData.Day)}{pathSeparator}";
+            string path = externalPath
+                          + charType
+                          + DateInformations.GetSplitData(EData.Year)
+                          + charType
+                          + DateInformations.GetSplitData(EData.Month)
+                          + charType
+                          + DateInformations.GetSplitData(EData.Day)
+                          + charType;
+
+            await Task.CompletedTask;
+
+            return path;
         }
     }
 }
