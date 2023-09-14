@@ -67,12 +67,6 @@ namespace Livros.API.V1.Controllers
             return CustomResponse(obras);
         }
 
-        /// <summary>
-        /// Insere uma obra.
-        /// </summary>
-        /// <param name="postObraDto"></param>
-        /// <param name="eDiretorio"></param>
-        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,20 +79,20 @@ namespace Livros.API.V1.Controllers
 
             logger.LogWarning("Objeto recebido {@postObraDto}", postObraDto);
 
-            if (!await IsValidURLs(eDiretorio))
+            if (!await UrlsSaoValidos(eDiretorio))
             {
                 NotifyWarning("Diretório não encontrado.");
                 return CustomResponse(ModelState);
             }
 
-            var (base64String, extensao) = ExtractImageInfo(postObraDto.ImagemBase64);
+            var (base64String, extensao) = ExtrairInformacoesImagem(postObraDto.ImagemBase64);
             if (base64String is null || extensao is null)
             {
                 NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");
                 return CustomResponse(ModelState);
             }
 
-            ViewObraDto inserido = await AddObra(postObraDto, eDiretorio, base64String, extensao);
+            ViewObraDto inserido = await AdicionarObra(postObraDto, eDiretorio, base64String, extensao);
 
             if (!IsValidOperation())
             {
@@ -110,19 +104,20 @@ namespace Livros.API.V1.Controllers
             return CustomResponse(inserido);
         }
 
-        private async Task<bool> IsValidURLs(EDiretorio eDiretorio)
+        private async Task<bool> UrlsSaoValidos(EDiretorio eDiretorio)
         {
             return await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente);
         }
 
-        private (string, string) ExtractImageInfo(string imagemBase64)
+        private (string, string) ExtrairInformacoesImagem(string imagemBase64)
         {
             string extensao = ExtensionSystem.GetExtensaoBase64(imagemBase64);
             string base64String = ExtensionSystem.GetBase64String(imagemBase64);
+
             return (base64String, extensao);
         }
 
-        private async Task<ViewObraDto> AddObra(PostObraDto postObraDto, EDiretorio eDiretorio, string base64String, string extensao)
+        private async Task<ViewObraDto> AdicionarObra(PostObraDto postObraDto, EDiretorio eDiretorio, string base64String, string extensao)
         {
             ViewObraDto inserido;
             Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
@@ -132,15 +127,10 @@ namespace Livros.API.V1.Controllers
                 logger.LogWarning("Foi requisitado a inserção de uma obra.");
                 inserido = await obraApplication.PostAsync(postObraDto, Urls["IP"], Urls["DNS"], Urls["SPLIT"], base64String, extensao);
             }
+
             return inserido;
         }
 
-        /// <summary>
-        /// Altera uma obra.
-        /// </summary>
-        /// <param name="putObraDto"></param>
-        /// <param name="eDiretorio"></param>
-        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -153,14 +143,56 @@ namespace Livros.API.V1.Controllers
 
             logger.LogWarning("Objeto recebido {@putObraDto}", putObraDto);
 
-            ViewObraDto atualizado;
+            if (!string.IsNullOrWhiteSpace(putObraDto.ImagemBase64))
+            {
+                return await AtualizarComImagem(putObraDto, eDiretorio);
+            }
+            else
+            {
+                return await AtualizarSemImagem(putObraDto);
+            }
+        }
+
+        private async Task<IActionResult> AtualizarComImagem(PutObraDto putObraDto, EDiretorio eDiretorio)
+        {
+            if (!await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente))
+            {
+                NotifyWarning("Diretório não encontrado.");
+                return CustomResponse(ModelState);
+            }
+
+            var urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
+
+            string extensao = ExtensionSystem.GetExtensaoBase64(putObraDto.ImagemBase64);
+            string stringBase64 = ExtensionSystem.GetBase64String(putObraDto.ImagemBase64);
+
+            if (extensao is null || stringBase64 is null)
+            {
+                NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");
+                return CustomResponse(ModelState);
+            }
+
+            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, urls["IP"], urls["DNS"], urls["SPLIT"], stringBase64, extensao);
+
+            if (obraAtualizada is null)
+            {
+                NotifyWarning("Nenhuma obra foi encontrada com o id informado.");
+                return CustomResponse(ModelState);
+            }
+
+            return CustomResponse(obraAtualizada);
+        }
+
+        private async Task<IActionResult> AtualizarSemImagem(PutObraDto putObraDto)
+        {
+            ViewObraDto obraAtualizada;
             using (Operation.Time("Tempo de atualização de uma obra."))
             {
                 logger.LogWarning("Foi requisitado a atualização de uma obra.");
-                atualizado = await obraApplication.PutAsync(putObraDto);
+                obraAtualizada = await obraApplication.PutAsync(putObraDto, "", "", "", "", "");
             }
 
-            if (atualizado is null)
+            if (obraAtualizada is null)
             {
                 return CustomResponse(ModelState);
             }
@@ -170,7 +202,7 @@ namespace Livros.API.V1.Controllers
                 NotifyWarning("Obra atualizada com sucesso!");
             }
 
-            return CustomResponse(atualizado);
+            return CustomResponse(obraAtualizada);
         }
 
         /// <summary>

@@ -1,17 +1,17 @@
 ﻿{
   "ObraHomologacao": {
     "IP": "\\\\192.168.103.20\\Sites\\Sistemas\\LibroVault\\Arquivos\\Obra\\Imagens",
-    "DNS": "https://sistemashomologacao.suafaculdade.com.br/LibroVault/Arquivos/Obra/Imagens",
+    "DNS": "https://teste.com.br/LibroVault/Arquivos/Obra/Imagens",
     "SPLIT": "LibroVault/"
   },
   "ObraDesenvolvimento": {
-    "IP": "\\\\192.168.103.20\\Sites\\Sistemas\\LibroVault\\Arquivos\\Obra\\Imagens",
-    "DNS": "https://sistemashomologacao.suafaculdade.com.br/LibroVault/Arquivos/Obra/Imagens",
+    "IP": "C:\\",
+    "DNS": "https://teste.com.br/LibroVault/Arquivos/Obra/Imagens",
     "SPLIT": "LibroVault/"
   },
   "ObraProducao": {
     "IP": "\\\\192.168.103.20\\Sites\\Sistemas\\LibroVault\\Arquivos\\Obra\\Imagens",
-    "DNS": "https://sistemashomologacao.suafaculdade.com.br/LibroVault/Arquivos/Obra/Imagens",
+    "DNS": "https://teste.com.br/LibroVault/Arquivos/Obra/Imagens",
     "SPLIT": "LibroVault/"
   }
 }

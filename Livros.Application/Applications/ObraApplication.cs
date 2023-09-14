@@ -38,12 +38,12 @@ namespace Livros.Application.Applications
         {
             Obra obra = mapper.Map<Obra>(postObraDto);
 
-            //obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
-            //                          await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
-            //                          await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
+            obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
+                                      await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
+                                      await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
 
-            //UploadBase64Methods<Obra> uploadClass = new();
-            //await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
+            UploadBase64Methods<Obra> uploadClass = new();
+            await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
 
             return mapper.Map<ViewObraDto>(await obraService.PostAsync(obra));
         }
@@ -62,14 +62,14 @@ namespace Livros.Application.Applications
 
             if (!string.IsNullOrWhiteSpace(base64string))
             {
-                //UploadBase64Methods<Obra> uploadClass = new();
-                //await uploadClass.DeleteImage(consulta);
+                UploadBase64Methods<Obra> uploadClass = new();
+                await uploadClass.DeleteImage(consulta);
 
-                //obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
-                //                          await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
-                //                          await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
+                obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
+                                          await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
+                                          await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
 
-                //await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
+                await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
             }
             else
             {
