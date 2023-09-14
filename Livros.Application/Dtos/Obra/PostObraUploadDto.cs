@@ -2,28 +2,13 @@
 using Livros.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Livros.Application.Dtos.Obra
 {
-    public class PutObraDto
+    public class PostObraUploadDto
     {
         [Display(Name = "imagem")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public IFormFile ImagemUpload { get; set; }
-
-        /// <summary>
-        /// ImagemId
-        /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid ImagemId { get; set; }
-
-        /// <summary>
-        /// Id
-        /// </summary>
-        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public Guid Id { get; set; }
 
         /// <summary>
         /// IdiomaId
@@ -48,30 +33,6 @@ namespace Livros.Application.Dtos.Obra
         public string Anotacao { get; set; }
 
         /// <summary>
-        /// Avaliação total
-        /// </summary>
-        /// <example>5</example>
-        [JsonIgnore]
-        [Display(Name = "avaliação total")]
-        public int AvaliacaoTotal { get; set; }
-
-        /// <summary>
-        /// Preço total
-        /// </summary>
-        /// <example>20</example>
-        [JsonIgnore]
-        [Display(Name = "preço total")]
-        public decimal PrecoTotal { get; set; }
-
-        /// <summary>
-        /// Página total
-        /// </summary>
-        /// <example>500</example>
-        [JsonIgnore]
-        [Display(Name = "página total")]
-        public int PaginaTotal { get; set; }
-
-        /// <summary>
         /// Concluído
         /// </summary>
         [Display(Name = "concluído")]
@@ -92,32 +53,8 @@ namespace Livros.Application.Dtos.Obra
         public ETipo Tipo { get; set; }
 
         /// <summary>
-        /// Status
-        /// </summary>
-        [Display(Name = "status")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        [EnumDataType(typeof(EStatus), ErrorMessage = "O campo {0} está em formato inválido.")]
-        public EStatus Status { get; set; }
-
-        /// <summary>
         /// Volumes
         /// </summary>
-        public IList<PutVolumeDto> Volumes { get; set; }
-
-        public PutObraDto()
-        {
-        }
-
-        public PutObraDto(PutObraUploadDto putObraUploadDto)
-        {
-            ImagemUpload = putObraUploadDto.ImagemUpload;
-            IdiomaId = putObraUploadDto.IdiomaId;
-            Titulo = putObraUploadDto.Titulo;
-            Anotacao = putObraUploadDto.Anotacao;
-            Concluido = putObraUploadDto.Concluido;
-            VolumeUnico = putObraUploadDto.VolumeUnico;
-            Tipo = putObraUploadDto.Tipo;
-            Volumes = putObraUploadDto.Volumes;
-        }
+        public IList<PostVolumeDto> Volumes { get; set; }
     }
 }

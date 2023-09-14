@@ -1,5 +1,6 @@
 ﻿using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -7,9 +8,9 @@ namespace Livros.Application.Dtos.Obra
 {
     public class PostObraDto
     {
-        //[Display(Name = "imagem")]
-        //[Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        //public IFormFile ImagemUpload { get; set; }
+        [Display(Name = "imagem")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public IFormFile ImagemUpload { get; set; }
 
         /// <summary>
         /// ImagemId
@@ -90,6 +91,18 @@ namespace Livros.Application.Dtos.Obra
 
         public PostObraDto()
         {
+        }
+
+        public PostObraDto(PostObraUploadDto postObraUploadDto)
+        {
+            ImagemUpload = postObraUploadDto.ImagemUpload;
+            IdiomaId = postObraUploadDto.IdiomaId;
+            Titulo = postObraUploadDto.Titulo;
+            Anotacao = postObraUploadDto.Anotacao;
+            Concluido = postObraUploadDto.Concluido;
+            VolumeUnico = postObraUploadDto.VolumeUnico;
+            Tipo = postObraUploadDto.Tipo;
+            Volumes = postObraUploadDto.Volumes;
         }
     }
 }

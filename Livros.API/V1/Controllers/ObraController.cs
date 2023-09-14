@@ -13,7 +13,7 @@ using SerilogTimings;
 
 namespace Livros.API.V1.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     [Route("/v{version:apiVersion}/obras")]
     [ApiController]
@@ -61,25 +61,25 @@ namespace Livros.API.V1.Controllers
         /// <summary>
         /// Insere uma obra.
         /// </summary>
-        /// <param name="postObraDto"></param>
+        /// <param name="postObraUploadDto"></param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostAsync([FromBody] PostObraDto postObraDto)
+        public async Task<IActionResult> PostAsync([FromForm] PostObraUploadDto postObraUploadDto)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@postObraDto}", postObraDto);
+            logger.LogWarning("Objeto recebido {@postObraUploadDto}", postObraUploadDto);
 
             ViewObraDto inserido;
             using (Operation.Time("Tempo de adição de uma obra."))
             {
                 logger.LogWarning("Foi requisitado a inserção de uma obra.");
-                inserido = await obraApplication.PostAsync(postObraDto);
+                inserido = await obraApplication.PostAsync(new PostObraDto(postObraUploadDto));
             }
 
             if (!IsValidOperation())
@@ -103,7 +103,7 @@ namespace Livros.API.V1.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutAsync([FromBody] PutObraDto putObraDto)
+        public async Task<IActionResult> PutAsync([FromForm] PutObraDto putObraDto)
         {
             if (!ModelState.IsValid)
             {
