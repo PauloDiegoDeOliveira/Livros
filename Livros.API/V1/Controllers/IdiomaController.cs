@@ -1,6 +1,6 @@
 ﻿using Livros.API.Controllers;
 using Livros.Application.Dtos.Base;
-using Livros.Application.Dtos.Genero;
+using Livros.Application.Dtos.Idioma;
 using Livros.Application.Dtos.Pagination;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;
@@ -15,70 +15,71 @@ namespace Livros.API.V1.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
-    [Route("/v{version:apiVersion}/generos")]
+    [Route("/v{version:apiVersion}/idiomas")]
     [ApiController]
-    public class GeneroController : MainController
+    public class IdiomaController : MainController
     {
-        private readonly IGeneroApplication generoApplication;
-        private readonly ILogger<GeneroController> logger;
+        private readonly IIdiomaApplication idiomaApplication;
+        private readonly ILogger<IdiomaController> logger;
 
-        public GeneroController(IGeneroApplication generoApplication,
+        public IdiomaController(IIdiomaApplication idiomaApplication,
                                 INotifier notifier,
-                                ILogger<GeneroController> logger,
+                                ILogger<IdiomaController> logger,
                                 IUser user) : base(notifier, user)
         {
-            this.generoApplication = generoApplication;
+            this.idiomaApplication = idiomaApplication;
             this.logger = logger;
         }
 
         /// <summary>
-        /// Retorna todos os gêneros, com opções de filtro e paginação de dados.
+        /// Retorna todos os idiomas, com opções de filtro e paginação de dados.
         /// </summary>
-        /// <param name="parametersGenero"></param>
+        /// <param name="parametersIdioma"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(ViewPagedListDto<Genero, ViewGeneroDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewPagedListDto<Idioma, ViewIdiomaDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] ParametersGenero parametersGenero)
+        public async Task<IActionResult> GetAllAsync([FromQuery] ParametersIdioma parametersIdioma)
         {
-            logger.LogWarning("Foi requisitado os gêneros.");
+            logger.LogWarning("Foi requisitado os idiomas.");
 
-            ViewPagedListDto<Genero, ViewGeneroDto> generos = await generoApplication.GetPaginationAsync(parametersGenero);
-            if (generos is null || !generos.Pagina.Any())
+            ViewPagedListDto<Idioma, ViewIdiomaDto> idiomas = await idiomaApplication.GetPaginationAsync(parametersIdioma);
+
+            if (idiomas is null || !idiomas.Pagina.Any())
             {
                 return CustomResponse(ModelState);
             }
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gêneros encontrados.");
+                NotifyWarning("Idiomas encontrados.");
             }
 
-            return CustomResponse(generos);
+            return CustomResponse(idiomas);
         }
 
         /// <summary>
-        /// Insere um gênero.
+        /// Insere um idioma.
         /// </summary>
-        /// <param name="postGeneroDto"></param>
+        /// <param name="postIdiomaDto"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewIdiomaDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostAsync([FromBody] PostGeneroDto postGeneroDto)
+        public async Task<IActionResult> PostAsync([FromBody] PostIdiomaDto postIdiomaDto)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@postGeneroDto}", postGeneroDto);
+            logger.LogWarning("Objeto recebido {@postIdiomaDto}", postIdiomaDto);
 
-            ViewGeneroDto inserido;
-            using (Operation.Time("Tempo de adição de um gênero."))
+            ViewIdiomaDto inserido;
+            using (Operation.Time("Tempo de adição de um idioma."))
             {
-                logger.LogWarning("Foi requisitado a inserção de um gênero.");
-                inserido = await generoApplication.PostAsync(postGeneroDto);
+                logger.LogWarning("Foi requisitado a inserção de um idioma.");
+                inserido = await idiomaApplication.PostAsync(postIdiomaDto);
             }
 
             if (!IsValidOperation())
@@ -88,34 +89,34 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero criado com sucesso!");
+                NotifyWarning("Idioma criado com sucesso!");
             }
 
             return CustomResponse(inserido);
         }
 
         /// <summary>
-        /// Altera um gênero.
+        /// Altera um idioma.
         /// </summary>
-        /// <param name="putGeneroDto"></param>
+        /// <param name="putIdiomaDto"></param>
         /// <returns></returns>
         [HttpPut]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewIdiomaDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutAsync([FromBody] PutGeneroDto putGeneroDto)
+        public async Task<IActionResult> PutAsync([FromBody] PutIdiomaDto putIdiomaDto)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@putGeneroDto}", putGeneroDto);
+            logger.LogWarning("Objeto recebido {@putIdiomaDto}", putIdiomaDto);
 
-            ViewGeneroDto atualizado;
-            using (Operation.Time("Tempo de atualização de um gênero."))
+            ViewIdiomaDto atualizado;
+            using (Operation.Time("Tempo de atualização de um idioma."))
             {
-                logger.LogWarning("Foi requisitado a atualização de um gênero.");
-                atualizado = await generoApplication.PutAsync(putGeneroDto);
+                logger.LogWarning("Foi requisitado a atualização de um idioma.");
+                atualizado = await idiomaApplication.PutAsync(putIdiomaDto);
             }
 
             if (atualizado is null)
@@ -125,26 +126,26 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero atualizado com sucesso!");
+                NotifyWarning("Idioma atualizado com sucesso!");
             }
 
             return CustomResponse(atualizado);
         }
 
         /// <summary>
-        /// Exclui um gênero.
+        /// Exclui um idioma.
         /// </summary>
         /// <param name="id"></param>
         /// <remarks>Ao excluir o mesmo será alterado para status 3 excluído.</remarks>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewIdiomaDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            ViewGeneroDto removido = await generoApplication.PutStatusAsync(id, EStatus.Excluido);
+            ViewIdiomaDto removido = await idiomaApplication.PutStatusAsync(id, EStatus.Excluido);
             if (removido is null)
             {
-                NotifyError("Nenhum gênero foi encontrado com o id informado.");
+                NotifyError("Nenhum idioma foi encontrado com o id informado.");
                 return CustomResponse(ModelState);
             }
 
@@ -157,19 +158,19 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero excluído com sucesso!");
+                NotifyWarning("Idioma excluído com sucesso!");
             }
 
             return CustomResponse(removido);
         }
 
         /// <summary>
-        /// Altera o status de um gênero.
+        /// Altera o status de um Idioma.
         /// </summary>
         /// <param name="putStatusDto"></param>
         /// <returns></returns>
         [HttpPut("status")]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewIdiomaDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutStatusAsync([FromBody] PutStatusDto putStatusDto)
         {
@@ -186,11 +187,11 @@ namespace Livros.API.V1.Controllers
 
             logger.LogWarning("Objeto recebido {@putStatusDto}", putStatusDto);
 
-            ViewGeneroDto atualizado;
-            using (Operation.Time("Tempo de atualização do status de um gênero."))
+            ViewIdiomaDto atualizado;
+            using (Operation.Time("Tempo de atualização do status de um idioma."))
             {
-                logger.LogWarning("Foi requisitado a atualização do status de um gênero.");
-                atualizado = await generoApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
+                logger.LogWarning("Foi requisitado a atualização do status de um idioma.");
+                atualizado = await idiomaApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
             }
 
             if (atualizado is null)
@@ -201,15 +202,15 @@ namespace Livros.API.V1.Controllers
             switch (atualizado.Status)
             {
                 case EStatus.Ativo:
-                    NotifyWarning("Gênero atualizado para ativo com sucesso!");
+                    NotifyWarning("Idioma atualizado para ativo com sucesso!");
                     break;
 
                 case EStatus.Inativo:
-                    NotifyWarning("Gênero atualizado para inativo com sucesso!");
+                    NotifyWarning("Idioma atualizado para inativo com sucesso!");
                     break;
 
                 case EStatus.Excluido:
-                    NotifyWarning("Gênero atualizado para excluído com sucesso!");
+                    NotifyWarning("Idioma atualizado para excluído com sucesso!");
                     break;
 
                 default:

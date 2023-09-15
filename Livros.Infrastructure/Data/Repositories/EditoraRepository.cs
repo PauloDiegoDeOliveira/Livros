@@ -13,7 +13,6 @@ namespace Livros.Infrastructure.Data.Repositories
 {
     public class EditoraRepository : RepositoryBase<Editora>, IEditoraRepository
     {
-        private readonly AppDbContext appDbContext;
         private readonly IUser user;
 
         public EditoraRepository(AppDbContext appDbContext,
@@ -22,7 +21,6 @@ namespace Livros.Infrastructure.Data.Repositories
                                  IConfiguration configuration,
                                  IUser user) : base(appDbContext, notifier, logger, configuration)
         {
-            this.appDbContext = appDbContext;
             this.user = user;
         }
 

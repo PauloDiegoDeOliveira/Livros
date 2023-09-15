@@ -13,9 +13,9 @@ namespace Livros.Infrastructure.Data.Repositories.Base
 {
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
     {
-        private readonly AppDbContext appDbContext;
-        private readonly INotifier notifier;
-        private readonly ILogger<RepositoryBase<TEntity>> logger;
+        protected readonly AppDbContext appDbContext;
+        protected readonly INotifier notifier;
+        protected readonly ILogger<RepositoryBase<TEntity>> logger;
         protected SqlConnection sqlConnection;
         protected IConfiguration configuration;
 
@@ -28,7 +28,7 @@ namespace Livros.Infrastructure.Data.Repositories.Base
             this.notifier = notifier;
             this.logger = logger;
             this.configuration = configuration;
-            this.sqlConnection = new SqlConnection(configuration.GetConnectionString("Connection"));
+            sqlConnection = new SqlConnection(configuration.GetConnectionString("Connection"));
         }
 
         protected void AddNotification(string mensagem)

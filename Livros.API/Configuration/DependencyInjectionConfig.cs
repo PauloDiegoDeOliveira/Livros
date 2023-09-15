@@ -31,6 +31,14 @@ namespace Livros.API.Configuration
             services.AddScoped<IGeneroRepository, GeneroRepository>();
             services.AddScoped<IGeneroService, GeneroService>();
 
+            services.AddScoped<IAutorApplication, AutorApplication>();
+            services.AddScoped<IAutorService, AutorService>();
+            services.AddScoped<IAutorRepository, AutorRepository>();
+
+            services.AddScoped<IIdiomaApplication, IdiomaApplication>();
+            services.AddScoped<IIdiomaService, IdiomaService>();
+            services.AddScoped<IIdiomaRepository, IdiomaRepository>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

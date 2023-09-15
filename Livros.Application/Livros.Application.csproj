@@ -27,8 +27,6 @@
   <ItemGroup>
     <Folder Include="Dtos\Identity\Autenticacao\" />
     <Folder Include="Dtos\Identity\Usuario\" />
-    <Folder Include="Dtos\Idioma\" />
-    <Folder Include="Dtos\Autor\" />
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />

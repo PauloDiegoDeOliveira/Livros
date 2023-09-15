@@ -1,6 +1,6 @@
 ﻿using Livros.API.Controllers;
+using Livros.Application.Dtos.Autor;
 using Livros.Application.Dtos.Base;
-using Livros.Application.Dtos.Genero;
 using Livros.Application.Dtos.Pagination;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;
@@ -15,70 +15,71 @@ namespace Livros.API.V1.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]
-    [Route("/v{version:apiVersion}/generos")]
+    [Route("/v{version:apiVersion}/autores")]
     [ApiController]
-    public class GeneroController : MainController
+    public class AutorController : MainController
     {
-        private readonly IGeneroApplication generoApplication;
-        private readonly ILogger<GeneroController> logger;
+        private readonly IAutorApplication autorApplication;
+        private readonly ILogger<AutorController> logger;
 
-        public GeneroController(IGeneroApplication generoApplication,
+        public AutorController(IAutorApplication autorApplication,
                                 INotifier notifier,
-                                ILogger<GeneroController> logger,
+                                ILogger<AutorController> logger,
                                 IUser user) : base(notifier, user)
         {
-            this.generoApplication = generoApplication;
+            this.autorApplication = autorApplication;
             this.logger = logger;
         }
 
         /// <summary>
-        /// Retorna todos os gêneros, com opções de filtro e paginação de dados.
+        /// Retorna todos os autores, com opções de filtro e paginação de dados.
         /// </summary>
-        /// <param name="parametersGenero"></param>
+        /// <param name="parametersAutor"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(ViewPagedListDto<Genero, ViewGeneroDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewPagedListDto<Autor, ViewAutorDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllAsync([FromQuery] ParametersGenero parametersGenero)
+        public async Task<IActionResult> GetAllAsync([FromQuery] ParametersAutor parametersAutor)
         {
-            logger.LogWarning("Foi requisitado os gêneros.");
+            logger.LogWarning("Foi requisitado os autores.");
 
-            ViewPagedListDto<Genero, ViewGeneroDto> generos = await generoApplication.GetPaginationAsync(parametersGenero);
-            if (generos is null || !generos.Pagina.Any())
+            ViewPagedListDto<Autor, ViewAutorDto> autores = await autorApplication.GetPaginationAsync(parametersAutor);
+
+            if (autores is null || !autores.Pagina.Any())
             {
                 return CustomResponse(ModelState);
             }
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gêneros encontrados.");
+                NotifyWarning("Autores encontrados.");
             }
 
-            return CustomResponse(generos);
+            return CustomResponse(autores);
         }
 
         /// <summary>
-        /// Insere um gênero.
+        /// Insere um autor.
         /// </summary>
-        /// <param name="postGeneroDto"></param>
+        /// <param name="postAutorDto"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewAutorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostAsync([FromBody] PostGeneroDto postGeneroDto)
+        public async Task<IActionResult> PostAsync([FromBody] PostAutorDto postAutorDto)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@postGeneroDto}", postGeneroDto);
+            logger.LogWarning("Objeto recebido {@postAutorDto}", postAutorDto);
 
-            ViewGeneroDto inserido;
-            using (Operation.Time("Tempo de adição de um gênero."))
+            ViewAutorDto inserido;
+            using (Operation.Time("Tempo de adição de um autor."))
             {
-                logger.LogWarning("Foi requisitado a inserção de um gênero.");
-                inserido = await generoApplication.PostAsync(postGeneroDto);
+                logger.LogWarning("Foi requisitado a inserção de um autor.");
+                inserido = await autorApplication.PostAsync(postAutorDto);
             }
 
             if (!IsValidOperation())
@@ -88,34 +89,34 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero criado com sucesso!");
+                NotifyWarning("Autor criado com sucesso!");
             }
 
             return CustomResponse(inserido);
         }
 
         /// <summary>
-        /// Altera um gênero.
+        /// Altera um autor.
         /// </summary>
-        /// <param name="putGeneroDto"></param>
+        /// <param name="putAutorDto"></param>
         /// <returns></returns>
         [HttpPut]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewAutorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutAsync([FromBody] PutGeneroDto putGeneroDto)
+        public async Task<IActionResult> PutAsync([FromBody] PutAutorDto putAutorDto)
         {
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
             }
 
-            logger.LogWarning("Objeto recebido {@putGeneroDto}", putGeneroDto);
+            logger.LogWarning("Objeto recebido {@putAutorDto}", putAutorDto);
 
-            ViewGeneroDto atualizado;
-            using (Operation.Time("Tempo de atualização de um gênero."))
+            ViewAutorDto atualizado;
+            using (Operation.Time("Tempo de atualização de um autor."))
             {
-                logger.LogWarning("Foi requisitado a atualização de um gênero.");
-                atualizado = await generoApplication.PutAsync(putGeneroDto);
+                logger.LogWarning("Foi requisitado a atualização de um autor.");
+                atualizado = await autorApplication.PutAsync(putAutorDto);
             }
 
             if (atualizado is null)
@@ -125,26 +126,26 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero atualizado com sucesso!");
+                NotifyWarning("Autor atualizado com sucesso!");
             }
 
             return CustomResponse(atualizado);
         }
 
         /// <summary>
-        /// Exclui um gênero.
+        /// Exclui um autor.
         /// </summary>
         /// <param name="id"></param>
         /// <remarks>Ao excluir o mesmo será alterado para status 3 excluído.</remarks>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewAutorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            ViewGeneroDto removido = await generoApplication.PutStatusAsync(id, EStatus.Excluido);
+            ViewAutorDto removido = await autorApplication.PutStatusAsync(id, EStatus.Excluido);
             if (removido is null)
             {
-                NotifyError("Nenhum gênero foi encontrado com o id informado.");
+                NotifyError("Nenhum autor foi encontrado com o id informado.");
                 return CustomResponse(ModelState);
             }
 
@@ -157,19 +158,19 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Gênero excluído com sucesso!");
+                NotifyWarning("Autor excluído com sucesso!");
             }
 
             return CustomResponse(removido);
         }
 
         /// <summary>
-        /// Altera o status de um gênero.
+        /// Altera o status de um autor.
         /// </summary>
         /// <param name="putStatusDto"></param>
         /// <returns></returns>
         [HttpPut("status")]
-        [ProducesResponseType(typeof(ViewGeneroDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ViewAutorDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutStatusAsync([FromBody] PutStatusDto putStatusDto)
         {
@@ -186,11 +187,11 @@ namespace Livros.API.V1.Controllers
 
             logger.LogWarning("Objeto recebido {@putStatusDto}", putStatusDto);
 
-            ViewGeneroDto atualizado;
-            using (Operation.Time("Tempo de atualização do status de um gênero."))
+            ViewAutorDto atualizado;
+            using (Operation.Time("Tempo de atualização do status de um autor."))
             {
-                logger.LogWarning("Foi requisitado a atualização do status de um gênero.");
-                atualizado = await generoApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
+                logger.LogWarning("Foi requisitado a atualização do status de um autor.");
+                atualizado = await autorApplication.PutStatusAsync(putStatusDto.Id, putStatusDto.Status);
             }
 
             if (atualizado is null)
@@ -201,15 +202,15 @@ namespace Livros.API.V1.Controllers
             switch (atualizado.Status)
             {
                 case EStatus.Ativo:
-                    NotifyWarning("Gênero atualizado para ativo com sucesso!");
+                    NotifyWarning("Autor atualizado para ativo com sucesso!");
                     break;
 
                 case EStatus.Inativo:
-                    NotifyWarning("Gênero atualizado para inativo com sucesso!");
+                    NotifyWarning("Autor atualizado para inativo com sucesso!");
                     break;
 
                 case EStatus.Excluido:
-                    NotifyWarning("Gênero atualizado para excluído com sucesso!");
+                    NotifyWarning("Autor atualizado para excluído com sucesso!");
                     break;
 
                 default:

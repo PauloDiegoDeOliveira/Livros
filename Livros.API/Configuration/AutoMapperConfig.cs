@@ -9,7 +9,9 @@ namespace Livros.API.Configuration
             services.AddAutoMapper(typeof(UsuarioMappingProfile),
                                    typeof(ObraMappingProfile),
                                    typeof(EditoraMappingProfile),
-                                   typeof(GeneroMappingProfile));
+                                   typeof(GeneroMappingProfile),
+                                   typeof(AutorMappingProfile),
+                                   typeof(IdiomaMappingProfile));
         }
     }
 }
