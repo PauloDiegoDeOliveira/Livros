@@ -4,12 +4,12 @@ namespace Livros.Application.Utilities.Image
 {
     public class GerenciadorArquivosImagemIFormFile<TEntity> where TEntity : UploadIFormFileBase
     {
-        public async Task<bool> CarregarImagemAsync(TEntity uploadForm)
+        public async Task<bool> CarregarImagemAsync(TEntity entity)
         {
             try
             {
-                using FileStream fileStream = new FileStream(uploadForm.CaminhoFisico, FileMode.Create);
-                await uploadForm.ImagemUpload.CopyToAsync(fileStream);
+                using FileStream fileStream = new(entity.CaminhoFisico, FileMode.Create);
+                await entity.ImagemUpload.CopyToAsync(fileStream);
             }
             catch (Exception)
             {
@@ -20,16 +20,16 @@ namespace Livros.Application.Utilities.Image
             return true;
         }
 
-        public bool DeletarImagem(TEntity uploadForm)
+        public bool DeletarImagem(TEntity entity)
         {
-            if (!File.Exists(uploadForm.CaminhoFisico))
+            if (!File.Exists(entity.CaminhoFisico))
             {
                 return true;
             }
 
             try
             {
-                File.Delete(uploadForm.CaminhoFisico);
+                File.Delete(entity.CaminhoFisico);
             }
             catch (Exception)
             {
