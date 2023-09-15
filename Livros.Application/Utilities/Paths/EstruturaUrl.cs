@@ -1,6 +1,6 @@
 ﻿namespace Livros.Application.Utilities.Paths
 {
-    public class Url
+    public class EstruturaUrl
     {
         public string IP { get; set; }
         public string DNS { get; set; }

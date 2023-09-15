@@ -2,15 +2,15 @@
 {
     public class IFormFileURLsUpload
     {
-        public static readonly Dictionary<string, Url> Urls = new()
+        public static readonly Dictionary<string, EstruturaUrl> Urls = new()
         {
-            { "UsuarioDesenvolvimento", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Arquivos/Usuario/Imagens", SPLIT = "Livros/"} },
-            { "UsuarioHomologacao", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Usuario/Imagens", SPLIT = "Livros/"} },
-            { "UsuarioProducao", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Usuario/Imagens", SPLIT = "Livros/"} },
+            { "UsuarioDesenvolvimento", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Arquivos/Usuario/Imagens", SPLIT = "Livros/"} },
+            { "UsuarioHomologacao", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Usuario/Imagens", SPLIT = "Livros/"} },
+            { "UsuarioProducao", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Usuario\\Imagens", DNS = "https://Livros/Usuario/Imagens", SPLIT = "Livros/"} },
 
-            { "ObraDesenvolvimento", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
-            { "ObraHomologacao", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
-            { "ObraProducao", new Url { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
+            { "ObraDesenvolvimento", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
+            { "ObraHomologacao", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
+            { "ObraProducao", new EstruturaUrl { IP = "\\\\192.168.103.20\\Sites\\Sistemas\\Livros\\Arquivos\\Obra\\Imagens", DNS = "https://Livros/Arquivos/Obra/Imagens", SPLIT = "Livros/"} },
         };
     }
 }
