@@ -38,9 +38,9 @@ namespace Livros.Application.Applications
         {
             Obra obra = mapper.Map<Obra>(postObraDto);
 
-            obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
-                                      await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
-                                      await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
+            obra.PolulateInformations(CriadorCaminho.CriarCaminhoPorIp(caminhoFisico),
+                                      CriadorCaminho.CriarCaminhoAbsoluto(caminhoAbsoluto),
+                                      CriadorCaminho.CriarCaminhoRelativo(CriadorCaminho.CriarCaminhoAbsoluto(caminhoAbsoluto), splitRelativo), extensao);
 
             GerenciadorArquivosImagemBase64<Obra> uploadBase64Methods = new();
             await uploadBase64Methods.CarregarDeBase64Async(obra.CaminhoFisico, base64string);
@@ -88,9 +88,9 @@ namespace Livros.Application.Applications
             GerenciadorArquivosImagemBase64<Obra> uploadBase64Methods = new();
             uploadBase64Methods.DeletarImagem(consulta);
 
-            obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
-                                      await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
-                                      await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
+            obra.PolulateInformations(CriadorCaminho.CriarCaminhoPorIp(caminhoFisico),
+                                      CriadorCaminho.CriarCaminhoAbsoluto(caminhoAbsoluto),
+                                      CriadorCaminho.CriarCaminhoRelativo(CriadorCaminho.CriarCaminhoAbsoluto(caminhoAbsoluto), splitRelativo), extensao);
 
             await uploadBase64Methods.CarregarDeBase64Async(obra.CaminhoFisico, base64string);
         }

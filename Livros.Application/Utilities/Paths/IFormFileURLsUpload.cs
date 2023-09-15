@@ -1,6 +1,6 @@
 ﻿namespace Livros.Application.Utilities.Paths
 {
-    public class Paths
+    public class IFormFileURLsUpload
     {
         public static readonly Dictionary<string, Url> Urls = new()
         {
