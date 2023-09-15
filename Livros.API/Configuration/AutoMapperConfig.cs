@@ -11,7 +11,8 @@ namespace Livros.API.Configuration
                                    typeof(EditoraMappingProfile),
                                    typeof(GeneroMappingProfile),
                                    typeof(AutorMappingProfile),
-                                   typeof(IdiomaMappingProfile));
+                                   typeof(IdiomaMappingProfile),
+                                   typeof(EstanteMappingProfile));
         }
     }
 }

@@ -39,6 +39,10 @@ namespace Livros.API.Configuration
             services.AddScoped<IIdiomaService, IdiomaService>();
             services.AddScoped<IIdiomaRepository, IdiomaRepository>();
 
+            services.AddScoped<IEstanteApplication, EstanteApplication>();
+            services.AddScoped<IEstanteService, EstanteService>();
+            services.AddScoped<IEstanteRepository, EstanteRepository>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
