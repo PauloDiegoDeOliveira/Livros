@@ -45,7 +45,7 @@ try
         options.SuppressModelStateInvalidFilter = true;
     });
 
-    await PathSystem.GetBase64URLsUpload();
+    await SistemaCaminho.CarregarURLsBase64();
 
     // Configure services
 

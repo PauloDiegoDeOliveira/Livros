@@ -112,7 +112,7 @@ namespace Livros.API.V1.Controllers
 
         private async Task<bool> UrlsSaoValidos(EDiretorio eDiretorio)
         {
-            return await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente);
+            return await SistemaCaminho.ValidarURLs(eDiretorio.ToString(), eAmbiente);
         }
 
         private (string, string) ExtrairInformacoesImagem(string imagemBase64)
@@ -126,7 +126,7 @@ namespace Livros.API.V1.Controllers
         private async Task<ViewObraDto> AdicionarObra(PostObraDto postObraDto, EDiretorio eDiretorio, string base64String, string extensao)
         {
             ViewObraDto inserido;
-            Dictionary<string, string> Urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
+            Dictionary<string, string> Urls = await SistemaCaminho.ObterURLs(eDiretorio.ToString(), eAmbiente);
 
             using (Operation.Time("Tempo de adição de uma obra."))
             {
@@ -189,13 +189,13 @@ namespace Livros.API.V1.Controllers
 
         private async Task<IActionResult> AtualizarComImagem(PutObraDto putObraDto, EDiretorio eDiretorio)
         {
-            if (!await PathSystem.ValidateURLs(eDiretorio.ToString(), eAmbiente))
+            if (!await SistemaCaminho.ValidarURLs(eDiretorio.ToString(), eAmbiente))
             {
                 NotifyWarning("Diretório não encontrado.");
                 return CustomResponse(ModelState);
             }
 
-            var urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
+            var urls = await SistemaCaminho.ObterURLs(eDiretorio.ToString(), eAmbiente);
 
             string obterExtensaoDoBase64 = InterpretadorDataUriImagem.ObterExtensaoDoBase64(putObraDto.ImagemBase64);
             string extrairStringBase64 = InterpretadorDataUriImagem.ExtrairStringBase64(putObraDto.ImagemBase64);
