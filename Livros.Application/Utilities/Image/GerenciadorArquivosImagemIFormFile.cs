@@ -2,24 +2,25 @@
 
 namespace Livros.Application.Utilities.Image
 {
-    public class UploadIFormFileMethods<TEntity> where TEntity : UploadIFormFileBase
+    public class GerenciadorArquivosImagemIFormFile<TEntity> where TEntity : UploadIFormFileBase
     {
-        public async Task<bool> UploadImage(TEntity uploadForm)
+        public async Task<bool> CarregarImagemAsync(TEntity uploadForm)
         {
             try
             {
-                using var fileStream = new FileStream(uploadForm.CaminhoFisico, FileMode.Create);
+                using FileStream fileStream = new FileStream(uploadForm.CaminhoFisico, FileMode.Create);
                 await uploadForm.ImagemUpload.CopyToAsync(fileStream);
-
-                return true;
             }
-            catch
+            catch (Exception)
             {
+                // logger.LogError(ex, "Erro ao carregar a imagem.");
                 return false;
             }
+
+            return true;
         }
 
-        public async Task<bool> DeleteImage(TEntity uploadForm)
+        public bool DeletarImagem(TEntity uploadForm)
         {
             if (!File.Exists(uploadForm.CaminhoFisico))
             {
@@ -29,14 +30,14 @@ namespace Livros.Application.Utilities.Image
             try
             {
                 File.Delete(uploadForm.CaminhoFisico);
-                await Task.CompletedTask;
-
-                return true;
             }
-            catch
+            catch (Exception)
             {
+                // logger.LogError(ex, "Erro ao deletar a imagem.");
                 return false;
             }
+
+            return true;
         }
     }
 }
