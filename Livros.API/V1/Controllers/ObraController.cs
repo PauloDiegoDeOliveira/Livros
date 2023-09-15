@@ -117,10 +117,10 @@ namespace Livros.API.V1.Controllers
 
         private (string, string) ExtrairInformacoesImagem(string imagemBase64)
         {
-            string extensao = ExtensionSystem.GetExtensaoBase64(imagemBase64);
-            string base64String = ExtensionSystem.GetBase64String(imagemBase64);
+            string obterExtensaoDoBase64 = InterpretadorDataUriImagem.ObterExtensaoDoBase64(imagemBase64);
+            string ExtrairStringBase64 = InterpretadorDataUriImagem.ExtrairStringBase64(imagemBase64);
 
-            return (base64String, extensao);
+            return (ExtrairStringBase64, obterExtensaoDoBase64);
         }
 
         private async Task<ViewObraDto> AdicionarObra(PostObraDto postObraDto, EDiretorio eDiretorio, string base64String, string extensao)
@@ -137,6 +137,12 @@ namespace Livros.API.V1.Controllers
             return inserido;
         }
 
+        /// <summary>
+        /// Altera uma obra.
+        /// </summary>
+        /// <param name="putObraDto"></param>
+        /// <param name="eDiretorio"></param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -191,16 +197,16 @@ namespace Livros.API.V1.Controllers
 
             var urls = await PathSystem.GetURLs(eDiretorio.ToString(), eAmbiente);
 
-            string extensao = ExtensionSystem.GetExtensaoBase64(putObraDto.ImagemBase64);
-            string stringBase64 = ExtensionSystem.GetBase64String(putObraDto.ImagemBase64);
+            string obterExtensaoDoBase64 = InterpretadorDataUriImagem.ObterExtensaoDoBase64(putObraDto.ImagemBase64);
+            string extrairStringBase64 = InterpretadorDataUriImagem.ExtrairStringBase64(putObraDto.ImagemBase64);
 
-            if (extensao is null || stringBase64 is null)
+            if (obterExtensaoDoBase64 is null || extrairStringBase64 is null)
             {
                 NotifyWarning("Extensão não suportada ou texto não se encontra em base64.");
                 return CustomResponse(ModelState);
             }
 
-            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, urls["IP"], urls["DNS"], urls["SPLIT"], stringBase64, extensao);
+            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, urls["IP"], urls["DNS"], urls["SPLIT"], extrairStringBase64, obterExtensaoDoBase64);
 
             if (obraAtualizada is null)
             {
