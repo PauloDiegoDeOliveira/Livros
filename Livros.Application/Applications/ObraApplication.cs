@@ -42,8 +42,8 @@ namespace Livros.Application.Applications
                                       await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
                                       await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
 
-            UploadBase64Methods<Obra> uploadClass = new();
-            await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
+            UploadBase64Methods<Obra> uploadBase64Methods = new();
+            await uploadBase64Methods.UploadImagem(obra.CaminhoFisico, base64string);
 
             return mapper.Map<ViewObraDto>(await obraService.PostAsync(obra));
         }
@@ -63,7 +63,19 @@ namespace Livros.Application.Applications
             {
                 await TratarAtualizacaoDeImagem(consulta, obra, caminhoFisico, caminhoAbsoluto, splitRelativo, base64string, extensao);
             }
-            else
+            else if (base64string == null)
+            {
+                UploadBase64Methods<Obra> uploadBase64Methods = new();
+                await uploadBase64Methods.DeleteImage(consulta);
+
+                consulta.NomeArquivo = null;
+                consulta.CaminhoAbsoluto = null;
+                consulta.CaminhoRelativo = null;
+                consulta.CaminhoFisico = null;
+                consulta.HoraEnvio = null;
+                obra.PutInformations(consulta);
+            }
+            else if (base64string == "")
             {
                 obra.PutInformations(consulta);
             }
@@ -73,14 +85,14 @@ namespace Livros.Application.Applications
 
         private async Task TratarAtualizacaoDeImagem(Obra consulta, Obra obra, string caminhoFisico, string caminhoAbsoluto, string splitRelativo, string base64string, string extensao)
         {
-            UploadBase64Methods<Obra> uploadClass = new();
-            await uploadClass.DeleteImage(consulta);
+            UploadBase64Methods<Obra> uploadBase64Methods = new();
+            await uploadBase64Methods.DeleteImage(consulta);
 
             obra.PolulateInformations(await PathCreator.CreateIpPath(caminhoFisico),
                                       await PathCreator.CreateAbsolutePath(caminhoAbsoluto),
                                       await PathCreator.CreateRelativePath(await PathCreator.CreateAbsolutePath(caminhoAbsoluto), splitRelativo), extensao);
 
-            await uploadClass.UploadImagem(obra.CaminhoFisico, base64string);
+            await uploadBase64Methods.UploadImagem(obra.CaminhoFisico, base64string);
         }
 
         public bool ExisteId(Guid id)

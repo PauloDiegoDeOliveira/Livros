@@ -2,11 +2,11 @@
 {
     public class UploadBase64Base : EntityBase
     {
-        public Guid NomeArquivo { get; private set; }
-        public string CaminhoRelativo { get; private set; }
-        public string CaminhoAbsoluto { get; private set; }
-        public string CaminhoFisico { get; private set; }
-        public DateTime HoraEnvio { get; private set; }
+        public Guid? NomeArquivo { get; set; }
+        public string CaminhoRelativo { get; set; }
+        public string CaminhoAbsoluto { get; set; }
+        public string CaminhoFisico { get; set; }
+        public DateTime? HoraEnvio { get; set; }
 
         protected UploadBase64Base()
         {
@@ -23,6 +23,7 @@
 
         public void PutInformations(Obra obra)
         {
+            NomeArquivo = obra.NomeArquivo;
             CaminhoRelativo = obra.CaminhoRelativo;
             CaminhoAbsoluto = obra.CaminhoAbsoluto;
             CaminhoFisico = obra.CaminhoFisico;

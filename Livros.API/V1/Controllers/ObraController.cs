@@ -137,12 +137,6 @@ namespace Livros.API.V1.Controllers
             return inserido;
         }
 
-        /// <summary>
-        /// Altera uma obra.
-        /// </summary>
-        /// <param name="putObraDto"></param>
-        /// <param name="eDiretorio"></param>
-        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(typeof(ViewObraDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -159,10 +153,32 @@ namespace Livros.API.V1.Controllers
             {
                 return await AtualizarComImagem(putObraDto, eDiretorio);
             }
-            else
+            else if (putObraDto.ImagemBase64 == "")
             {
-                return await AtualizarSemImagem(putObraDto);
+                return await AtualizarSemAlterarImagem(putObraDto);
             }
+            else if (putObraDto.ImagemBase64 == null)
+            {
+                return await AtualizarRemovendoImagem(putObraDto);
+            }
+            return CustomResponse(ModelState);
+        }
+
+        private async Task<IActionResult> AtualizarRemovendoImagem(PutObraDto putObraDto)
+        {
+            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, null, null, null, null, null);
+
+            if (obraAtualizada is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Obra atualizada e imagem removida com sucesso!");
+            }
+
+            return CustomResponse(obraAtualizada);
         }
 
         private async Task<IActionResult> AtualizarComImagem(PutObraDto putObraDto, EDiretorio eDiretorio)
@@ -195,23 +211,26 @@ namespace Livros.API.V1.Controllers
             return CustomResponse(obraAtualizada);
         }
 
-        private async Task<IActionResult> AtualizarSemImagem(PutObraDto putObraDto)
+        private async Task<IActionResult> AtualizarSemAlterarImagem(PutObraDto putObraDto)
         {
             ViewObraDto obraAtualizada;
-            using (Operation.Time("Tempo de atualização de uma obra."))
+
+            using (Operation.Time("Tempo de atualização de uma obra sem alterar a imagem."))
             {
-                logger.LogWarning("Foi requisitado a atualização de uma obra.");
+                logger.LogWarning("Foi requisitado a atualização de uma obra, mas sem alterar a imagem existente.");
+
                 obraAtualizada = await obraApplication.PutAsync(putObraDto, "", "", "", "", "");
             }
 
             if (obraAtualizada is null)
             {
+                NotifyWarning("Nenhuma obra foi encontrada com o id informado.");
                 return CustomResponse(ModelState);
             }
 
             if (IsValidOperation())
             {
-                NotifyWarning("Obra atualizada com sucesso!");
+                NotifyWarning("Obra atualizada com sucesso, e a imagem permaneceu inalterada!");
             }
 
             return CustomResponse(obraAtualizada);
