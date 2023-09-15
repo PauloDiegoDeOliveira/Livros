@@ -330,5 +330,37 @@ namespace Livros.API.V1.Controllers
 
             return CustomResponse(atualizado);
         }
+
+        /// <summary>
+        /// Retorna detalhes de uma obra.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>Id: B9D01043-B103-42A1-AE3C-08DAD14324A9</remarks>
+        [HttpGet("detalhes/{id:guid}")]
+        [ProducesResponseType(typeof(ViewObraDetalhesDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetByIdDetailsAsync(Guid id)
+        {
+            ViewObraDetalhesDto viewObraDetalhesDto = await obraApplication.GetByIdDetalhesAsync(id);
+            if (viewObraDetalhesDto is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (!IsValidOperation())
+            {
+                return CustomResponse(ModelState);
+            }
+
+            logger.LogWarning("Foi requisitado detalhes de uma obra. {@viewObraDetalhesDto}", viewObraDetalhesDto);
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Detalhes de uma obra.");
+            }
+
+            return CustomResponse(viewObraDetalhesDto);
+        }
     }
 }

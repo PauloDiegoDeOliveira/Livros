@@ -8,7 +8,9 @@ namespace Livros.Domain.Core.Interfaces.Services
     {
         Task<PagedList<Obra>> GetPaginationAsync(ParametersObra parametersObra);
 
-        bool ExisteId(Guid id);
+        Task<Obra> GetByIdDetalhesAsync(Guid obraId);
+
+        bool ExisteId(Guid obraId);
 
         bool ExisteNome(Obra obra);
     }

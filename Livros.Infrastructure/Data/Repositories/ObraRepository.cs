@@ -111,6 +111,17 @@ namespace Livros.Infrastructure.Data.Repositories
             obraConsultado.Volumes = obra.Volumes;
         }
 
+        public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)
+        {
+            Obra obra = await appDbContext.Obras
+                     .Include(o => o.Volumes)
+                     .Include(o => o.Estantes)
+                     .AsNoTracking()
+                     .FirstOrDefaultAsync(o => o.Id == obraId);
+
+            return obra;
+        }
+
         public bool ExisteId(Guid id)
         {
             return appDbContext.Obras.Any(o => o.Id == id);

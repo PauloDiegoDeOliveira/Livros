@@ -15,6 +15,8 @@ namespace Livros.Application.Interfaces
 
         Task<ViewObraDto> PutAsync(PutObraDto putObraDto, string caminhoFisico, string caminhoAbsoluto, string splitRelativo, string base64string, string extensao);
 
+        Task<ViewObraDetalhesDto> GetByIdDetalhesAsync(Guid obraId);
+
         bool ExisteId(Guid id);
 
         bool ExisteNomePostDto(PostObraDto postObraDto);

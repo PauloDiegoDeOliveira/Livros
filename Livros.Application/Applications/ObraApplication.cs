@@ -95,9 +95,15 @@ namespace Livros.Application.Applications
             await uploadBase64Methods.CarregarDeBase64Async(obra.CaminhoFisico, base64string);
         }
 
-        public bool ExisteId(Guid id)
+        public async Task<ViewObraDetalhesDto> GetByIdDetalhesAsync(Guid obraId)
         {
-            return obraService.ExisteId(id);
+            Obra obra = await obraService.GetByIdDetalhesAsync(obraId);
+            return mapper.Map<ViewObraDetalhesDto>(obra);
+        }
+
+        public bool ExisteId(Guid obraId)
+        {
+            return obraService.ExisteId(obraId);
         }
 
         public bool ExisteNomePostDto(PostObraDto postObraDto)

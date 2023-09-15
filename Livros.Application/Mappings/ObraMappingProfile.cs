@@ -17,6 +17,8 @@ namespace Livros.Application.Mappings
             CreateMap<PostObraDto, Obra>().ReverseMap();
             CreateMap<PutObraDto, Obra>().ReverseMap();
 
+            CreateMap<Obra, ViewObraDetalhesDto>().ReverseMap();
+
             CreateMap<Obra, ViewObraDto>()
                   .ForMember(viewObraDto => viewObraDto.PrecoTotal,
                              opt => opt.MapFrom(obra => obra.Volumes.Sum(volume => volume.Preco).MoedaBrasileira()))

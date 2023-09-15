@@ -21,6 +21,11 @@ namespace Livros.Domain.Service
             return await obraRepository.GetPaginationAsync(parametersObra);
         }
 
+        public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)
+        {
+            return await obraRepository.GetByIdDetalhesAsync(obraId);
+        }
+
         public bool ExisteId(Guid id)
         {
             return obraRepository.ExisteId(id);
