@@ -16,7 +16,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
+    <Compile Remove="Attributes\**" />
+    <Compile Remove="Utilities\Hash\**" />
+    <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Utilities\Hash\**" />
+    <None Remove="Attributes\**" />
+    <None Remove="Utilities\Hash\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Dtos\Identity\Autenticacao\" />
     <Folder Include="Dtos\Identity\Usuario\" />
     <Folder Include="Dtos\Idioma\" />
@@ -24,7 +32,6 @@
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />
-    <Folder Include="Utilities\Hash\" />
     <Folder Include="Validators\Autor\" />
     <Folder Include="Validators\Editora\" />
     <Folder Include="Validators\Genero\" />
