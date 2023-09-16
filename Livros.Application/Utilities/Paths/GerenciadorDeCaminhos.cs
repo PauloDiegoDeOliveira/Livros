@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Livros.Application.Utilities.Paths
 {
-    public static class SistemaCaminho
+    public static class GerenciadorDeCaminhos
     {
         public static Dictionary<string, Dictionary<string, string>> Caminhos { get; private set; }
 

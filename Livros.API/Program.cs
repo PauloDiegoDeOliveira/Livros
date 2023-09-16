@@ -45,7 +45,7 @@ try
         options.SuppressModelStateInvalidFilter = true;
     });
 
-    await SistemaCaminho.CarregarURLsBase64();
+    await GerenciadorDeCaminhos.CarregarURLsBase64();
 
     // Configure services
 
