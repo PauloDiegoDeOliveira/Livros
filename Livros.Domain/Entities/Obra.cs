@@ -5,7 +5,9 @@ namespace Livros.Domain.Entities
     public class Obra : UploadBase64Base
     {
         public string UsuarioId { get; set; }
-        public Guid IdiomaId { get; set; }
+        public string EditoraId { get; set; }
+        public string GeneroId { get; set; }
+        public string AutoriId { get; set; }
         public string Titulo { get; set; }
         public string Anotacao { get; set; }
         public int? AvaliacaoTotal { get; set; }
@@ -16,11 +18,18 @@ namespace Livros.Domain.Entities
         public string Tipo { get; set; }
 
         public Usuario Usuario { get; set; }
-        public Idioma Idioma { get; set; }
-        public IList<Editora> Editoras { get; set; }
+        public Editora Editora { get; set; }
+        public Genero Genero { get; set; }
+        public Autor Autor { get; set; }
+        public IList<Idioma> Idiomas { get; set; }
         public IList<Estante> Estantes { get; set; }
         public IList<Volume> Volumes { get; set; }
         public IList<Autor> Autores { get; set; }
         public IList<Genero> Generos { get; set; }
+
+        public void ListaIdiomas(IList<Idioma> idiomas)
+        {
+            Idiomas = idiomas;
+        }
     }
 }

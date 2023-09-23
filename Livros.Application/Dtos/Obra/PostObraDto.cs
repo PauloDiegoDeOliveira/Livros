@@ -1,4 +1,5 @@
-﻿using Livros.Application.Dtos.Volume;
+﻿using Livros.Application.Dtos.Idioma;
+using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -8,10 +9,28 @@ namespace Livros.Application.Dtos.Obra
     public class PostObraDto
     {
         /// <summary>
-        /// IdiomaId
+        /// Id de editora
         /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid IdiomaId { get; set; }
+        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
+        [Display(Name = "id de editora")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string EditoraId { get; set; }
+
+        /// <summary>
+        /// Id de género
+        /// </summary>
+        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
+        [Display(Name = "id de género")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string GeneroId { get; set; }
+
+        /// <summary>
+        /// Id de autor
+        /// </summary>
+        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
+        [Display(Name = "id de autor")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string AutorId { get; set; }
 
         /// <summary>
         /// Título
@@ -77,6 +96,11 @@ namespace Livros.Application.Dtos.Obra
         /// Volumes
         /// </summary>
         public IList<PostVolumeDto> Volumes { get; set; }
+
+        /// <summary>
+        /// Idiomas
+        /// </summary>
+        public IList<ReferenciaIdiomaDto> Idiomas { get; set; }
 
         /// <summary>
         /// Imagem em base64

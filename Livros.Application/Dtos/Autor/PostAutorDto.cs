@@ -5,12 +5,6 @@ namespace Livros.Application.Dtos.Autor
     public class PostAutorDto
     {
         /// <summary>
-        /// ObraId
-        /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid ObraId { get; set; }
-
-        /// <summary>
         /// Nome
         /// </summary>
         /// <example>Isaac Asimov</example>

@@ -1,4 +1,5 @@
-﻿using Livros.Application.Dtos.Lista;
+﻿using Livros.Application.Dtos.Editora;
+using Livros.Application.Dtos.Lista;
 using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
 
@@ -7,8 +8,10 @@ namespace Livros.Application.Dtos.Obra
     public class ViewObraDetalhesDto
     {
         public Guid Id { get; set; }
-        public Guid UsuarioId { get; set; }
-        public Guid IdiomaId { get; set; }
+        public string UsuarioId { get; set; }
+        public string EditoraId { get; set; }
+        public string GeneroId { get; set; }
+        public string AutorId { get; set; }
         public string Titulo { get; set; }
         public string Anotacao { get; set; }
         public int AvaliacaoTotal { get; set; }
@@ -22,6 +25,7 @@ namespace Livros.Application.Dtos.Obra
         public EStatus Status { get; set; }
 
         public IList<ViewVolumeDto> Volumes { get; set; }
+        public IList<ViewEditoraDto> Editoras { get; set; }
         public IList<ViewEstanteDto> Estantes { get; set; }
     }
 }

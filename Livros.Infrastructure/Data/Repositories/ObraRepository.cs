@@ -84,21 +84,44 @@ namespace Livros.Infrastructure.Data.Repositories
             });
         }
 
-        public override async Task<Obra> PostAsync(Obra obra)
+        private void DefinirUsuarioId(Obra obra)
         {
             obra.UsuarioId = user.GetUserId().ToString();
+        }
+
+        public override async Task<Obra> PostAsync(Obra obra)
+        {
+            DefinirUsuarioId(obra);
+            await InsertIdiomasAsync(obra);
+
             return await base.PostAsync(obra);
+        }
+
+        private async Task InsertIdiomasAsync(Obra obra)
+        {
+            List<Idioma> idiomasConsultados = new();
+
+            foreach (Idioma idioma in obra.Idiomas)
+            {
+                Idioma idiomaConsultado = await appDbContext.Idiomas.FindAsync(idioma.Id);
+                idiomasConsultados.Add(idiomaConsultado);
+            }
+
+            obra.ListaIdiomas(idiomasConsultados);
         }
 
         public override async Task<Obra> PutAsync(Obra obra)
         {
             Obra obraConsultado = await appDbContext.Obras
                         .Include(o => o.Volumes)
+                        .Include(o => o.Idiomas)
                         .FirstOrDefaultAsync(o => o.Id == obra.Id);
 
             appDbContext.Entry(obraConsultado).CurrentValues.SetValues(obra);
+
+            DefinirUsuarioId(obra);
             UpdateVolumeAsync(obra, obraConsultado);
-            obraConsultado.UsuarioId = user.GetUserId().ToString();
+            await UpdateIdiomasAsync(obra, obraConsultado);
 
             await SaveChangesAsync();
 
@@ -109,6 +132,16 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             obraConsultado.Volumes.Clear();
             obraConsultado.Volumes = obra.Volumes;
+        }
+
+        private async Task UpdateIdiomasAsync(Obra obra, Obra obraConsultado)
+        {
+            obraConsultado.Idiomas.Clear();
+            foreach (Idioma idioma in obra.Idiomas)
+            {
+                Idioma idiomaConsultado = await appDbContext.Idiomas.FindAsync(idioma.Id);
+                obraConsultado.Idiomas.Add(idiomaConsultado);
+            }
         }
 
         public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)

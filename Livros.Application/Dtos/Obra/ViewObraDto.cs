@@ -6,8 +6,10 @@ namespace Livros.Application.Dtos.Obra
     public class ViewObraDto
     {
         public Guid Id { get; set; }
-        public Guid UsuarioId { get; set; }
-        public Guid IdiomaId { get; set; }
+        public string UsuarioId { get; set; }
+        public string EditoraId { get; set; }
+        public string GeneroId { get; set; }
+        public string AutorId { get; set; }
         public string Titulo { get; set; }
         public string Anotacao { get; set; }
         public int AvaliacaoTotal { get; set; }

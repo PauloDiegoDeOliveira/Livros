@@ -6,6 +6,13 @@ namespace Livros.Application.Dtos.Estante
     public class PutEstanteDto
     {
         /// <summary>
+        /// ObraId
+        /// </summary>
+        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public Guid ObraId { get; set; }
+
+        /// <summary>
         /// Id
         /// </summary>
         /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
