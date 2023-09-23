@@ -92,13 +92,118 @@ namespace Livros.Infrastructure.Data.Repositories
         public override async Task<Estante> PostAsync(Estante estante)
         {
             DefinirUsuarioId(estante);
-            return await base.PostAsync(estante);
+            estante.Nome = await ObterNomeIncrementado(estante.Nome);
+
+            return await base.PostAsync(await InserirObrasAsync(estante));
+        }
+
+        private async Task<string> ObterNomeIncrementado(string nomeBase)
+        {
+            if (!await EstanteExisteParaUsuario(nomeBase))
+            {
+                return nomeBase;
+            }
+
+            string nomeNovo;
+            int incremento = 2;
+
+            do
+            {
+                nomeNovo = $"{nomeBase} ({incremento})";
+                incremento++;
+            }
+            while (await EstanteExisteParaUsuario(nomeNovo));
+
+            return nomeNovo;
+        }
+
+        private async Task<bool> EstanteExisteParaUsuario(string nome)
+        {
+            return await appDbContext.Estantes.AsNoTracking()
+                            .AnyAsync(e => e.Nome.ToLower() == nome.ToLower()
+                                    && e.Status != EStatus.Excluido.ToString()
+                                    && e.UsuarioId == user.GetUserId().ToString());
+        }
+
+        private async Task<Estante> InserirObrasAsync(Estante estante)
+        {
+            List<Obra> obras = await appDbContext.Obras
+                 .Where(obra => estante.Obras.Select(e => e.Id).Contains(obra.Id))
+                 .ToListAsync();
+
+            if (obras.Count > 50)
+            {
+                AddNotification("A estante não pode ter mais de 50 obras.");
+            }
+
+            estante.Obras = obras;
+
+            return estante;
         }
 
         public override async Task<Estante> PutAsync(Estante estante)
         {
             DefinirUsuarioId(estante);
-            return await base.PutAsync(estante);
+            estante.Nome = await ObterNomeIncrementadoParaPut(estante.Nome, estante.Id);
+
+            return await base.PutAsync(await AtualizarEstanteAsync(estante));
+        }
+
+        private async Task<string> ObterNomeIncrementadoParaPut(string nomeBase, Guid estanteId)
+        {
+            if (!await EstanteExisteParaOutroUsuario(nomeBase, estanteId))
+            {
+                return nomeBase;
+            }
+
+            string nomeNovo;
+            int incremento = 2;
+
+            do
+            {
+                nomeNovo = $"{nomeBase} ({incremento})";
+                incremento++;
+            }
+            while (await EstanteExisteParaOutroUsuario(nomeNovo, estanteId));
+
+            return nomeNovo;
+        }
+
+        private async Task<bool> EstanteExisteParaOutroUsuario(string nome, Guid obraId)
+        {
+            return await appDbContext.Estantes.AsNoTracking()
+                .AnyAsync(p => p.Nome.ToLower() == nome.ToLower()
+                            && p.Status != EStatus.Excluido.ToString()
+                            && p.UsuarioId == user.GetUserId().ToString()
+                            && p.Id != obraId);
+        }
+
+        private async Task<Estante> AtualizarEstanteAsync(Estante estante)
+        {
+            Estante estanteConsultado = await appDbContext.Estantes
+                         .Include(e => e.Obras)
+                         .FirstOrDefaultAsync(e => e.Id == estante.Id);
+
+            if (estanteConsultado == null)
+            {
+                AddNotification("Nenhuma estante foi encontrada com o id informado.");
+                return null;
+            }
+
+            appDbContext.Entry(estanteConsultado).CurrentValues.SetValues(estante);
+            await AtualizarObraAsync(estante, estanteConsultado);
+
+            return estanteConsultado;
+        }
+
+        private async Task AtualizarObraAsync(Estante estante, Estante estanteConsultado)
+        {
+            estanteConsultado.Obras.Clear();
+            foreach (Obra obra in estante.Obras)
+            {
+                Obra obraConsultado = await appDbContext.Obras.FindAsync(obra.Id);
+                estanteConsultado.Obras.Add(obraConsultado);
+            }
         }
 
         public bool ExisteId(Guid id)
