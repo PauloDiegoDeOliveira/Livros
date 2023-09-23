@@ -84,15 +84,20 @@ namespace Livros.Infrastructure.Data.Repositories
             });
         }
 
-        public override async Task<Estante> PostAsync(Estante estante)
+        private void DefinirUsuarioId(Estante estante)
         {
             estante.UsuarioId = user.GetUserId().ToString();
+        }
+
+        public override async Task<Estante> PostAsync(Estante estante)
+        {
+            DefinirUsuarioId(estante);
             return await base.PostAsync(estante);
         }
 
         public override async Task<Estante> PutAsync(Estante estante)
         {
-            estante.UsuarioId = user.GetUserId().ToString();
+            DefinirUsuarioId(estante);
             return await base.PutAsync(estante);
         }
 

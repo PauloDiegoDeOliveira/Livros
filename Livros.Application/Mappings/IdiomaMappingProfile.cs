@@ -16,6 +16,7 @@ namespace Livros.Application.Mappings
             CreateMap<PostIdiomaDto, Idioma>().ReverseMap();
             CreateMap<PutIdiomaDto, Idioma>().ReverseMap();
             CreateMap<Idioma, ViewIdiomaDto>().ReverseMap();
+            CreateMap<Idioma, ReferenciaIdiomaDto>().ReverseMap();
         }
     }
 }

@@ -1,17 +1,11 @@
-﻿using Livros.Domain.Enums;
+﻿using Livros.Application.Dtos.Obra;
+using Livros.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Livros.Application.Dtos.Estante
 {
     public class PutEstanteDto
     {
-        /// <summary>
-        /// ObraId
-        /// </summary>
-        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public Guid ObraId { get; set; }
-
         /// <summary>
         /// Id
         /// </summary>
@@ -41,5 +35,10 @@ namespace Livros.Application.Dtos.Estante
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [EnumDataType(typeof(EStatus), ErrorMessage = "O campo {0} está em formato inválido.")]
         public EStatus Status { get; set; }
+
+        /// <summary>
+        /// Obras
+        /// </summary>
+        public IList<ReferenciaObraDto> Obras { get; set; }
     }
 }

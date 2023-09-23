@@ -5,6 +5,7 @@ using Livros.Domain.Entities;
 using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -84,15 +85,20 @@ namespace Livros.Infrastructure.Data.Repositories
             });
         }
 
-        public override async Task<Genero> PostAsync(Genero genero)
+        private void DefinirUsuarioId(Genero genero)
         {
             genero.UsuarioId = user.GetUserId().ToString();
+        }
+
+        public override async Task<Genero> PostAsync(Genero genero)
+        {
+            DefinirUsuarioId(genero);
             return await base.PostAsync(genero);
         }
 
         public override async Task<Genero> PutAsync(Genero genero)
         {
-            genero.UsuarioId = user.GetUserId().ToString();
+            DefinirUsuarioId(genero);
             return await base.PutAsync(genero);
         }
 
