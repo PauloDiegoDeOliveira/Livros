@@ -16,10 +16,10 @@ namespace Livros.Infrastructure.Data.Repositories
         private readonly IUser user;
 
         public AutorRepository(AppDbContext appDbContext,
-                                INotifier notifier,
-                                ILogger<RepositoryBase<Autor>> logger,
-                                IConfiguration configuration,
-                                IUser user) : base(appDbContext, notifier, logger, configuration)
+                               INotifier notifier,
+                               ILogger<RepositoryBase<Autor>> logger,
+                               IConfiguration configuration,
+                               IUser user) : base(appDbContext, notifier, logger, configuration)
         {
             this.user = user;
         }
