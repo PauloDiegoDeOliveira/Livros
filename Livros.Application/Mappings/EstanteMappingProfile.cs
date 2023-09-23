@@ -17,6 +17,7 @@ namespace Livros.Application.Mappings
             CreateMap<PostEstanteDto, Estante>().ReverseMap();
             CreateMap<PutEstanteDto, Estante>().ReverseMap();
             CreateMap<Estante, ViewEstanteDto>().ReverseMap();
+            CreateMap<Estante, ViewEstanteDetalhesDto>().ReverseMap();
         }
     }
 }

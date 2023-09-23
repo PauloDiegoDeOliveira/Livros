@@ -3,6 +3,7 @@ using Livros.Application.Applications.Base;
 using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Estante;
 using Livros.Application.Dtos.Lista;
+using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;
@@ -31,6 +32,12 @@ namespace Livros.Application.Applications
             }
 
             return new ViewPagedListDto<Estante, ViewEstanteDto>(estantes, mapper.Map<List<ViewEstanteDto>>(estantes));
+        }
+
+        public async Task<ViewEstanteDetalhesDto> GetByIdDetalhesAsync(Guid id)
+        {
+            Estante estante = await estanteService.GetByIdDetalhesAsync(id);
+            return mapper.Map<ViewEstanteDetalhesDto>(estante);
         }
 
         public bool ExisteId(Guid id)

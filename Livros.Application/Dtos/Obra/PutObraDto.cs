@@ -14,7 +14,7 @@ namespace Livros.Application.Dtos.Obra
         /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
         [Display(Name = "id de editora")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string EditoraId { get; set; }
+        public Guid EditoraId { get; set; }
 
         /// <summary>
         /// Id de género
@@ -22,7 +22,7 @@ namespace Livros.Application.Dtos.Obra
         /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
         [Display(Name = "id de género")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string GeneroId { get; set; }
+        public Guid GeneroId { get; set; }
 
         /// <summary>
         /// Id de autor
@@ -30,7 +30,7 @@ namespace Livros.Application.Dtos.Obra
         /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
         [Display(Name = "id de autor")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string AutorId { get; set; }
+        public Guid AutorId { get; set; }
 
         /// <summary>
         /// Id

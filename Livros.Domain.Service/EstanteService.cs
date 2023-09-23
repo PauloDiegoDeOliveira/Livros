@@ -21,6 +21,11 @@ namespace Livros.Domain.Service
             return await estanteRepository.GetPaginationAsync(parametersEstante);
         }
 
+        public async Task<Estante> GetByIdDetalhesAsync(Guid id)
+        {
+            return await estanteRepository.GetByIdDetalhesAsync(id);
+        }
+
         public bool ExisteId(Guid id)
         {
             return estanteRepository.ExisteId(id);

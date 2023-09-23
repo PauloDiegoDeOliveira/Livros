@@ -12,6 +12,8 @@ namespace Livros.Application.Interfaces
     {
         Task<ViewPagedListDto<Estante, ViewEstanteDto>> GetPaginationAsync(ParametersEstante parametersEstante);
 
+        Task<ViewEstanteDetalhesDto> GetByIdDetalhesAsync(Guid id);
+
         bool ExisteId(Guid id);
 
         bool ExisteNomePostDto(PostEstanteDto postEstanteDto);

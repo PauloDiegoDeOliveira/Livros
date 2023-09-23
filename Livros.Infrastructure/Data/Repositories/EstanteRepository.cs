@@ -206,6 +206,15 @@ namespace Livros.Infrastructure.Data.Repositories
             }
         }
 
+        public async Task<Estante> GetByIdDetalhesAsync(Guid id)
+        {
+            return await appDbContext.Estantes
+                      .Include(e => e.Obras)
+                      .ThenInclude(o => o.Volumes)
+                      .AsNoTracking()
+                      .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public bool ExisteId(Guid id)
         {
             return appDbContext.Estantes.Any(e => e.Id == id);

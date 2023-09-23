@@ -52,6 +52,7 @@ namespace Livros.Application.Dtos.Usuario
         /// <summary>
         /// Senha
         /// </summary>
+        /// <example>Teste@123</example>
         [Display(Name = "senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(100, ErrorMessage = "O campo senha precisa ter entre {2} e {1} caracteres.", MinimumLength = 6)]
@@ -60,6 +61,7 @@ namespace Livros.Application.Dtos.Usuario
         /// <summary>
         /// Confirmar senha
         /// </summary>
+        /// <example>Teste@123</example>
         [Display(Name = "confirmar senha")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [Compare("Senha", ErrorMessage = "As senhas não conferem.")]

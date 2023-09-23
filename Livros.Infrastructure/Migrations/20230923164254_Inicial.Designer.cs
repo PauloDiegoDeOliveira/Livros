@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230923154342_Inicial")]
+    [Migration("20230923164254_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -333,10 +333,6 @@ namespace Livros.Infrastructure.Migrations
                     b.Property<Guid>("AutorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AvaliacaoTotal")
-                        .HasColumnType("int")
-                        .HasColumnName("AvaliacaoTotal");
-
                     b.Property<string>("CaminhoAbsoluto")
                         .HasColumnType("nvarchar(max)");
 
@@ -363,14 +359,6 @@ namespace Livros.Infrastructure.Migrations
 
                     b.Property<Guid?>("NomeArquivo")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("PaginaTotal")
-                        .HasColumnType("int")
-                        .HasColumnName("PaginaTotal");
-
-                    b.Property<decimal?>("PrecoTotal")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("PrecoTotal");
 
                     b.Property<string>("Status")
                         .IsRequired()

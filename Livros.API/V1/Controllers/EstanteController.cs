@@ -220,5 +220,38 @@ namespace Livros.API.V1.Controllers
 
             return CustomResponse(atualizado);
         }
+
+        /// <summary>
+        /// Retorna detalhes de uma estante.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>Id: B9D01043-B103-42A1-AE3C-08DAD14324A9</remarks>
+        [HttpGet("detalhes/{id:guid}")]
+        [ProducesResponseType(typeof(ViewEstanteDetalhesDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetByIdDetailsAsync(Guid id)
+        {
+            ViewEstanteDetalhesDto viewEstanteDetalhesDto = await estanteApplication.GetByIdDetalhesAsync(id);
+
+            if (viewEstanteDetalhesDto is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (!IsValidOperation())
+            {
+                return CustomResponse(ModelState);
+            }
+
+            logger.LogWarning("Foi requisitado detalhes de uma estante. {@viewEstanteDetalhesDto}", viewEstanteDetalhesDto);
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Detalhes de uma estante.");
+            }
+
+            return CustomResponse(viewEstanteDetalhesDto);
+        }
     }
 }

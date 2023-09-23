@@ -24,15 +24,6 @@ namespace Livros.Infrastructure.Configurations
                    .HasMaxLength(5000)
                    .HasColumnType("varchar(5000)");
 
-            builder.Property(o => o.AvaliacaoTotal)
-                   .HasColumnName("AvaliacaoTotal");
-
-            builder.Property(o => o.PrecoTotal)
-                   .HasColumnName("PrecoTotal");
-
-            builder.Property(o => o.PaginaTotal)
-                   .HasColumnName("PaginaTotal");
-
             builder.Property(o => o.Tipo)
                    .IsRequired()
                    .HasColumnName("Tipo")
