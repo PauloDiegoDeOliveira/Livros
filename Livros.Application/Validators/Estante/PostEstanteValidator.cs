@@ -13,24 +13,20 @@ namespace Livros.Application.Validators.Estante
         {
             this.obraApplication = obraApplication;
 
-            RuleFor(x => x)
-                .Must(NaoExisteObraIdDuplicados)
-                .WithMessage("Não é possível inserir obras repetidas na mesma estante.")
-                .When(x => x.Obras != null);
+            When(x => x.Obras != null && x.Obras.Any(), () =>
+            {
+                RuleFor(x => x)
+                    .Must(NaoExisteObraIdDuplicados)
+                    .WithMessage("Não é possível inserir obras repetidas na mesma estante.");
 
-            RuleForEach(x => x.Obras)
-                .SetValidator(new ReferenciaObraValidator(obraApplication))
-                .When(x => x.Obras != null && x.Obras.Any());
+                RuleForEach(x => x.Obras)
+                    .SetValidator(new ReferenciaObraValidator(obraApplication));
+            });
         }
 
-        private static bool NaoExisteObraIdDuplicados(PostEstanteDto postEstanteDto)
+        private bool NaoExisteObraIdDuplicados(PostEstanteDto postEstanteDto)
         {
-            if (postEstanteDto.Obras == null)
-            {
-                return true;
-            }
-
-            return postEstanteDto.Obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
+            return postEstanteDto.Obras?.GroupBy(x => x.Id).All(g => g.Count() == 1) ?? true;
         }
     }
 }

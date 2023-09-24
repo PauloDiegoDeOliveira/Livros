@@ -27,23 +27,20 @@ namespace Livros.Application.Validators.Estante
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
-            RuleFor(x => x.Obras)
-                .Must(obras => obras == null || NaoExisteObraIdDuplicados(obras))
-                .WithMessage("Não é possível inserir obras repetidas na mesma estante.");
+            When(x => x.Obras != null && x.Obras.Any(), () =>
+            {
+                RuleFor(x => x.Obras)
+                    .Must(NaoExisteObraIdDuplicados)
+                    .WithMessage("Não é possível inserir obras repetidas na mesma estante.");
 
-            RuleForEach(x => x.Obras)
-                .SetValidator(new ReferenciaObraValidator(obraApplication))
-                .When(x => x.Obras != null && x.Obras.Any());
+                RuleForEach(x => x.Obras)
+                    .SetValidator(new ReferenciaObraValidator(obraApplication));
+            });
         }
 
-        private static bool NaoExisteObraIdDuplicados(IList<ReferenciaObraDto> obras)
+        private bool NaoExisteObraIdDuplicados(IList<ReferenciaObraDto> referenciaObraDto)
         {
-            if (obras == null)
-            {
-                return true;
-            }
-
-            return obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
+            return referenciaObraDto?.GroupBy(x => x.Id).All(g => g.Count() == 1) ?? true;
         }
     }
 }
