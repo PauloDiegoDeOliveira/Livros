@@ -9,34 +9,61 @@ namespace Livros.Application.Validators.Obra
     public class PutObraValidator : AbstractValidator<PutObraDto>
     {
         private readonly IObraApplication obraApplication;
+        private readonly IEditoraApplication editoraApplication;
+        private readonly IGeneroApplication generoApplication;
+        private readonly IAutorApplication autorApplication;
         private readonly IIdiomaApplication idiomaApplication;
 
         public PutObraValidator(IObraApplication obraApplication,
+                                IEditoraApplication editoraApplication,
+                                IGeneroApplication generoApplication,
+                                IAutorApplication autorApplication,
                                 IIdiomaApplication idiomaApplication)
         {
             this.obraApplication = obraApplication;
+            this.editoraApplication = editoraApplication;
+            this.generoApplication = generoApplication;
+            this.autorApplication = autorApplication;
             this.idiomaApplication = idiomaApplication;
 
             RuleFor(x => x.Id)
-                .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-                .Must(id => obraApplication.ExisteId(id))
-                .WithMessage("Nenhuma obra foi encontrada com o id informado.");
+                  .NotEmpty()
+                  .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                  .Must(id => obraApplication.ExisteId(id))
+                  .WithMessage("Nenhuma obra foi encontrada com o id informado.");
 
             RuleFor(x => x.Titulo)
-                .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
+                  .NotEmpty()
+                  .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
             When(x => x.Titulo != null, () =>
             {
                 RuleFor(x => x)
-                    .Must(dto => !obraApplication.ExisteNomePutDto(dto))
-                    .WithMessage("Já existe uma obra cadastrada com o nome informado.");
+                  .Must(dto => !obraApplication.ExisteNomePutDto(dto))
+                  .WithMessage("Já existe uma obra cadastrada com o nome informado.");
             });
 
             RuleFor(x => x.Status)
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
+
+            RuleFor(x => x.EditoraId)
+                .NotEmpty()
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                .Must(id => editoraApplication.ExisteId(id))
+                .WithMessage("Nenhuma editora foi encontrada com o id informado.");
+
+            RuleFor(x => x.GeneroId)
+                .NotEmpty()
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                .Must(id => generoApplication.ExisteId(id))
+                .WithMessage("Nenhum género foi encontrado com o id informado.");
+
+            RuleFor(x => x.AutorId)
+                .NotEmpty()
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                .Must(id => autorApplication.ExisteId(id))
+                .WithMessage("Nenhum autor foi encontrado com o id informado.");
 
             When(x => x.Idiomas != null && x.Idiomas.Any(), () =>
             {
