@@ -13,49 +13,25 @@ namespace Livros.Application.Validators.Autor
             this.autorApplication = autorApplication;
 
             RuleFor(x => x.Id)
-                .NotNull()
-                .WithMessage("O campo {PropertyName} não pode ser nulo.")
-
                 .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser vazio.")
-
-                .Must((dto, cancelar) =>
-                {
-                    return ExisteId(dto.Id);
-                }).WithMessage("Nenhum autor foi encontrado com o id informado.");
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                .Must(id => autorApplication.ExisteId(id))
+                .WithMessage("Nenhum autor foi encontrado com o id informado.");
 
             RuleFor(x => x.Nome)
-                .NotNull()
-                .WithMessage("O campo {PropertyName} não pode ser nulo.")
-
                 .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser vazio.");
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
             When(x => x.Nome != null, () =>
             {
                 RuleFor(x => x)
-                    .Must((dto, cancellation) =>
-                    {
-                        return !ExisteNomePutDto(dto);
-                    }).WithMessage("Já existe um autor cadastrado com o nome informado.");
+                    .Must(dto => !autorApplication.ExisteNomePutDto(dto))
+                    .WithMessage("Já existe um autor cadastrado com o nome informado.");
             });
 
             RuleFor(x => x.Status)
-                .NotNull()
-                .WithMessage("O campo {PropertyName} não pode ser nulo.")
-
                 .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser vazio.");
-        }
-
-        private bool ExisteId(Guid id)
-        {
-            return autorApplication.ExisteId(id);
-        }
-
-        private bool ExisteNomePutDto(PutAutorDto putAutorDto)
-        {
-            return autorApplication.ExisteNomePutDto(putAutorDto);
+                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
         }
     }
 }

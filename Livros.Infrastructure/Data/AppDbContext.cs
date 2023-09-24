@@ -4,6 +4,7 @@ using Livros.Domain.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace Livros.Infrastructure.Data
@@ -61,5 +62,27 @@ namespace Livros.Infrastructure.Data
 
             return base.SaveChangesAsync(cancellationToken);
         }
+
+        #region Somente em desenvolvimento.
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Cria uma LoggerFactory que loga para o console.
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                .AddFilter((category, level) => level == LogLevel.Warning)
+                .AddConsole();
+            });
+
+            base.OnConfiguring(optionsBuilder);
+
+            // Habilita o logging de dados sensíveis.
+            optionsBuilder
+                .EnableSensitiveDataLogging()
+                .UseLoggerFactory(loggerFactory);
+        }
+
+        #endregion Somente em desenvolvimento.
     }
 }
