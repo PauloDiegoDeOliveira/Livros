@@ -26,8 +26,8 @@ namespace Livros.Application.Interfaces
 
         bool ExisteVolumeId(Guid id);
 
-        bool ExisteNomeNumeroVolumePostDto(PostVolumeDto postVolumeDto);
+        bool ExisteNumeroVolumePostDto(PostVolumeDto postVolumeDto);
 
-        bool ExisteNomeNumeroVolumePutDto(PutVolumeDto putVolumeDto);
+        bool ExisteNumeroVolumePutDto(PutVolumeDto putVolumeDto);
     }
 }

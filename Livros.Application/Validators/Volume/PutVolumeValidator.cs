@@ -12,21 +12,24 @@ namespace Livros.Application.Validators.Volume
         {
             this.obraApplication = obraApplication;
 
-            RuleFor(x => x.Id)
-                .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-                .Must(id => obraApplication.ExisteId(id))
-                .WithMessage("Nenhum volume foi encontrado com o id informado.");
+            When(x => x.Id != Guid.Empty, () =>
+            {
+                RuleFor(x => x.Id)
+                    .NotEmpty()
+                    .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+                    .Must(id => obraApplication.ExisteVolumeId(id))
+                    .WithMessage("Nenhum volume foi encontrado com o id informado.");
+            });
 
             RuleFor(x => x.Titulo)
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
-            When(x => x.Titulo != null, () =>
+            When(x => x.Numero != 0, () =>
             {
                 RuleFor(x => x)
-                    .Must(dto => !obraApplication.ExisteNomeNumeroVolumePutDto(dto))
-                    .WithMessage("Já existe um volume cadastrado com o nome informado.");
+                    .Must(dto => !obraApplication.ExisteNumeroVolumePutDto(dto))
+                    .WithMessage("Já existe um volume cadastrado com o número informado.");
             });
 
             RuleFor(x => x.Status)

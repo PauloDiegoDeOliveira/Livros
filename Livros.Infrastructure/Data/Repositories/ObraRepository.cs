@@ -118,9 +118,10 @@ namespace Livros.Infrastructure.Data.Repositories
                         .Include(o => o.Idiomas)
                         .FirstOrDefaultAsync(o => o.Id == obra.Id);
 
+            DefinirUsuarioId(obra);
+
             appDbContext.Entry(obraConsultado).CurrentValues.SetValues(obra);
 
-            DefinirUsuarioId(obra);
             UpdateVolumeAsync(obra, obraConsultado);
             await UpdateIdiomasAsync(obra, obraConsultado);
 
@@ -180,19 +181,14 @@ namespace Livros.Infrastructure.Data.Repositories
             return appDbContext.Volumes.Any(v => v.Id == id);
         }
 
-        public bool ExisteNomeNumeroVolume(Volume volume)
+        public bool ExisteNumeroVolume(Volume volume)
         {
-            IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
-               .Where(v => v.Numero == volume.Numero
-                           && v.ObraId == volume.ObraId
-                           && v.Obra.UsuarioId == user.GetUserId().ToString());
-
-            if (volume.Id != Guid.Empty)
-            {
-                query = query.Where(v => v.Id != volume.Id);
-            }
-
-            return query.Any();
+            return appDbContext.Volumes.AsNoTracking()
+                .Any(x => x.Id != volume.Id
+                     && x.ObraId == volume.ObraId
+                     && x.Numero == volume.Numero
+                     && x.Status != EStatus.Excluido.ToString()
+                     && x.Obra.UsuarioId == user.GetUserId().ToString());
         }
     }
 }

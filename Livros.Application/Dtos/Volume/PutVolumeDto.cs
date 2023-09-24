@@ -6,17 +6,16 @@ namespace Livros.Application.Dtos.Volume
     public class PutVolumeDto
     {
         /// <summary>
-        /// Id
-        /// </summary>
-        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// ObraId
         /// </summary>
         /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
         public Guid ObraId { get; set; }
+
+        /// <summary>
+        /// Id
+        /// </summary>
+        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Título
