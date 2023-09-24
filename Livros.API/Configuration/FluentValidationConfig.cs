@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Livros.Application.Validators.Autor;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Globalization;
@@ -37,8 +38,8 @@ namespace Livros.API.Configuration
 
         private static void RegisterValidators(IServiceCollection services)
         {
-            //services.AddValidatorsFromAssemblyContaining<PostLivroValidator>();
-            //services.AddValidatorsFromAssemblyContaining<PutLivroValidator>();
+            services.AddValidatorsFromAssemblyContaining<PostAutorValidator>();
+            services.AddValidatorsFromAssemblyContaining<PutAutorValidator>();
 
             services.AddFluentValidationAutoValidation();
         }

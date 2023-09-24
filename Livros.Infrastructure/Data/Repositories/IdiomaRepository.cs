@@ -85,17 +85,15 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public bool ExisteNome(Idioma idioma)
         {
-            if (idioma.Id == Guid.Empty)
+            IQueryable<Idioma> query = appDbContext.Idiomas.AsNoTracking()
+                .Where(i => i.Nome.ToLower() == idioma.Nome.ToLower());
+
+            if (idioma.Id != Guid.Empty)
             {
-                return appDbContext.Idiomas.AsNoTracking()
-                       .Any(g => g.Nome.ToLower() == idioma.Nome.ToLower());
+                query = query.Where(i => i.Id != idioma.Id);
             }
-            else
-            {
-                return appDbContext.Idiomas.AsNoTracking()
-                        .Any(g => g.Nome.ToLower() == idioma.Nome.ToLower()
-                            && g.Id != idioma.Id);
-            }
+
+            return query.Any();
         }
     }
 }

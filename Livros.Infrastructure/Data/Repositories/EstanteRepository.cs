@@ -222,17 +222,15 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public bool ExisteNome(Estante estante)
         {
-            if (estante.Id == Guid.Empty)
+            IQueryable<Estante> query = appDbContext.Estantes.AsNoTracking()
+                .Where(e => e.Nome.ToLower() == estante.Nome.ToLower());
+
+            if (estante.Id != Guid.Empty)
             {
-                return appDbContext.Estantes.AsNoTracking()
-                             .Any(e => e.Nome.ToLower() == estante.Nome.ToLower());
+                query = query.Where(e => e.Id != estante.Id);
             }
-            else
-            {
-                return appDbContext.Estantes.AsNoTracking()
-                            .Any(e => e.Nome.ToLower() == estante.Nome.ToLower()
-                                && e.Id != estante.Id);
-            }
+
+            return query.Any();
         }
     }
 }

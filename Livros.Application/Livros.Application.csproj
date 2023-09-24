@@ -30,7 +30,6 @@
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />
-    <Folder Include="Validators\Autor\" />
     <Folder Include="Validators\Editora\" />
     <Folder Include="Validators\Genero\" />
     <Folder Include="Validators\Idioma\" />

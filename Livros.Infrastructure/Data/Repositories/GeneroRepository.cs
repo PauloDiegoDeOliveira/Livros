@@ -108,17 +108,15 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public bool ExisteNome(Genero genero)
         {
-            if (genero.Id == Guid.Empty)
+            IQueryable<Genero> query = appDbContext.Generos.AsNoTracking()
+                .Where(g => g.Nome.ToLower() == genero.Nome.ToLower());
+
+            if (genero.Id != Guid.Empty)
             {
-                return appDbContext.Generos.AsNoTracking()
-                       .Any(g => g.Nome.ToLower() == genero.Nome.ToLower());
+                query = query.Where(g => g.Id != genero.Id);
             }
-            else
-            {
-                return appDbContext.Generos.AsNoTracking()
-                        .Any(g => g.Nome.ToLower() == genero.Nome.ToLower()
-                            && g.Id != genero.Id);
-            }
+
+            return query.Any();
         }
     }
 }

@@ -108,17 +108,15 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public bool ExisteNome(Autor autor)
         {
-            if (autor.Id == Guid.Empty)
+            IQueryable<Autor> query = appDbContext.Autores.AsNoTracking()
+                .Where(a => a.Nome.ToLower() == autor.Nome.ToLower());
+
+            if (autor.Id != Guid.Empty)
             {
-                return appDbContext.Autores.AsNoTracking()
-                       .Any(g => g.Nome.ToLower() == autor.Nome.ToLower());
+                query = query.Where(a => a.Id != autor.Id);
             }
-            else
-            {
-                return appDbContext.Autores.AsNoTracking()
-                        .Any(g => g.Nome.ToLower() == autor.Nome.ToLower()
-                            && g.Id != autor.Id);
-            }
+
+            return query.Any();
         }
     }
 }
