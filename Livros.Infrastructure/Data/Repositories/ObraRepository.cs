@@ -123,13 +123,12 @@ namespace Livros.Infrastructure.Data.Repositories
         public override async Task<Obra> PutAsync(Obra obra)
         {
             AtualizarOrdemVolume(obra.Volumes);
+            DefinirUsuarioId(obra);
 
             Obra obraConsultado = await appDbContext.Obras
                         .Include(o => o.Volumes)
                         .Include(o => o.Idiomas)
                         .FirstOrDefaultAsync(o => o.Id == obra.Id);
-
-            DefinirUsuarioId(obra);
 
             appDbContext.Entry(obraConsultado).CurrentValues.SetValues(obra);
 
