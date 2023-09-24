@@ -3,6 +3,7 @@ using Livros.Application.Applications.Base;
 using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
+using Livros.Application.Dtos.Volume;
 using Livros.Application.Interfaces;
 using Livros.Application.Utilities.Image;
 using Livros.Application.Utilities.Paths;
@@ -118,6 +119,27 @@ namespace Livros.Application.Applications
         {
             Obra obra = mapper.Map<Obra>(putObraDto);
             bool consulta = obraService.ExisteNome(obra);
+
+            return mapper.Map<bool>(consulta);
+        }
+
+        public bool ExisteVolumeId(Guid id)
+        {
+            return obraService.ExisteVolumeId(id);
+        }
+
+        public bool ExisteNomeVolumePostDto(PostVolumeDto postVolumeDto)
+        {
+            Volume volume = mapper.Map<Volume>(postVolumeDto);
+            bool consulta = obraService.ExisteNomeVolume(volume);
+
+            return mapper.Map<bool>(consulta);
+        }
+
+        public bool ExisteNomeVolumePutDto(PutVolumeDto putVolumeDto)
+        {
+            Volume volume = mapper.Map<Volume>(putVolumeDto);
+            bool consulta = obraService.ExisteNomeVolume(volume);
 
             return mapper.Map<bool>(consulta);
         }

@@ -1,6 +1,7 @@
 ﻿using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
+using Livros.Application.Dtos.Volume;
 using Livros.Application.Interfaces.Base;
 using Livros.Domain.Entities;
 using Livros.Domain.Pagination;
@@ -22,5 +23,11 @@ namespace Livros.Application.Interfaces
         bool ExisteNomePostDto(PostObraDto postObraDto);
 
         bool ExisteNomePutDto(PutObraDto putObraDto);
+
+        bool ExisteVolumeId(Guid id);
+
+        bool ExisteNomeVolumePostDto(PostVolumeDto postVolumeDto);
+
+        bool ExisteNomeVolumePutDto(PutVolumeDto putVolumeDto);
     }
 }

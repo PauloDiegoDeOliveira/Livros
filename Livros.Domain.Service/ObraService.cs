@@ -35,5 +35,15 @@ namespace Livros.Domain.Service
         {
             return obraRepository.ExisteNome(obra);
         }
+
+        public bool ExisteVolumeId(Guid id)
+        {
+            return obraRepository.ExisteVolumeId(id);
+        }
+
+        public bool ExisteNomeVolume(Volume volume)
+        {
+            return obraRepository.ExisteNomeVolume(volume);
+        }
     }
 }

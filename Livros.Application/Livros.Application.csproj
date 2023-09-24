@@ -18,10 +18,13 @@
   <ItemGroup>
     <Compile Remove="Attributes\**" />
     <Compile Remove="Utilities\Hash\**" />
+    <Compile Remove="Validators\Imagem\**" />
     <EmbeddedResource Remove="Attributes\**" />
     <EmbeddedResource Remove="Utilities\Hash\**" />
+    <EmbeddedResource Remove="Validators\Imagem\**" />
     <None Remove="Attributes\**" />
     <None Remove="Utilities\Hash\**" />
+    <None Remove="Validators\Imagem\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,14 +33,8 @@
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />
-    <Folder Include="Validators\Editora\" />
-    <Folder Include="Validators\Genero\" />
-    <Folder Include="Validators\Idioma\" />
-    <Folder Include="Validators\Imagem\" />
-    <Folder Include="Validators\Lista\" />
-    <Folder Include="Validators\Volume\" />
+    <Folder Include="Validators\Estante\" />
     <Folder Include="Validators\Usuario\" />
-    <Folder Include="Validators\Obra\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -173,5 +173,23 @@ namespace Livros.Infrastructure.Data.Repositories
 
             return query.Any();
         }
+
+        public bool ExisteVolumeId(Guid id)
+        {
+            return appDbContext.Volumes.Any(v => v.Id == id);
+        }
+
+        public bool ExisteNomeVolume(Volume volume)
+        {
+            IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
+                .Where(v => v.Titulo.ToLower() == volume.Titulo.ToLower());
+
+            if (volume.Id != Guid.Empty)
+            {
+                query = query.Where(v => v.Id != volume.Id);
+            }
+
+            return query.Any();
+        }
     }
 }
