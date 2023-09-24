@@ -7,7 +7,6 @@ using Livros.Application.Dtos.Idioma;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Volume;
 using Livros.Application.Validators.Autor;
-using Livros.Application.Validators.Estante;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Globalization;

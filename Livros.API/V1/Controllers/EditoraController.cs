@@ -41,7 +41,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersEditora parametersEditora)
         {
-            logger.LogWarning("Foi requisitado as obras.");
+            string logMessage = parametersEditora?.PalavraChave != null
+                 ? $"Em editoras foi buscado a palavra chave: {parametersEditora.PalavraChave}"
+                 : "Foi requisitado as editoras.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Editora, ViewEditoraDto> editoras = await editoraApplication.GetPaginationAsync(parametersEditora);
             if (editoras is null || !editoras.Pagina.Any())

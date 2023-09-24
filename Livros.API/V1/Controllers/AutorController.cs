@@ -41,7 +41,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersAutor parametersAutor)
         {
-            logger.LogWarning("Foi requisitado os autores.");
+            string logMessage = parametersAutor?.PalavraChave != null
+                 ? $"Em autores foi buscado a palavra chave: {parametersAutor.PalavraChave}"
+                 : "Foi requisitado os autores.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Autor, ViewAutorDto> autores = await autorApplication.GetPaginationAsync(parametersAutor);
 

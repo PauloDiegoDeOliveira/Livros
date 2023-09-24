@@ -41,7 +41,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersGenero parametersGenero)
         {
-            logger.LogWarning("Foi requisitado os gêneros.");
+            string logMessage = parametersGenero?.PalavraChave != null
+                 ? $"Em gêneros foi buscado a palavra chave: {parametersGenero.PalavraChave}"
+                 : "Foi requisitado os gêneros.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Genero, ViewGeneroDto> generos = await generoApplication.GetPaginationAsync(parametersGenero);
             if (generos is null || !generos.Pagina.Any())

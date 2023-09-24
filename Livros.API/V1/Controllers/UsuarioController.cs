@@ -41,7 +41,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersUsuario parametersUsuario)
         {
-            logger.LogWarning("Foi requisitado os usuários.");
+            string logMessage = parametersUsuario?.PalavraChave != null
+                     ? $"Em usuários foi buscado a palavra chave: {parametersUsuario.PalavraChave}"
+                     : "Foi requisitado os usuários.";
+
+            logger.LogWarning(logMessage);
 
             ViewPaginacaoUsuarioDto usuarios = await usuarioApplication.GetPaginationAsync(parametersUsuario);
             if (usuarios is null || !usuarios.Pagina.Any())

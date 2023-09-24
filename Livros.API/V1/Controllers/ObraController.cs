@@ -50,7 +50,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersObra parametersObra)
         {
-            logger.LogWarning("Foi requisitado as obras.");
+            string logMessage = parametersObra?.PalavraChave != null
+                     ? $"Em obras foi buscado a palavra chave: {parametersObra.PalavraChave}"
+                     : "Foi requisitado as obras.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Obra, ViewObraDto> obras = await obraApplication.GetPaginationAsync(parametersObra);
 
@@ -167,6 +171,7 @@ namespace Livros.API.V1.Controllers
             {
                 return await AtualizarRemovendoImagem(putObraDto);
             }
+
             return CustomResponse(ModelState);
         }
 
@@ -212,6 +217,11 @@ namespace Livros.API.V1.Controllers
             {
                 NotifyWarning("Nenhuma obra foi encontrada com o id informado.");
                 return CustomResponse(ModelState);
+            }
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Obra e imagem atualizada com sucesso!");
             }
 
             return CustomResponse(obraAtualizada);

@@ -3,7 +3,6 @@ using Livros.Application.Applications.Base;
 using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Estante;
 using Livros.Application.Dtos.Lista;
-using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
 using Livros.Application.Interfaces;
 using Livros.Domain.Core.Interfaces.Services;

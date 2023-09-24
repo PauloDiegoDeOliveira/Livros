@@ -41,7 +41,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersIdioma parametersIdioma)
         {
-            logger.LogWarning("Foi requisitado os idiomas.");
+            string logMessage = parametersIdioma?.PalavraChave != null
+                     ? $"Em idiomas foi buscado a palavra chave: {parametersIdioma.PalavraChave}"
+                     : "Foi requisitado os idiomas.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Idioma, ViewIdiomaDto> idiomas = await idiomaApplication.GetPaginationAsync(parametersIdioma);
 

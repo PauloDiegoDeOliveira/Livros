@@ -42,7 +42,11 @@ namespace Livros.API.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAsync([FromQuery] ParametersEstante parametersEstante)
         {
-            logger.LogWarning("Foi requisitado as estantes.");
+            string logMessage = parametersEstante?.PalavraChave != null
+                 ? $"Em estantes foi buscado a palavra chave: {parametersEstante.PalavraChave}"
+                 : "Foi requisitado as estantes.";
+
+            logger.LogWarning(logMessage);
 
             ViewPagedListDto<Estante, ViewEstanteDto> estantes = await estanteApplication.GetPaginationAsync(parametersEstante);
             if (estantes is null || !estantes.Pagina.Any())
