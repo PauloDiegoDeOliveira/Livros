@@ -5,6 +5,7 @@ using Livros.Domain.Entities;
 using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -179,10 +180,12 @@ namespace Livros.Infrastructure.Data.Repositories
             return appDbContext.Volumes.Any(v => v.Id == id);
         }
 
-        public bool ExisteNomeVolume(Volume volume)
+        public bool ExisteNomeNumeroVolume(Volume volume)
         {
             IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
-                .Where(v => v.Titulo.ToLower() == volume.Titulo.ToLower());
+               .Where(v => v.Numero == volume.Numero
+                           && v.ObraId == volume.ObraId
+                           && v.Obra.UsuarioId == user.GetUserId().ToString());
 
             if (volume.Id != Guid.Empty)
             {

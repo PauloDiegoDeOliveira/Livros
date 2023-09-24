@@ -25,7 +25,7 @@ namespace Livros.Application.Validators.Volume
             When(x => x.Titulo != null, () =>
             {
                 RuleFor(x => x)
-                    .Must(dto => !obraApplication.ExisteNomeVolumePutDto(dto))
+                    .Must(dto => !obraApplication.ExisteNomeNumeroVolumePutDto(dto))
                     .WithMessage("Já existe um volume cadastrado com o nome informado.");
             });
 

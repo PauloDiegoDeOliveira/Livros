@@ -3,6 +3,7 @@ using Livros.Application.Dtos.Idioma;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Interfaces;
 using Livros.Application.Validators.Idioma;
+using Livros.Application.Validators.Volume;
 
 namespace Livros.Application.Validators.Obra
 {
@@ -64,6 +65,12 @@ namespace Livros.Application.Validators.Obra
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
                 .Must(id => autorApplication.ExisteId(id))
                 .WithMessage("Nenhum autor foi encontrado com o id informado.");
+
+            When(x => x.Volumes != null && x.Volumes.Any(), () =>
+            {
+                RuleForEach(x => x.Volumes)
+                    .SetValidator(new PutVolumeValidator(obraApplication));
+            });
 
             When(x => x.Idiomas != null && x.Idiomas.Any(), () =>
             {

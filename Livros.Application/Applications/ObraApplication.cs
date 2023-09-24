@@ -128,18 +128,18 @@ namespace Livros.Application.Applications
             return obraService.ExisteVolumeId(id);
         }
 
-        public bool ExisteNomeVolumePostDto(PostVolumeDto postVolumeDto)
+        public bool ExisteNomeNumeroVolumePostDto(PostVolumeDto postVolumeDto)
         {
             Volume volume = mapper.Map<Volume>(postVolumeDto);
-            bool consulta = obraService.ExisteNomeVolume(volume);
+            bool consulta = obraService.ExisteNomeNumeroVolume(volume);
 
             return mapper.Map<bool>(consulta);
         }
 
-        public bool ExisteNomeVolumePutDto(PutVolumeDto putVolumeDto)
+        public bool ExisteNomeNumeroVolumePutDto(PutVolumeDto putVolumeDto)
         {
             Volume volume = mapper.Map<Volume>(putVolumeDto);
-            bool consulta = obraService.ExisteNomeVolume(volume);
+            bool consulta = obraService.ExisteNomeNumeroVolume(volume);
 
             return mapper.Map<bool>(consulta);
         }
