@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Livros.Application.Dtos.Estante;
+using Livros.Application.Dtos.Obra;
 using Livros.Application.Interfaces;
 using Livros.Application.Validators.Obra;
 
@@ -26,25 +27,21 @@ namespace Livros.Application.Validators.Estante
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
-            When(x => x.Obras != null, () =>
-            {
-                RuleFor(x => x.Obras)
-                   .NotEmpty()
-                   .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
+            RuleFor(x => x.Obras)
+                .Must(obras => obras == null || NaoExisteObraIdDuplicados(obras))
+                .WithMessage("Não é possível inserir obras repetidas na mesma estante.");
 
-                RuleFor(x => x)
-                    .Must((dto, cancellation) =>
-                    {
-                        return ExisteObrasDuplicadas(dto);
-                    }).WithMessage("Não é possível inserir obras repetidas na mesma estante.");
-
-                RuleForEach(x => x.Obras).SetValidator(new ReferenciaObraValidator(obraApplication));
-            });
+            RuleForEach(x => x.Obras)
+                .SetValidator(new ReferenciaObraValidator(obraApplication))
+                .When(x => x.Obras != null && x.Obras.Any());
         }
 
-        private static bool ExisteObrasDuplicadas(PutEstanteDto putEstanteDto)
+        private static bool NaoExisteObraIdDuplicados(IList<ReferenciaObraDto> obras)
         {
-            return putEstanteDto.Obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
+            if (obras == null)
+                return true;
+
+            return obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
         }
     }
 }
