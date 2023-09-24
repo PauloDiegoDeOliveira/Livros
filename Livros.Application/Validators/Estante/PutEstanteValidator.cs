@@ -39,7 +39,9 @@ namespace Livros.Application.Validators.Estante
         private static bool NaoExisteObraIdDuplicados(IList<ReferenciaObraDto> obras)
         {
             if (obras == null)
+            {
                 return true;
+            }
 
             return obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
         }

@@ -26,7 +26,9 @@ namespace Livros.Application.Validators.Estante
         private static bool NaoExisteObraIdDuplicados(PostEstanteDto postEstanteDto)
         {
             if (postEstanteDto.Obras == null)
+            {
                 return true;
+            }
 
             return postEstanteDto.Obras.GroupBy(x => x.Id).All(g => g.Count() == 1);
         }

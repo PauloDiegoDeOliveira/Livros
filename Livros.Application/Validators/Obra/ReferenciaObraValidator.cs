@@ -17,17 +17,9 @@ namespace Livros.Application.Validators.Obra
                 RuleFor(x => x.Id)
                    .NotEmpty()
                    .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-
-                .Must((dto, cancelar) =>
-                {
-                    return ExisteId(dto.Id);
-                }).WithMessage("Nenhuma obra foi encontrada com o id informado.");
+                   .Must(id => obraApplication.ExisteId(id))
+                   .WithMessage("Nenhuma obra foi encontrada com o id informado.");
             });
-        }
-
-        private bool ExisteId(Guid id)
-        {
-            return obraApplication.ExisteId(id);
         }
     }
 }
