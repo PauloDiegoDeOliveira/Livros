@@ -230,7 +230,7 @@ namespace Livros.API.V1.Controllers
         [HttpGet("detalhes/{id:guid}")]
         [ProducesResponseType(typeof(ViewEstanteDetalhesDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetByIdDetailsAsync(Guid id)
+        public async Task<IActionResult> GetByIdDetalhesAsync(Guid id)
         {
             ViewEstanteDetalhesDto viewEstanteDetalhesDto = await estanteApplication.GetByIdDetalhesAsync(id);
 
