@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Livros.Application.Dtos.Editora;
+using Livros.Application.Dtos.Estante;
 using Livros.Application.Dtos.Genero;
 using Livros.Application.Dtos.Idioma;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Volume;
 using Livros.Application.Validators.Autor;
+using Livros.Application.Validators.Estante;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Globalization;
@@ -60,6 +62,9 @@ namespace Livros.API.Configuration
 
             services.AddValidatorsFromAssemblyContaining<PostVolumeDto>();
             services.AddValidatorsFromAssemblyContaining<PutVolumeDto>();
+
+            services.AddValidatorsFromAssemblyContaining<PostEstanteDto>();
+            services.AddValidatorsFromAssemblyContaining<PutEstanteDto>();
 
             services.AddFluentValidationAutoValidation();
         }

@@ -8,6 +8,8 @@ namespace Livros.Application.Dtos.Lista
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public bool Publico { get; set; }
+        public DateTime CriadoEm { get; set; }
+        public DateTime? AlteradoEm { get; set; }
         public EStatus Status { get; set; }
     }
 }

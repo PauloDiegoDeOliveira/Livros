@@ -33,7 +33,6 @@
     <Folder Include="Dtos\Imagem\" />
     <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />
-    <Folder Include="Validators\Estante\" />
     <Folder Include="Validators\Usuario\" />
   </ItemGroup>
 
