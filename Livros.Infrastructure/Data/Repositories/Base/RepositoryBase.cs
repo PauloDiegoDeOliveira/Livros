@@ -175,10 +175,10 @@ namespace Livros.Infrastructure.Data.Repositories.Base
             }
             catch (Exception ex)
             {
+                logger.LogWarning(ex.Message);
+                logger.LogWarning(ex.InnerException.ToString());
                 AddNotification("Ocorreu um erro ao executar a operação.");
                 AddNotification(ex.Message);
-                logger.LogWarning(ex.InnerException.ToString());
-                logger.LogWarning(ex.Message);
                 //logger.LogWarning(ex.StackTrace);
                 //logger.LogWarning(ex.ToString());
 

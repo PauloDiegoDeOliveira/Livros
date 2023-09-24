@@ -6,8 +6,8 @@ namespace Livros.Application.Dtos.Volume
     {
         public Guid Id { get; set; }
         public Guid ObraId { get; set; }
-        public string Titulo { get; set; }
-        public int Numero { get; set; }
+        public string Nome { get; set; }
+        public int Ordem { get; set; }
         public int Paginas { get; set; }
         public string Anotacao { get; set; }
         public string Preco { get; set; }

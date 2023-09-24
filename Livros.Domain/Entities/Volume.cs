@@ -5,8 +5,8 @@ namespace Livros.Domain.Entities
     public class Volume : EntityBase
     {
         public Guid ObraId { get; set; }
-        public string Titulo { get; set; }
-        public int Numero { get; set; }
+        public string Nome { get; set; }
+        public int Ordem { get; set; }
         public int Paginas { get; set; }
         public string Anotacao { get; set; }
         public decimal Preco { get; set; }

@@ -11,13 +11,13 @@ namespace Livros.Application.Dtos.Volume
         public Guid ObraId { get; set; }
 
         /// <summary>
-        /// Título
+        /// Nome
         /// </summary>
         /// <example>Volume</example>
-        [Display(Name = "título")]
+        [Display(Name = "nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string Titulo { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// Páginas

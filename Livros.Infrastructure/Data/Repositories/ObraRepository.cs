@@ -5,7 +5,6 @@ using Livros.Domain.Entities;
 using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -30,7 +29,7 @@ namespace Livros.Infrastructure.Data.Repositories
             return await TryCatch(async () =>
             {
                 IQueryable<Obra> obras = appDbContext.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString())
-                        .Include(o => o.Volumes)
+                        .Include(o => o.Volumes.OrderBy(v => v.Ordem))
                         .AsNoTracking();
 
                 if (parametersObra.Id != null)
@@ -90,8 +89,18 @@ namespace Livros.Infrastructure.Data.Repositories
             obra.UsuarioId = user.GetUserId().ToString();
         }
 
+        private void AtualizarOrdemVolume(IList<Volume> volumes)
+        {
+            int numero = 1;
+            foreach (Volume volume in volumes)
+            {
+                volume.Ordem = numero++;
+            }
+        }
+
         public override async Task<Obra> PostAsync(Obra obra)
         {
+            AtualizarOrdemVolume(obra.Volumes);
             DefinirUsuarioId(obra);
             await InsertIdiomasAsync(obra);
 
@@ -113,6 +122,8 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public override async Task<Obra> PutAsync(Obra obra)
         {
+            AtualizarOrdemVolume(obra.Volumes);
+
             Obra obraConsultado = await appDbContext.Obras
                         .Include(o => o.Volumes)
                         .Include(o => o.Idiomas)
@@ -149,7 +160,7 @@ namespace Livros.Infrastructure.Data.Repositories
         public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)
         {
             return await appDbContext.Obras
-                     .Include(o => o.Volumes)
+                     .Include(o => o.Volumes.OrderBy(v => v.Ordem))
                      .Include(o => o.Editora)
                      .Include(o => o.Genero)
                      .Include(o => o.Autor)
@@ -186,7 +197,7 @@ namespace Livros.Infrastructure.Data.Repositories
             return appDbContext.Volumes.AsNoTracking()
                 .Any(x => x.Id != volume.Id
                      && x.ObraId == volume.ObraId
-                     && x.Numero == volume.Numero
+                     && x.Ordem == volume.Ordem
                      && x.Status != EStatus.Excluido.ToString()
                      && x.Obra.UsuarioId == user.GetUserId().ToString());
         }

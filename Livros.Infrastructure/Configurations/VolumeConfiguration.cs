@@ -13,9 +13,9 @@ namespace Livros.Infrastructure.Configurations
 
             base.Configure(builder);
 
-            builder.Property(v => v.Titulo)
+            builder.Property(v => v.Nome)
                    .IsRequired()
-                   .HasColumnName("Titulo")
+                   .HasColumnName("Nome")
                    .HasMaxLength(150)
                    .HasColumnType("varchar(150)");
 

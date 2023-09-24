@@ -18,20 +18,13 @@ namespace Livros.Application.Dtos.Volume
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Título
+        /// Nome
         /// </summary>
         /// <example>Volume</example>
         [Display(Name = "título")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(150, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
-        public string Titulo { get; set; }
-
-        /// <summary>
-        /// Número
-        /// </summary>
-        /// <example>1</example>
-        [Display(Name = "número")]
-        public int Numero { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// Páginas

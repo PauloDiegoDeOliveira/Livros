@@ -4,6 +4,7 @@ using Livros.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230924222831_NumeroParaOrdem")]
+    partial class NumeroParaOrdem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -531,12 +533,6 @@ namespace Livros.Infrastructure.Migrations
                     b.Property<bool>("Lido")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
-                        .HasColumnName("Nome");
-
                     b.Property<Guid>("ObraId")
                         .HasColumnType("uniqueidentifier");
 
@@ -556,6 +552,12 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(50)")
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Titulo");
 
                     b.HasKey("Id");
 
