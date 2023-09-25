@@ -51,11 +51,11 @@ namespace Livros.Application.Validators.Obra
                 .Must(id => autorApplication.ExisteId(id))
                 .WithMessage("Nenhum autor foi encontrado com o id informado.");
 
-            When(x => x.Volumes != null && x.Volumes.Any(), () =>
-            {
-                RuleForEach(x => x.Volumes)
-                    .SetValidator(new PostVolumeValidator(obraApplication));
-            });
+            //When(x => x.Volumes != null && x.Volumes.Any(), () =>
+            //{
+            //    RuleForEach(x => x.Volumes)
+            //        .SetValidator(new PostVolumeValidator(obraApplication));
+            //});
 
             When(x => x.Idiomas != null && x.Idiomas.Any(), () =>
             {
