@@ -38,6 +38,7 @@ namespace Livros.Application.Dtos.Volume
         /// </summary>
         /// <example>100</example>
         [Display(Name = "preço")]
+        [Range(0, (double)decimal.MaxValue, ErrorMessage = "O {0} deve ser um valor positivo.")]
         public decimal Preco { get; set; }
 
         /// <summary>
