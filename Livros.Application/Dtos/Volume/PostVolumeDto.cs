@@ -60,6 +60,7 @@ namespace Livros.Application.Dtos.Volume
         [Display(Name = "data de leitura")]
         [DataType(DataType.DateTime, ErrorMessage = "O campo {0} está em formato inválido.")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Range(typeof(DateTime), "1600-01-01", "2100-12-31", ErrorMessage = "A {0} deve estar entre {1} e {2}.")]
         public DateTime DataLeitura { get; set; }
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace Livros.Application.Dtos.Volume
         [Display(Name = "data de compra")]
         [DataType(DataType.DateTime, ErrorMessage = "O campo {0} está em formato inválido.")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Range(typeof(DateTime), "1600-01-01", "2100-12-31", ErrorMessage = "A {0} deve estar entre {1} e {2}.")]
         public DateTime DataCompra { get; set; }
     }
 }
