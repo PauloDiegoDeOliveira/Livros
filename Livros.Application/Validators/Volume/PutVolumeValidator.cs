@@ -21,14 +21,14 @@ namespace Livros.Application.Validators.Volume
                     .WithMessage("Nenhum volume foi encontrado com o id informado.");
             });
 
-            When(x => x.Nome != null, () =>
-            {
-                RuleFor(x => x.Nome)
-                    .NotEmpty()
-                    .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-                    .Must((dto, nome) => !obraApplication.ExisteNomeVolumePutDto(dto))
-                    .WithMessage("Já existe um volume cadastrado com o nome informado.");
-            });
+            //When(x => x.Nome != null, () =>
+            //{
+            //    RuleFor(x => x.Nome)
+            //        .NotEmpty()
+            //        .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
+            //        .Must((dto, nome) => !obraApplication.ExisteNomeVolumePutDto(dto))
+            //        .WithMessage("Já existe um volume cadastrado com o nome informado.");
+            //});
 
             RuleFor(x => x.Status)
                 .NotEmpty()
