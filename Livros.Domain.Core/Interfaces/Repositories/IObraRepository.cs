@@ -16,6 +16,8 @@ namespace Livros.Domain.Core.Interfaces.Repositories
 
         bool ExisteVolumeId(Guid id);
 
+        bool ExisteNomeVolume(Volume volume);
+
         bool ExisteNumeroVolume(Volume volume);
     }
 }

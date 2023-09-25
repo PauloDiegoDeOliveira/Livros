@@ -39,7 +39,7 @@ namespace Livros.Infrastructure.Data.Repositories
 
                 if (parametersObra.PalavraChave != null)
                 {
-                    obras = obras.Where(o => o.Titulo.ToLower().Trim().Contains(parametersObra.PalavraChave.ToLower().Trim()));
+                    obras = obras.Where(o => o.Nome.ToLower().Trim().Contains(parametersObra.PalavraChave.ToLower().Trim()));
                 }
 
                 if (parametersObra.Status != 0)
@@ -58,11 +58,11 @@ namespace Livros.Infrastructure.Data.Repositories
                         switch (parametersObra.Ordenar)
                         {
                             case EOrdenar.Crescente:
-                                obras = obras.OrderBy(o => o.Titulo);
+                                obras = obras.OrderBy(o => o.Nome);
                                 break;
 
                             case EOrdenar.Decrescente:
-                                obras = obras.OrderByDescending(o => o.Titulo);
+                                obras = obras.OrderByDescending(o => o.Nome);
                                 break;
 
                             case EOrdenar.Novos:
@@ -176,7 +176,7 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNome(Obra obra)
         {
             IQueryable<Obra> query = appDbContext.Obras.AsNoTracking()
-                .Where(o => o.Titulo.ToLower() == obra.Titulo.ToLower());
+                .Where(o => o.Nome.ToLower() == obra.Nome.ToLower());
 
             if (obra.Id != Guid.Empty)
             {
@@ -189,6 +189,19 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteVolumeId(Guid id)
         {
             return appDbContext.Volumes.Any(v => v.Id == id);
+        }
+
+        public bool ExisteNomeVolume(Volume volume)
+        {
+            IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
+                .Where(v => v.Nome.ToLower() == volume.Nome.ToLower());
+
+            if (volume.Id != Guid.Empty)
+            {
+                query = query.Where(v => v.Id != volume.Id);
+            }
+
+            return query.Any();
         }
 
         public bool ExisteNumeroVolume(Volume volume)

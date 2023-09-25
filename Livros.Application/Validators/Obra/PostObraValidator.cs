@@ -2,7 +2,6 @@
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Interfaces;
 using Livros.Application.Validators.Idioma;
-using Livros.Application.Validators.Volume;
 
 namespace Livros.Application.Validators.Obra
 {
@@ -26,11 +25,11 @@ namespace Livros.Application.Validators.Obra
             this.autorApplication = autorApplication;
             this.idiomaApplication = idiomaApplication;
 
-            RuleFor(x => x.Titulo)
+            RuleFor(x => x.Nome)
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
                 .Must((dto, nome) => !obraApplication.ExisteNomePostDto(dto))
-                .When(x => !string.IsNullOrEmpty(x.Titulo))
+                .When(x => !string.IsNullOrEmpty(x.Nome))
                 .WithMessage("Já existe uma obra cadastrada com o nome informado.");
 
             RuleFor(x => x.EditoraId)

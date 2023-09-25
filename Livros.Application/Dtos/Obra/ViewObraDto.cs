@@ -10,7 +10,7 @@ namespace Livros.Application.Dtos.Obra
         public Guid EditoraId { get; set; }
         public Guid GeneroId { get; set; }
         public Guid AutorId { get; set; }
-        public string Titulo { get; set; }
+        public string Nome { get; set; }
         public string Anotacao { get; set; }
         public int AvaliacaoTotal { get; set; }
         public string PrecoTotal { get; set; }

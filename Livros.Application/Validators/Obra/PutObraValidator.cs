@@ -33,11 +33,11 @@ namespace Livros.Application.Validators.Obra
                   .Must(id => obraApplication.ExisteId(id))
                   .WithMessage("Nenhuma obra foi encontrada com o id informado.");
 
-            RuleFor(x => x.Titulo)
+            RuleFor(x => x.Nome)
                   .NotEmpty()
                   .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
 
-            When(x => x.Titulo != null, () =>
+            When(x => x.Nome != null, () =>
             {
                 RuleFor(x => x)
                   .Must(dto => !obraApplication.ExisteNomePutDto(dto))

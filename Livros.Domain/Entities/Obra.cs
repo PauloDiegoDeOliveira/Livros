@@ -8,7 +8,7 @@ namespace Livros.Domain.Entities
         public Guid EditoraId { get; set; }
         public Guid GeneroId { get; set; }
         public Guid AutorId { get; set; }
-        public string Titulo { get; set; }
+        public string Nome { get; set; }
         public string Anotacao { get; set; }
         public bool Concluido { get; set; }
         public bool VolumeUnico { get; set; }
