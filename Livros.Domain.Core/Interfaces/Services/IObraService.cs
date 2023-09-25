@@ -15,9 +15,5 @@ namespace Livros.Domain.Core.Interfaces.Services
         bool ExisteNome(Obra obra);
 
         bool ExisteVolumeId(Guid id);
-
-        bool ExisteNomeVolume(Volume volume);
-
-        bool ExisteNumeroVolume(Volume volume);
     }
 }
