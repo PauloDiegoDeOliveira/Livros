@@ -176,7 +176,9 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNome(Obra obra)
         {
             IQueryable<Obra> query = appDbContext.Obras.AsNoTracking()
-                .Where(o => o.Nome.ToLower() == obra.Nome.ToLower());
+                .Where(o => o.Nome.ToLower() == obra.Nome.ToLower()
+                       && o.UsuarioId == user.GetUserId().ToString()
+                       && o.Status != EStatus.Excluido.ToString());
 
             if (obra.Id != Guid.Empty)
             {
@@ -194,7 +196,10 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNomeVolume(Volume volume)
         {
             IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
-                .Where(v => v.Nome.ToLower() == volume.Nome.ToLower());
+                .Include(v => v.Obra)
+                .Where(v => v.Nome.ToLower() == volume.Nome.ToLower()
+                       && v.Obra.UsuarioId == user.GetUserId().ToString()
+                       && v.Status != EStatus.Excluido.ToString());
 
             if (volume.Id != Guid.Empty)
             {

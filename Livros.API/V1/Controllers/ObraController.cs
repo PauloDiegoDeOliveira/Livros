@@ -186,7 +186,7 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Obra atualizada e imagem removida com sucesso!");
+                NotifyWarning("Obra atualizada e imagem excluída com sucesso!");
             }
 
             return CustomResponse(obraAtualizada);
@@ -221,7 +221,7 @@ namespace Livros.API.V1.Controllers
 
             if (IsValidOperation())
             {
-                NotifyWarning("Obra e imagem atualizada com sucesso!");
+                NotifyWarning("Obra e imagem atualizadas com sucesso!");
             }
 
             return CustomResponse(obraAtualizada);
