@@ -4,11 +4,11 @@ namespace Livros.Application.Dtos.Volume
 {
     public class PostVolumeDto
     {
-        /// <summary>
-        /// ObraId
-        /// </summary>
-        /// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
-        public Guid ObraId { get; set; }
+        ///// <summary>
+        ///// ObraId
+        ///// </summary>
+        ///// <example>EBBD2417-8FF7-482C-9768-08DAD14324AE</example>
+        //public Guid ObraId { get; set; }
 
         /// <summary>
         /// Nome
