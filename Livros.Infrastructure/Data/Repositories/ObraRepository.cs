@@ -193,32 +193,5 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return appDbContext.Volumes.Any(v => v.Id == id);
         }
-
-        // TODO - Refatorar
-        public bool ExisteNomeVolume(Volume volume)
-        {
-            IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()
-                .Include(v => v.Obra)
-                .Where(v => v.Nome.ToLower() == volume.Nome.ToLower()
-                       && v.Obra.UsuarioId == user.GetUserId().ToString()
-                       && v.Status != EStatus.Excluido.ToString());
-
-            if (volume.Id != Guid.Empty)
-            {
-                query = query.Where(v => v.Id != volume.Id);
-            }
-
-            return query.Any();
-        }
-
-        public bool ExisteNumeroVolume(Volume volume)
-        {
-            return appDbContext.Volumes.AsNoTracking()
-                .Any(x => x.Id != volume.Id
-                     && x.ObraId == volume.ObraId
-                     && x.Ordem == volume.Ordem
-                     && x.Status != EStatus.Excluido.ToString()
-                     && x.Obra.UsuarioId == user.GetUserId().ToString());
-        }
     }
 }

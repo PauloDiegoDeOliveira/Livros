@@ -24,22 +24,6 @@ namespace Livros.Application.Validators.Volume
             RuleFor(x => x.Status)
                 .NotEmpty()
                 .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.");
-
-            //When(x => x.Nome != null, () =>
-            //{
-            //    RuleFor(x => x.Nome)
-            //        .NotEmpty()
-            //        .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-            //        .Must((dto, nome) => !obraApplication.ExisteNomeVolumePutDto(dto))
-            //        .WithMessage("Já existe um volume cadastrado com o nome informado.");
-            //});
-
-            //When(x => x.Ordem != 0, () =>
-            //{
-            //    RuleFor(x => x)
-            //        .Must(dto => !obraApplication.ExisteNumeroVolumePutDto(dto))
-            //        .WithMessage("Já existe um volume cadastrado com a ordem informado.");
-            //});
         }
     }
 }
