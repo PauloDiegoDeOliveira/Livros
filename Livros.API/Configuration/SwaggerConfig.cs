@@ -90,12 +90,14 @@ namespace Livros.API.Configuration
                 Title = "Libro Vault",
                 Version = description.ApiVersion.ToString(),
                 Description = "Esta API faz parte do projeto Libro Vault.<br><br>"
-                  + "Contatos:<br><br>"
-                  + "Paulo Diego - pdiegodo@gmail.com<br>"
-                  + "Linkedin: https://www.linkedin.com/in/paulodiegodeoliveira/ <br><br>"
+                            + "<strong>Contatos:</strong> <br><br>"
+                            + "<strong>Nome:</strong> Paulo Diego <br>"
+                            + "<strong>E-mail:</strong> pdiegodo@gmail.com <br>"
+                            + "<strong>Linkedin:</strong> https://www.linkedin.com/in/paulodiegodeoliveira/ <br><br>"
 
-                  + "Henrique Fickert - henriquefickert@hotmail.com<br>"
-                  + "Linkedin: https://www.linkedin.com/in/henriquefickert/",
+                            + "<strong>Nome:</strong> Henrique Fickert <br>"
+                            + "<strong>E-mail:</strong> henriquefickert@hotmail.com <br>"
+                            + "<strong>Linkedin:</strong> https://www.linkedin.com/in/henriquefickert/",
             };
 
             if (description.IsDeprecated)
