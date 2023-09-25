@@ -7,8 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Repositories\SqlScripts\**" />
+    <EmbeddedResource Remove="Data\Repositories\SqlScripts\**" />
+    <None Remove="Data\Repositories\SqlScripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\Repositories\Base\" />
-    <Folder Include="Data\Repositories\SqlScripts\" />
   </ItemGroup>
 
   <ItemGroup>
