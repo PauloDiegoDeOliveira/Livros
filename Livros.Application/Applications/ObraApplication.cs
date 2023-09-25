@@ -3,7 +3,6 @@ using Livros.Application.Applications.Base;
 using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
-using Livros.Application.Dtos.Volume;
 using Livros.Application.Interfaces;
 using Livros.Application.Utilities.Image;
 using Livros.Application.Utilities.Paths;

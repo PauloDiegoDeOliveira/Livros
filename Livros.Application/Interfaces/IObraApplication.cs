@@ -1,7 +1,6 @@
 ﻿using Livros.Application.Dtos.Base;
 using Livros.Application.Dtos.Obra;
 using Livros.Application.Dtos.Pagination;
-using Livros.Application.Dtos.Volume;
 using Livros.Application.Interfaces.Base;
 using Livros.Domain.Entities;
 using Livros.Domain.Pagination;

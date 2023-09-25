@@ -6,7 +6,6 @@ using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
