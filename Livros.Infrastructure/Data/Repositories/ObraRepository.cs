@@ -6,6 +6,7 @@ using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -193,6 +194,7 @@ namespace Livros.Infrastructure.Data.Repositories
             return appDbContext.Volumes.Any(v => v.Id == id);
         }
 
+        // TODO - Refatorar
         public bool ExisteNomeVolume(Volume volume)
         {
             IQueryable<Volume> query = appDbContext.Volumes.AsNoTracking()

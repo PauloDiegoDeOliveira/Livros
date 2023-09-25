@@ -68,6 +68,10 @@ namespace Livros.Application.Validators.Obra
 
             When(x => x.Volumes != null && x.Volumes.Any(), () =>
             {
+                RuleFor(x => x)
+                  .Must(NaoExistemNomesDuplicadosEmVolumes)
+                  .WithMessage("Não é possível inserir volumes com nomes idênticos na mesma obra.");
+
                 RuleForEach(x => x.Volumes)
                     .SetValidator(new PutVolumeValidator(obraApplication));
             });
@@ -81,6 +85,11 @@ namespace Livros.Application.Validators.Obra
                 RuleForEach(x => x.Idiomas)
                     .SetValidator(new ReferenciaIdiomaValidator(idiomaApplication));
             });
+        }
+
+        private bool NaoExistemNomesDuplicadosEmVolumes(PutObraDto putObraDto)
+        {
+            return putObraDto.Volumes?.GroupBy(x => x.Nome).All(g => g.Count() == 1) ?? true;
         }
 
         private bool NaoExisteIdiomaIdDuplicados(IList<ReferenciaIdiomaDto> referenciaIdiomaDto)
