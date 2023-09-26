@@ -121,6 +121,7 @@ namespace Livros.Application.Applications
             usuario.DataNascimento = putCadastroUsuarioDto.DataNascimento;
             usuario.Status = putCadastroUsuarioDto.Status.ToString();
             usuario.AlteradoEm = DateTime.Now;
+            usuario.EmailConfirmed = true;
 
             IdentityResult result = await userManager.UpdateAsync(usuario);
             if (!result.Succeeded)
