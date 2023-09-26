@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -296,7 +297,7 @@ namespace Livros.Infrastructure.Migrations
                     EditoraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GeneroId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AutorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Titulo = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
                     Anotacao = table.Column<string>(type: "varchar(5000)", maxLength: 5000, nullable: true),
                     Concluido = table.Column<bool>(type: "bit", nullable: false),
                     VolumeUnico = table.Column<bool>(type: "bit", nullable: false),
@@ -392,8 +393,8 @@ namespace Livros.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Titulo = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    Numero = table.Column<int>(type: "int", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Ordem = table.Column<int>(type: "int", nullable: false),
                     Paginas = table.Column<int>(type: "int", nullable: false),
                     Anotacao = table.Column<string>(type: "varchar(5000)", maxLength: 5000, nullable: true),
                     Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

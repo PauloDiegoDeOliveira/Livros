@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livros.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230923164254_Inicial")]
+    [Migration("20230926023332_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -357,6 +357,12 @@ namespace Livros.Infrastructure.Migrations
                     b.Property<DateTime?>("HoraEnvio")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Nome");
+
                     b.Property<Guid?>("NomeArquivo")
                         .HasColumnType("uniqueidentifier");
 
@@ -375,12 +381,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(150)")
                         .HasDefaultValue("Obra")
                         .HasColumnName("Tipo");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
-                        .HasColumnName("Titulo");
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
@@ -533,11 +533,17 @@ namespace Livros.Infrastructure.Migrations
                     b.Property<bool>("Lido")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Nome");
 
                     b.Property<Guid>("ObraId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Ordem")
+                        .HasColumnType("int");
 
                     b.Property<int>("Paginas")
                         .HasColumnType("int");
@@ -552,12 +558,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(50)")
                         .HasDefaultValue("Ativo")
                         .HasColumnName("Status");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)")
-                        .HasColumnName("Titulo");
 
                     b.HasKey("Id");
 
