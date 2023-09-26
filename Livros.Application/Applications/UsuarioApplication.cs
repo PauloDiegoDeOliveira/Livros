@@ -90,7 +90,8 @@ namespace Livros.Application.Applications
                 Nome = postCadastroUsuarioDto.Nome,
                 //usuario.Sobrenome = postCadastroUsuarioDto.Sobrenome;
                 Genero = postCadastroUsuarioDto.Genero.ToString(),
-                DataNascimento = postCadastroUsuarioDto.DataNascimento
+                DataNascimento = postCadastroUsuarioDto.DataNascimento,
+                EmailConfirmed = true
             };
 
             IdentityResult result = await userManager.CreateAsync(usuario, postCadastroUsuarioDto.Senha);
