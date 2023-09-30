@@ -100,8 +100,8 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public override async Task<Obra> PostAsync(Obra obra)
         {
-            AtualizarOrdemVolume(obra.Volumes);
             DefinirUsuarioId(obra);
+            AtualizarOrdemVolume(obra.Volumes);
             await InsertIdiomasAsync(obra);
 
             return await base.PostAsync(obra);
@@ -122,8 +122,8 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public override async Task<Obra> PutAsync(Obra obra)
         {
-            AtualizarOrdemVolume(obra.Volumes);
             DefinirUsuarioId(obra);
+            AtualizarOrdemVolume(obra.Volumes);
 
             Obra obraConsultado = await appDbContext.Obras
                         .Include(o => o.Volumes)

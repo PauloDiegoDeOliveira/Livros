@@ -18,7 +18,8 @@ namespace Livros.Infrastructure.Data.Repositories
                                 ILogger<RepositoryBase<Idioma>> logger,
                                 IConfiguration configuration,
                                 IUser user) : base(appDbContext, notifier, logger, configuration)
-        { }
+        {
+        }
 
         public async Task<PagedList<Idioma>> GetPaginationAsync(ParametersIdioma parametersIdioma)
         {
