@@ -175,23 +175,6 @@ namespace Livros.API.V1.Controllers
             return CustomResponse(ModelState);
         }
 
-        private async Task<IActionResult> AtualizarRemovendoImagem(PutObraDto putObraDto)
-        {
-            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, null, null, null, null, null);
-
-            if (obraAtualizada is null)
-            {
-                return CustomResponse(ModelState);
-            }
-
-            if (IsValidOperation())
-            {
-                NotifyWarning("Obra atualizada e imagem excluída com sucesso!");
-            }
-
-            return CustomResponse(obraAtualizada);
-        }
-
         private async Task<IActionResult> AtualizarComImagem(PutObraDto putObraDto, EDiretorio eDiretorio)
         {
             if (!await GerenciadorDeCaminhos.ValidarURLs(eDiretorio.ToString(), eAmbiente))
@@ -247,6 +230,23 @@ namespace Livros.API.V1.Controllers
             if (IsValidOperation())
             {
                 NotifyWarning("Obra atualizada com sucesso, e a imagem permaneceu inalterada!");
+            }
+
+            return CustomResponse(obraAtualizada);
+        }
+
+        private async Task<IActionResult> AtualizarRemovendoImagem(PutObraDto putObraDto)
+        {
+            ViewObraDto obraAtualizada = await obraApplication.PutAsync(putObraDto, null, null, null, null, null);
+
+            if (obraAtualizada is null)
+            {
+                return CustomResponse(ModelState);
+            }
+
+            if (IsValidOperation())
+            {
+                NotifyWarning("Obra atualizada e imagem excluída com sucesso!");
             }
 
             return CustomResponse(obraAtualizada);
