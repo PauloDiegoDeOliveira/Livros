@@ -47,6 +47,20 @@ namespace Livros.Infrastructure.Data.Repositories
                     editoras = editoras.Where(e => e.Status == parametersEditora.Status.ToString());
                 }
 
+                if (parametersEditora.QuantidadeObras != 0)
+                {
+                    switch (parametersEditora.Ordenar)
+                    {
+                        case EOrdenar.Crescente:
+                            editoras = editoras.OrderBy(e => e.Obras.Count);
+                            break;
+
+                        case EOrdenar.Decrescente:
+                            editoras = editoras.OrderByDescending(e => e.Obras.Count);
+                            break;
+                    }
+                }
+
                 if (!editoras.Any())
                 {
                     AddNotification("Nenhum objeto foi encontrado.", ENotificationType.Warning);
