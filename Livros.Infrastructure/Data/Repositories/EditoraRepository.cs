@@ -28,8 +28,8 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return await TryCatch(async () =>
             {
-                IQueryable<Editora> editoras = appDbContext.Editoras
-                    .Where(e => e.UsuarioId == user.GetUserId().ToString())
+                IQueryable<Editora> editoras = appDbContext.Editoras.Where(e => e.UsuarioId == user.GetUserId().ToString())
+                    .Include(e => e.Obras.Where(e => e.UsuarioId == user.GetUserId().ToString()))
                     .AsNoTracking();
 
                 if (parametersEditora.Id != null)
@@ -49,14 +49,14 @@ namespace Livros.Infrastructure.Data.Repositories
 
                 if (parametersEditora.QuantidadeObras != 0)
                 {
-                    switch (parametersEditora.Ordenar)
+                    switch (parametersEditora.QuantidadeObras)
                     {
-                        case EOrdenar.Crescente:
-                            editoras = editoras.OrderBy(e => e.Obras.Count);
+                        case EQuantidadeObras.Crescente:
+                            editoras = editoras.OrderBy(x => x.Obras.Count());
                             break;
 
-                        case EOrdenar.Decrescente:
-                            editoras = editoras.OrderByDescending(e => e.Obras.Count);
+                        case EQuantidadeObras.Decrescente:
+                            editoras = editoras.OrderByDescending(e => e.Obras.Count());
                             break;
                     }
                 }
@@ -87,10 +87,6 @@ namespace Livros.Infrastructure.Data.Repositories
                                 editoras = editoras.OrderBy(e => e.CriadoEm);
                                 break;
                         }
-                    }
-                    else
-                    {
-                        editoras = editoras.OrderBy(e => e.CriadoEm);
                     }
                 }
 
