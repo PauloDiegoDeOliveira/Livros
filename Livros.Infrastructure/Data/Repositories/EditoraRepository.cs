@@ -52,7 +52,7 @@ namespace Livros.Infrastructure.Data.Repositories
                     switch (parametersEditora.QuantidadeObras)
                     {
                         case EQuantidadeObras.Crescente:
-                            editoras = editoras.OrderBy(x => x.Obras.Count());
+                            editoras = editoras.OrderBy(e => e.Obras.Count());
                             break;
 
                         case EQuantidadeObras.Decrescente:
