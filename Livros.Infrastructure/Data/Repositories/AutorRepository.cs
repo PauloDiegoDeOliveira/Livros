@@ -47,6 +47,20 @@ namespace Livros.Infrastructure.Data.Repositories
                     autores = autores.Where(g => g.Status == parametersAutor.Status.ToString());
                 }
 
+                if (parametersAutor.QuantidadeObras != 0)
+                {
+                    switch (parametersAutor.QuantidadeObras)
+                    {
+                        case EQuantidadeObras.Crescente:
+                            autores = autores.OrderBy(e => e.Obras.Count());
+                            break;
+
+                        case EQuantidadeObras.Decrescente:
+                            autores = autores.OrderByDescending(e => e.Obras.Count());
+                            break;
+                    }
+                }
+
                 if (!autores.Any())
                 {
                     AddNotification("Nenhum objeto foi encontrado.", ENotificationType.Warning);
@@ -73,10 +87,6 @@ namespace Livros.Infrastructure.Data.Repositories
                                 autores = autores.OrderBy(g => g.CriadoEm);
                                 break;
                         }
-                    }
-                    else
-                    {
-                        autores = autores.OrderBy(e => e.CriadoEm);
                     }
                 }
 

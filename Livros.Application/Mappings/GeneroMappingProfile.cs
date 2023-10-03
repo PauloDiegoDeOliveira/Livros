@@ -15,7 +15,9 @@ namespace Livros.Application.Mappings
         {
             CreateMap<PostGeneroDto, Genero>().ReverseMap();
             CreateMap<PutGeneroDto, Genero>().ReverseMap();
-            CreateMap<Genero, ViewGeneroDto>().ReverseMap();
+
+            CreateMap<Genero, ViewGeneroDto>().ForMember(viewObraDto => viewObraDto.QuantidadeObras,
+                     opt => opt.MapFrom(editora => editora.Obras.Count()));
         }
     }
 }

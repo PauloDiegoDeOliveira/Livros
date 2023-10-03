@@ -47,6 +47,20 @@ namespace Livros.Infrastructure.Data.Repositories
                     generos = generos.Where(g => g.Status == parametersGenero.Status.ToString());
                 }
 
+                if (parametersGenero.QuantidadeObras != 0)
+                {
+                    switch (parametersGenero.QuantidadeObras)
+                    {
+                        case EQuantidadeObras.Crescente:
+                            generos = generos.OrderBy(g => g.Obras.Count());
+                            break;
+
+                        case EQuantidadeObras.Decrescente:
+                            generos = generos.OrderByDescending(g => g.Obras.Count());
+                            break;
+                    }
+                }
+
                 if (!generos.Any())
                 {
                     AddNotification("Nenhum objeto foi encontrado.", ENotificationType.Warning);
@@ -73,10 +87,6 @@ namespace Livros.Infrastructure.Data.Repositories
                                 generos = generos.OrderBy(g => g.CriadoEm);
                                 break;
                         }
-                    }
-                    else
-                    {
-                        generos = generos.OrderBy(e => e.CriadoEm);
                     }
                 }
 
