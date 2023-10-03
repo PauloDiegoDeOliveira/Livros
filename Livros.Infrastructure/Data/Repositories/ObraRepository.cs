@@ -30,7 +30,54 @@ namespace Livros.Infrastructure.Data.Repositories
             {
                 IQueryable<Obra> obras = appDbContext.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString())
                         .Include(o => o.Volumes.OrderBy(v => v.Ordem))
+                        .Include(o => o.Autor)
+                        .Include(o => o.Editora)
+                        .Include(o => o.Genero)
+                        .Include(o => o.Idiomas)
                         .AsNoTracking();
+
+                if (parametersObra.AutorId != Guid.Empty)
+                {
+                    obras = obras.Where(o => o.AutorId == parametersObra.AutorId);
+                }
+
+                if (parametersObra.EditoraId != Guid.Empty)
+                {
+                    obras = obras.Where(o => o.EditoraId == parametersObra.EditoraId);
+                }
+
+                if (parametersObra.GeneroId != Guid.Empty)
+                {
+                    obras = obras.Where(o => o.GeneroId == parametersObra.GeneroId);
+                }
+
+                if (parametersObra.VolumeUnico)
+                {
+                    obras = obras.Where(o => o.VolumeUnico);
+                }
+
+                if (parametersObra.IdiomaId != null)
+                {
+                    obras = obras.Where(o => o.Idiomas.Any(o => parametersObra.IdiomaId.Contains(o.Id)));
+                }
+
+                if (parametersObra.Tipo != 0)
+                {
+                    obras = obras.Where(o => o.Tipo == parametersObra.Tipo.ToString());
+                }
+
+                if (parametersObra.DataInicio.HasValue && !parametersObra.DataFim.HasValue)
+                {
+                    obras = obras.Where(o => o.CriadoEm.Date >= parametersObra.DataInicio.Value.Date);
+                }
+                else if (!parametersObra.DataInicio.HasValue && parametersObra.DataFim.HasValue)
+                {
+                    obras = obras.Where(o => o.CriadoEm.Date <= parametersObra.DataFim.Value.Date);
+                }
+                else if (parametersObra.DataInicio.HasValue && parametersObra.DataFim.HasValue)
+                {
+                    obras = obras.Where(o => o.CriadoEm.Date >= parametersObra.DataInicio.Value.Date && o.CriadoEm.Date <= parametersObra.DataFim.Value.Date);
+                }
 
                 if (parametersObra.Id != null)
                 {
@@ -73,10 +120,6 @@ namespace Livros.Infrastructure.Data.Repositories
                                 obras = obras.OrderBy(o => o.CriadoEm);
                                 break;
                         }
-                    }
-                    else
-                    {
-                        obras = obras.OrderBy(o => o.CriadoEm);
                     }
                 }
 
