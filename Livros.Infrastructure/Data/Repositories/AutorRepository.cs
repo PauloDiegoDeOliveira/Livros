@@ -28,8 +28,8 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             return await TryCatch(async () =>
             {
-                IQueryable<Autor> autores = appDbContext.Autores
-                    .Where(g => g.UsuarioId == user.GetUserId().ToString())
+                IQueryable<Autor> autores = appDbContext.Autores.Where(a => a.UsuarioId == user.GetUserId().ToString())
+                    .Include(a => a.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString()))
                     .AsNoTracking();
 
                 if (parametersAutor.Id != null)
