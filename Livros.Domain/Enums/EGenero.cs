@@ -2,8 +2,8 @@
 {
     public enum EGenero
     {
-        Masculino = 1,
-        Feminino,
+        Feminino = 1,
+        Masculino,
         Outro
     }
 }

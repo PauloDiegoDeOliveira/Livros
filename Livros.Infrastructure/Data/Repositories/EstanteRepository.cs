@@ -5,6 +5,7 @@ using Livros.Domain.Entities;
 using Livros.Domain.Enums;
 using Livros.Domain.Pagination;
 using Livros.Infrastructure.Data.Repositories.Base;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -223,7 +224,9 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNome(Estante estante)
         {
             IQueryable<Estante> query = appDbContext.Estantes.AsNoTracking()
-                .Where(e => e.Nome.ToLower() == estante.Nome.ToLower());
+                    .Where(o => o.Nome.ToLower() == estante.Nome.ToLower()
+                       && o.UsuarioId == user.GetUserId().ToString()
+                       && o.Status != EStatus.Excluido.ToString());
 
             if (estante.Id != Guid.Empty)
             {

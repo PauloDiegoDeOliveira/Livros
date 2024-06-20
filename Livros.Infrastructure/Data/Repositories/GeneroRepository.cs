@@ -119,7 +119,9 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNome(Genero genero)
         {
             IQueryable<Genero> query = appDbContext.Generos.AsNoTracking()
-                .Where(g => g.Nome.ToLower() == genero.Nome.ToLower());
+                         .Where(o => o.Nome.ToLower() == genero.Nome.ToLower()
+                       && o.UsuarioId == user.GetUserId().ToString()
+                       && o.Status != EStatus.Excluido.ToString());
 
             if (genero.Id != Guid.Empty)
             {

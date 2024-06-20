@@ -119,7 +119,9 @@ namespace Livros.Infrastructure.Data.Repositories
         public bool ExisteNome(Editora editora)
         {
             IQueryable<Editora> query = appDbContext.Editoras.AsNoTracking()
-                .Where(e => e.Nome.ToLower() == editora.Nome.ToLower());
+                 .Where(o => o.Nome.ToLower() == editora.Nome.ToLower()
+                       && o.UsuarioId == user.GetUserId().ToString()
+                       && o.Status != EStatus.Excluido.ToString());
 
             if (editora.Id != Guid.Empty)
             {
