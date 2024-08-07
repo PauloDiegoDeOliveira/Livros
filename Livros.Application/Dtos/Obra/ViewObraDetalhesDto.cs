@@ -26,10 +26,10 @@ namespace Livros.Application.Dtos.Obra
         public ETipo Tipo { get; set; }
         public EStatus Status { get; set; }
 
-        public IList<ViewVolumeDto> Volumes { get; set; }
         public ViewEditoraDto Editora { get; set; }
-        public ViewGeneroDto Genero { get; set; }
-        public ViewAutorDto Autor { get; set; }
+        public IList<ViewVolumeDto> Volumes { get; set; }
         public IList<ViewEstanteDto> Estantes { get; set; }
+        public IList<ViewGeneroDto> Generos { get; set; }
+        public IList<ViewAutorDto> Autores { get; set; }
     }
 }

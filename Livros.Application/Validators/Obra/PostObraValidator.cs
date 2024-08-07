@@ -38,18 +38,6 @@ namespace Livros.Application.Validators.Obra
                 .Must(id => editoraApplication.ExisteId(id))
                 .WithMessage("Nenhuma editora foi encontrada com o id informado.");
 
-            RuleFor(x => x.GeneroId)
-                .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-                .Must(id => generoApplication.ExisteId(id))
-                .WithMessage("Nenhum género foi encontrado com o id informado.");
-
-            RuleFor(x => x.AutorId)
-                .NotEmpty()
-                .WithMessage("O campo {PropertyName} não pode ser nulo ou vazio.")
-                .Must(id => autorApplication.ExisteId(id))
-                .WithMessage("Nenhum autor foi encontrado com o id informado.");
-
             When(x => x.Volumes != null && x.Volumes.Any(), () =>
             {
                 RuleFor(x => x)

@@ -29,7 +29,6 @@ namespace Livros.Infrastructure.Data.Repositories
             return await TryCatch(async () =>
             {
                 IQueryable<Genero> generos = appDbContext.Generos.Where(g => g.UsuarioId == user.GetUserId().ToString())
-                    .Include(a => a.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString()))
                     .AsNoTracking();
 
                 if (parametersGenero.Id != null)
@@ -45,20 +44,6 @@ namespace Livros.Infrastructure.Data.Repositories
                 if (parametersGenero.Status != 0)
                 {
                     generos = generos.Where(g => g.Status == parametersGenero.Status.ToString());
-                }
-
-                if (parametersGenero.QuantidadeObras != 0)
-                {
-                    switch (parametersGenero.QuantidadeObras)
-                    {
-                        case EQuantidadeObras.Crescente:
-                            generos = generos.OrderBy(g => g.Obras.Count());
-                            break;
-
-                        case EQuantidadeObras.Decrescente:
-                            generos = generos.OrderByDescending(g => g.Obras.Count());
-                            break;
-                    }
                 }
 
                 if (!generos.Any())

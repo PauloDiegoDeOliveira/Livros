@@ -6,8 +6,6 @@ namespace Livros.Domain.Entities
     {
         public string UsuarioId { get; set; }
         public Guid EditoraId { get; set; }
-        public Guid GeneroId { get; set; }
-        public Guid AutorId { get; set; }
         public string Nome { get; set; }
         public string Anotacao { get; set; }
         public bool Concluido { get; set; }
@@ -16,15 +14,25 @@ namespace Livros.Domain.Entities
 
         public Usuario Usuario { get; set; }
         public Editora Editora { get; set; }
-        public Genero Genero { get; set; }
-        public Autor Autor { get; set; }
-        public IList<Idioma> Idiomas { get; set; }
         public IList<Estante> Estantes { get; set; }
         public IList<Volume> Volumes { get; set; }
+        public IList<Idioma> Idiomas { get; set; }
+        public IList<Autor> Autores { get; set; }
+        public IList<Genero> Generos { get; set; }
 
         public void ListaIdiomas(IList<Idioma> idiomas)
         {
             Idiomas = idiomas;
+        }
+
+        public void ListaAutores(IList<Autor> autores)
+        {
+            Autores = autores;
+        }
+
+        public void ListaGeneros(IList<Genero> generos)
+        {
+            Generos = generos;
         }
     }
 }

@@ -30,25 +30,15 @@ namespace Livros.Infrastructure.Data.Repositories
             {
                 IQueryable<Obra> obras = appDbContext.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString())
                         .Include(o => o.Volumes.OrderBy(v => v.Ordem))
-                        .Include(o => o.Autor)
+                        .Include(o => o.Autores)
                         .Include(o => o.Editora)
-                        .Include(o => o.Genero)
+                        .Include(o => o.Generos)
                         .Include(o => o.Idiomas)
                         .AsNoTracking();
-
-                if (parametersObra.AutorId != Guid.Empty)
-                {
-                    obras = obras.Where(o => o.AutorId == parametersObra.AutorId);
-                }
 
                 if (parametersObra.EditoraId != Guid.Empty)
                 {
                     obras = obras.Where(o => o.EditoraId == parametersObra.EditoraId);
-                }
-
-                if (parametersObra.GeneroId != Guid.Empty)
-                {
-                    obras = obras.Where(o => o.GeneroId == parametersObra.GeneroId);
                 }
 
                 if (parametersObra.VolumeUnico)
@@ -59,6 +49,16 @@ namespace Livros.Infrastructure.Data.Repositories
                 if (parametersObra.IdiomaId != null)
                 {
                     obras = obras.Where(o => o.Idiomas.Any(o => parametersObra.IdiomaId.Contains(o.Id)));
+                }
+
+                if (parametersObra.AutorId != null)
+                {
+                    obras = obras.Where(o => o.Autores.Any(o => parametersObra.AutorId.Contains(o.Id)));
+                }
+
+                if (parametersObra.GeneroId != null)
+                {
+                    obras = obras.Where(o => o.Generos.Any(o => parametersObra.GeneroId.Contains(o.Id)));
                 }
 
                 if (parametersObra.Tipo != 0)
@@ -145,15 +145,16 @@ namespace Livros.Infrastructure.Data.Repositories
         {
             DefinirUsuarioId(obra);
             AtualizarOrdemVolume(obra.Volumes);
-            await InsertIdiomasAsync(obra);
+            await InserirIdiomasAsync(obra);
+            await InserirGenerosAsync(obra);
+            await InserirAutoresAsync(obra);
 
             return await base.PostAsync(obra);
         }
 
-        private async Task InsertIdiomasAsync(Obra obra)
+        private async Task InserirIdiomasAsync(Obra obra)
         {
             List<Idioma> idiomasConsultados = new();
-
             foreach (Idioma idioma in obra.Idiomas)
             {
                 Idioma idiomaConsultado = await appDbContext.Idiomas.FindAsync(idioma.Id);
@@ -161,6 +162,30 @@ namespace Livros.Infrastructure.Data.Repositories
             }
 
             obra.ListaIdiomas(idiomasConsultados);
+        }
+
+        private async Task InserirGenerosAsync(Obra obra)
+        {
+            List<Genero> generosConsultados = new();
+            foreach (Genero genero in obra.Generos)
+            {
+                Genero generoConsultado = await appDbContext.Generos.FindAsync(genero.Id);
+                generosConsultados.Add(generoConsultado);
+            }
+
+            obra.ListaGeneros(generosConsultados);
+        }
+
+        private async Task InserirAutoresAsync(Obra obra)
+        {
+            List<Autor> autoresConsultados = new();
+            foreach (Autor autor in obra.Autores)
+            {
+                Autor autorConsultado = await appDbContext.Autores.FindAsync(autor.Id);
+                autoresConsultados.Add(autorConsultado);
+            }
+
+            obra.ListaAutores(autoresConsultados);
         }
 
         public override async Task<Obra> PutAsync(Obra obra)
@@ -171,12 +196,16 @@ namespace Livros.Infrastructure.Data.Repositories
             Obra obraConsultado = await appDbContext.Obras
                         .Include(o => o.Volumes)
                         .Include(o => o.Idiomas)
+                        .Include(o => o.Generos)
+                        .Include(o => o.Autores)
                         .FirstOrDefaultAsync(o => o.Id == obra.Id);
 
             appDbContext.Entry(obraConsultado).CurrentValues.SetValues(obra);
 
             UpdateVolumeAsync(obra, obraConsultado);
-            await UpdateIdiomasAsync(obra, obraConsultado);
+            await AtualizarIdiomasAsync(obra, obraConsultado);
+            await AtualizarAutoresAsync(obra, obraConsultado);
+            await AtualizarGenerosAsync(obra, obraConsultado);
 
             await SaveChangesAsync();
 
@@ -189,7 +218,7 @@ namespace Livros.Infrastructure.Data.Repositories
             obraConsultado.Volumes = obra.Volumes;
         }
 
-        private async Task UpdateIdiomasAsync(Obra obra, Obra obraConsultado)
+        private async Task AtualizarIdiomasAsync(Obra obra, Obra obraConsultado)
         {
             obraConsultado.Idiomas.Clear();
             foreach (Idioma idioma in obra.Idiomas)
@@ -199,13 +228,33 @@ namespace Livros.Infrastructure.Data.Repositories
             }
         }
 
+        private async Task AtualizarAutoresAsync(Obra obra, Obra obraConsultado)
+        {
+            obraConsultado.Autores.Clear();
+            foreach (Autor autor in obra.Autores)
+            {
+                Autor autorConsultado = await appDbContext.Autores.FindAsync(autor.Id);
+                obraConsultado.Autores.Add(autorConsultado);
+            }
+        }
+
+        private async Task AtualizarGenerosAsync(Obra obra, Obra obraConsultado)
+        {
+            obraConsultado.Generos.Clear();
+            foreach (Genero genero in obra.Generos)
+            {
+                Genero generoConsultado = await appDbContext.Generos.FindAsync(genero.Id);
+                obraConsultado.Generos.Add(generoConsultado);
+            }
+        }
+
         public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)
         {
             return await appDbContext.Obras
                      .Include(o => o.Volumes.OrderBy(v => v.Ordem))
                      .Include(o => o.Editora)
-                     .Include(o => o.Genero)
-                     .Include(o => o.Autor)
+                     .Include(o => o.Generos)
+                     .Include(o => o.Autores)
                      .Include(o => o.Estantes)
                      .AsNoTracking()
                      .FirstOrDefaultAsync(o => o.Id == obraId);

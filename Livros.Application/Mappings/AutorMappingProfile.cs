@@ -15,9 +15,8 @@ namespace Livros.Application.Mappings
         {
             CreateMap<PostAutorDto, Autor>().ReverseMap();
             CreateMap<PutAutorDto, Autor>().ReverseMap();
-
-            CreateMap<Autor, ViewAutorDto>().ForMember(viewObraDto => viewObraDto.QuantidadeObras,
-                   opt => opt.MapFrom(editora => editora.Obras.Count()));
+            CreateMap<Autor, ViewAutorDto>().ReverseMap();
+            CreateMap<Autor, ReferenciaAutorDto>().ReverseMap();
         }
     }
 }

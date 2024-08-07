@@ -29,7 +29,6 @@ namespace Livros.Infrastructure.Data.Repositories
             return await TryCatch(async () =>
             {
                 IQueryable<Autor> autores = appDbContext.Autores.Where(a => a.UsuarioId == user.GetUserId().ToString())
-                    .Include(a => a.Obras.Where(o => o.UsuarioId == user.GetUserId().ToString()))
                     .AsNoTracking();
 
                 if (parametersAutor.Id != null)
@@ -45,20 +44,6 @@ namespace Livros.Infrastructure.Data.Repositories
                 if (parametersAutor.Status != 0)
                 {
                     autores = autores.Where(g => g.Status == parametersAutor.Status.ToString());
-                }
-
-                if (parametersAutor.QuantidadeObras != 0)
-                {
-                    switch (parametersAutor.QuantidadeObras)
-                    {
-                        case EQuantidadeObras.Crescente:
-                            autores = autores.OrderBy(e => e.Obras.Count());
-                            break;
-
-                        case EQuantidadeObras.Decrescente:
-                            autores = autores.OrderByDescending(e => e.Obras.Count());
-                            break;
-                    }
                 }
 
                 if (!autores.Any())

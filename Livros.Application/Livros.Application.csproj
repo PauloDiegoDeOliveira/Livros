@@ -17,23 +17,30 @@
 
   <ItemGroup>
     <Compile Remove="Attributes\**" />
+    <Compile Remove="Dtos\Identity\**" />
+    <Compile Remove="Dtos\Imagem\**" />
+    <Compile Remove="Dtos\Token\**" />
     <Compile Remove="Utilities\Hash\**" />
     <Compile Remove="Validators\Imagem\**" />
+    <Compile Remove="Validators\Usuario\**" />
     <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Dtos\Identity\**" />
+    <EmbeddedResource Remove="Dtos\Imagem\**" />
+    <EmbeddedResource Remove="Dtos\Token\**" />
     <EmbeddedResource Remove="Utilities\Hash\**" />
     <EmbeddedResource Remove="Validators\Imagem\**" />
+    <EmbeddedResource Remove="Validators\Usuario\**" />
     <None Remove="Attributes\**" />
+    <None Remove="Dtos\Identity\**" />
+    <None Remove="Dtos\Imagem\**" />
+    <None Remove="Dtos\Token\**" />
     <None Remove="Utilities\Hash\**" />
     <None Remove="Validators\Imagem\**" />
+    <None Remove="Validators\Usuario\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Identity\Autenticacao\" />
-    <Folder Include="Dtos\Identity\Usuario\" />
-    <Folder Include="Dtos\Imagem\" />
-    <Folder Include="Dtos\Token\" />
     <Folder Include="Interfaces\Base\" />
-    <Folder Include="Validators\Usuario\" />
   </ItemGroup>
 
   <ItemGroup>

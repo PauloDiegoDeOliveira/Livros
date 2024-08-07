@@ -1,4 +1,6 @@
-﻿using Livros.Application.Dtos.Idioma;
+﻿using Livros.Application.Dtos.Autor;
+using Livros.Application.Dtos.Genero;
+using Livros.Application.Dtos.Idioma;
 using Livros.Application.Dtos.Volume;
 using Livros.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
@@ -14,22 +16,6 @@ namespace Livros.Application.Dtos.Obra
         [Display(Name = "id de editora")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public Guid EditoraId { get; set; }
-
-        /// <summary>
-        /// Id de género
-        /// </summary>
-        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
-        [Display(Name = "id de género")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public Guid GeneroId { get; set; }
-
-        /// <summary>
-        /// Id de autor
-        /// </summary>
-        /// <example>085acbb3-a6b5-4cfa-dc22-08daa7d24f76</example>
-        [Display(Name = "id de autor")]
-        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public Guid AutorId { get; set; }
 
         /// <summary>
         /// Id
@@ -91,6 +77,16 @@ namespace Livros.Application.Dtos.Obra
         /// Idiomas
         /// </summary>
         public IList<ReferenciaIdiomaDto> Idiomas { get; set; }
+
+        /// <summary>
+        /// Autores
+        /// </summary>
+        public IList<ReferenciaAutorDto> Autores { get; set; }
+
+        /// <summary>
+        /// Gêneros
+        /// </summary>
+        public IList<ReferenciaGeneroDto> Generos { get; set; }
 
         /// <summary>
         /// Imagem em base64
