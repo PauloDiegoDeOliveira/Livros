@@ -250,14 +250,28 @@ namespace Livros.Infrastructure.Data.Repositories
 
         public async Task<Obra> GetByIdDetalhesAsync(Guid obraId)
         {
-            return await appDbContext.Obras
-                     .Include(o => o.Volumes.OrderBy(v => v.Ordem))
-                     .Include(o => o.Editora)
-                     .Include(o => o.Generos)
-                     .Include(o => o.Autores)
-                     .Include(o => o.Estantes)
-                     .AsNoTracking()
-                     .FirstOrDefaultAsync(o => o.Id == obraId);
+            var usuarioId = user.GetUserId().ToString();
+
+            var obra = await appDbContext.Obras
+                .Where(o => o.Id == obraId && o.UsuarioId == usuarioId)
+                .Include(o => o.Volumes.OrderBy(v => v.Ordem))
+                .Include(o => o.Editora)
+                .Include(o => o.Generos)
+                .Include(o => o.Autores)
+                .Include(o => o.Estantes)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o =>
+                    o.Editora.UsuarioId == usuarioId &&
+                    o.Generos.All(g => g.UsuarioId == usuarioId) &&
+                    o.Autores.All(a => a.UsuarioId == usuarioId) &&
+                    o.Estantes.All(e => e.UsuarioId == usuarioId));
+
+            if (obra == null)
+            {
+                return null;
+            }
+
+            return obra;
         }
 
         public bool ExisteId(Guid id)
