@@ -22,6 +22,21 @@ namespace Livros.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AutorObra", b =>
+                {
+                    b.Property<Guid>("AutoresId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ObrasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AutoresId", "ObrasId");
+
+                    b.HasIndex("ObrasId");
+
+                    b.ToTable("AutorObra");
+                });
+
             modelBuilder.Entity("EstanteObra", b =>
                 {
                     b.Property<Guid>("EstantesId")
@@ -35,6 +50,21 @@ namespace Livros.Infrastructure.Migrations
                     b.HasIndex("ObrasId");
 
                     b.ToTable("EstanteObra");
+                });
+
+            modelBuilder.Entity("GeneroObra", b =>
+                {
+                    b.Property<Guid>("GenerosId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ObrasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GenerosId", "ObrasId");
+
+                    b.HasIndex("ObrasId");
+
+                    b.ToTable("GeneroObra");
                 });
 
             modelBuilder.Entity("IdiomaObra", b =>
@@ -70,9 +100,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(150)")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid>("ObraId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -85,8 +112,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ObraId");
 
                     b.HasIndex("UsuarioId");
 
@@ -186,9 +211,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("varchar(150)")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid>("ObraId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -201,8 +223,6 @@ namespace Livros.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ObraId");
 
                     b.HasIndex("UsuarioId");
 
@@ -701,11 +721,41 @@ namespace Livros.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AutorObra", b =>
+                {
+                    b.HasOne("Livros.Domain.Entities.Autor", null)
+                        .WithMany()
+                        .HasForeignKey("AutoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Livros.Domain.Entities.Obra", null)
+                        .WithMany()
+                        .HasForeignKey("ObrasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EstanteObra", b =>
                 {
                     b.HasOne("Livros.Domain.Entities.Estante", null)
                         .WithMany()
                         .HasForeignKey("EstantesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Livros.Domain.Entities.Obra", null)
+                        .WithMany()
+                        .HasForeignKey("ObrasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GeneroObra", b =>
+                {
+                    b.HasOne("Livros.Domain.Entities.Genero", null)
+                        .WithMany()
+                        .HasForeignKey("GenerosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -733,17 +783,9 @@ namespace Livros.Infrastructure.Migrations
 
             modelBuilder.Entity("Livros.Domain.Entities.Autor", b =>
                 {
-                    b.HasOne("Livros.Domain.Entities.Obra", "Obra")
-                        .WithMany("Autores")
-                        .HasForeignKey("ObraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Autores")
                         .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Obra");
 
                     b.Navigation("Usuario");
                 });
@@ -768,17 +810,9 @@ namespace Livros.Infrastructure.Migrations
 
             modelBuilder.Entity("Livros.Domain.Entities.Genero", b =>
                 {
-                    b.HasOne("Livros.Domain.Entities.Obra", "Obra")
-                        .WithMany("Generos")
-                        .HasForeignKey("ObraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Livros.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Generos")
                         .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Obra");
 
                     b.Navigation("Usuario");
                 });
@@ -869,10 +903,6 @@ namespace Livros.Infrastructure.Migrations
 
             modelBuilder.Entity("Livros.Domain.Entities.Obra", b =>
                 {
-                    b.Navigation("Autores");
-
-                    b.Navigation("Generos");
-
                     b.Navigation("Volumes");
                 });
 

@@ -204,6 +204,27 @@ namespace Livros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Autores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Autores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Autores_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Editoras",
                 columns: table => new
                 {
@@ -247,6 +268,27 @@ namespace Livros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Generos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Generos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Generos_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Obras",
                 columns: table => new
                 {
@@ -284,28 +326,24 @@ namespace Livros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Autores",
+                name: "AutorObra",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
-                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    AutoresId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObrasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autores", x => x.Id);
+                    table.PrimaryKey("PK_AutorObra", x => new { x.AutoresId, x.ObrasId });
                     table.ForeignKey(
-                        name: "FK_Autores_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_AutorObra_Autores_AutoresId",
+                        column: x => x.AutoresId,
+                        principalTable: "Autores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Autores_Obras_ObraId",
-                        column: x => x.ObraId,
+                        name: "FK_AutorObra_Obras_ObrasId",
+                        column: x => x.ObrasId,
                         principalTable: "Obras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -336,28 +374,24 @@ namespace Livros.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Generos",
+                name: "GeneroObra",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ObraId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    Status = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false, defaultValue: "Ativo"),
-                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlteradoEm = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    GenerosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObrasId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Generos", x => x.Id);
+                    table.PrimaryKey("PK_GeneroObra", x => new { x.GenerosId, x.ObrasId });
                     table.ForeignKey(
-                        name: "FK_Generos_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_GeneroObra_Generos_GenerosId",
+                        column: x => x.GenerosId,
+                        principalTable: "Generos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Generos_Obras_ObraId",
-                        column: x => x.ObraId,
+                        name: "FK_GeneroObra_Obras_ObrasId",
+                        column: x => x.ObrasId,
                         principalTable: "Obras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -457,14 +491,14 @@ namespace Livros.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Autores_ObraId",
-                table: "Autores",
-                column: "ObraId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Autores_UsuarioId",
                 table: "Autores",
                 column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AutorObra_ObrasId",
+                table: "AutorObra",
+                column: "ObrasId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Editoras_UsuarioId",
@@ -482,9 +516,9 @@ namespace Livros.Infrastructure.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Generos_ObraId",
-                table: "Generos",
-                column: "ObraId");
+                name: "IX_GeneroObra_ObrasId",
+                table: "GeneroObra",
+                column: "ObrasId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Generos_UsuarioId",
@@ -530,13 +564,13 @@ namespace Livros.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Autores");
+                name: "AutorObra");
 
             migrationBuilder.DropTable(
                 name: "EstanteObra");
 
             migrationBuilder.DropTable(
-                name: "Generos");
+                name: "GeneroObra");
 
             migrationBuilder.DropTable(
                 name: "IdiomaObra");
@@ -551,7 +585,13 @@ namespace Livros.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Autores");
+
+            migrationBuilder.DropTable(
                 name: "Estantes");
+
+            migrationBuilder.DropTable(
+                name: "Generos");
 
             migrationBuilder.DropTable(
                 name: "Idiomas");
